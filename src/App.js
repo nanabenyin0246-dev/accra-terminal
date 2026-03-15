@@ -139,84 +139,14 @@ export default function App(){
   const botRef=useRef(null);
   const cmdRef=useRef(null);
 
-  useEffect(()=>{
-    async function f(){
-      try{
-        const r=await fetch(`${COINGECKO}/simple/price?ids=bitcoin,ethereum,solana,binancecoin&vs_currencies=usd&include_24hr_change=true`);
-        setCrypto(await r.json());
-      }catch{}
-    }
-    f();const t=setInterval(f,60000);return()=>clearInterval(t);
-  },[]);
-
-  useEffect(()=>{
-    async function f(){
-      try{
-        const r=await fetch(FOREX_API);
-        const d=await r.json();
-        if(d.rates) setForex(d.rates);
-      }catch{}
-    }
-    f();const t=setInterval(f,300000);return()=>clearInterval(t);
-  },[]);
-
-  useEffect(()=>{
-    async function f(){
-      try{
-        const r=await fetch(FEAR_API);
-        const d=await r.json();
-        if(d.data?.[0]) setFearGreed({value:+d.data[0].value,label:d.data[0].value_classification});
-      }catch{}
-    }
-    f();const t=setInterval(f,3600000);return()=>clearInterval(t);
-  },[]);
-
-  useEffect(()=>{
-    async function f(){
-      try{
-        const r=await fetch(`${VALLEY_BASE}/stocks/prices`,{headers:{'X-API-Key':VALLEY_KEY}});
-        if(!r.ok) return;
-        const d=await r.json();
-        if(d.data){
-          setStocks(prev=>({...prev,GSE:prev.GSE.map(s=>{const live=d.data.find(x=>x.ticker===s.t);return live?{...s,p:live.price||s.p,pc:live.prev_close||s.pc,v:live.volume||s.v}:s;})}));
-        }
-      }catch{}
-    }
-    f();const t=setInterval(f,60000);return()=>clearInterval(t);
-  },[]);
-
-  const runBot=useCallback(async()=>{
-    try{
-      const r=await fetch(`${COINGECKO}/coins/${botCoin}/ohlc?vs_currency=usd&days=14`);
-      const raw=await r.json();
-      if(!Array.isArray(raw)||raw.length<40) return;
-      const closes=raw.map(([,,,,c])=>c);
-      const price=closes[closes.length-1];
-      const sig=generateSignal(closes);
-      setBotSig({...sig,price,coin:botCoin});
-      setBotLog(prev=>[{time:new Date().toLocaleTimeString(),coin:botCoin.toUpperCase(),price,action:sig.signal,confidence:sig.confidence,rsi:sig.rsi,macd:sig.macd,reasons:sig.reasons?.[0]||''},...prev.slice(0,14)]);
-    }catch{}
-  },[botCoin]);
-
-  useEffect(()=>{if(botRunning){runBot();botRef.current=setInterval(runBot,30000);}else clearInterval(botRef.current);return()=>clearInterval(botRef.current);},[botRunning,runBot]);
-
-  useEffect(()=>{
+    useEffect(()=>{
     async function fetchBotStatus(){
-      const urls=[
-        `https://raw.githubusercontent.com/nanabenyin0246-dev/accra-terminal/master/bot_status.json?nocache=${Date.now()}`,
-        `https://api.github.com/repos/nanabenyin0246-dev/accra-terminal/contents/bot_status.json`,
-      ];
-      for(const url of urls){
-        try{
-          const r=await fetch(url,{cache:'no-store',headers:{'Cache-Control':'no-cache'}});
-          if(r.ok){
-            const d=await r.json();
-            const data=d.content?JSON.parse(atob(d.content)):d;
-            setBotStatus(data);setBotConnected(true);return;
-          }
-        }catch{}
-      }
-      setBotConnected(false);
+      try{
+        const url=`https://gist.githubusercontent.com/nanabenyin0246-dev/4f5f6918288ddaec0a1fc998af3e6f99/raw/bot_status.json?t=${Date.now()}`;
+        const r=await fetch(url,{cache:"no-store"});
+        if(r.ok){const d=await r.json();setBotStatus(d);setBotConnected(true);}
+        else{setBotConnected(false);}
+      }catch{setBotConnected(false);}
     }
     fetchBotStatus();
     const t=setInterval(fetchBotStatus,60000);
