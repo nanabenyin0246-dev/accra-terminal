@@ -134,6 +134,8 @@ export default function App(){
   const [botStatus,setBotStatus]=useState(null);
   const [botStrategy,setBotStrategy]=useState({mode:'balanced',min_confidence:35,max_open_trades:5,crypto_enabled:true,stocks_enabled:true,hfm_enabled:true,avoid_assets:[],prefer_assets:[],market_condition:'neutral'});
   const [botConnected,setBotConnected]=useState(false);
+  const [aiLoading,setAiLoading]=useState(false);
+  const [aiRec,setAiRec]=useState('');
   const [portfolio]=useState([{sym:'BTC',qty:0.012,avg:62000,color:'#f7931a'},{sym:'SOL',qty:2.5,avg:140,color:'#9945ff'},{sym:'MTNGH',qty:1200,avg:1.72,color:'#f5a623'},{sym:'GCB',qty:500,avg:5.80,color:'#00c853'}]);
   const chatEndRef=useRef(null);
   const botRef=useRef(null);
@@ -1216,10 +1218,25 @@ export default function App(){
                         </div>
                       ))}
                     </div>
-                    <button onClick={()=>sendChat('Based on current market data, what trading strategy should the bot use? Analyze Fear&Greed, crypto trends, and macro conditions to recommend: mode (aggressive/balanced/conservative), market_condition (bull/bear/neutral), and min_confidence threshold.')}
+                    <button onClick={async()=>{
+                        setAiLoading(true);setAiRec('');
+                        const fg=fearGreed?.value||50;
+                        const btc=crypto.bitcoin?.usd||0;
+                        const top=botStatus?.top_opportunities?.[0];
+                        const prompt=`Trading strategy AI. Fear&Greed=${fg}/100, BTC=$${btc.toLocaleString()}, USD/GHS=${forex.GHS?.toFixed(2)||'N/A'}, Assets scanned=${botStatus?.assets_scanned||0}, Open trades=${botStatus?.open_trades||0}, Top signal=${top?.symbol||'none'} score=${top?.score||0}. Recommend strategy. Reply ONLY valid JSON no markdown: {"mode":"conservative|balanced|aggressive","market_condition":"bear|neutral|bull","min_confidence":35,"reason":"2 sentences","action":"what to do now"}`;
+                        try{
+                          const res=await fetch('https://api.groq.com/openai/v1/chat/completions',{method:'POST',headers:{'Authorization':'Bearer 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','Content-Type':'application/json'},body:JSON.stringify({model:'llama-3.3-70b-versatile',max_tokens:200,temperature:0.1,messages:[{role:'system',content:'Return valid JSON only.'},{role:'user',content:prompt}]})});
+                          const d=await res.json();
+                          const p=JSON.parse(d.choices[0].message.content.trim());
+                          setBotStrategy(prev=>({...prev,mode:p.mode||prev.mode,market_condition:p.market_condition||prev.market_condition,min_confidence:p.min_confidence||35}));
+                          setAiRec(p.reason+' '+p.action);
+                        }catch(e){setAiRec('AI analysis failed. Try again.');}
+                        setAiLoading(false);
+                      }}
                       style={{width:'100%',padding:'9px',background:`${C.gold}18`,border:`1px solid ${C.gold}`,borderRadius:5,color:C.gold,fontWeight:600,fontSize:13,cursor:'pointer'}}>
-                      Ask AI for Strategy
+                      {aiLoading?'Analyzing market...':'Ask AI for Strategy'}
                     </button>
+                    {aiRec&&(<div style={{marginTop:8,padding:'8px 10px',background:C.bg3,borderRadius:5,fontSize:12,color:C.text2,lineHeight:1.6,border:`1px solid ${C.border}`}}><b style={{color:C.gold}}>AI Recommendation:</b><br/>{aiRec}</div>)}
                   </div>
                 </div>
               ):(
