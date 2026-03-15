@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 
 const LW_CDN='https://unpkg.com/lightweight-charts@4.2.0/dist/lightweight-charts.standalone.production.js';
 function loadScript(src){return new Promise((res,rej)=>{if(document.querySelector(`script[src="${src}"]`)){res();return;}const s=document.createElement('script');s.src=src;s.onload=res;s.onerror=rej;document.head.appendChild(s);});}
@@ -7,12 +7,12 @@ const AI_CONFIG={
   anthropic:{url:'https://api.anthropic.com/v1/messages',model:'claude-sonnet-4-20250514',key:null,label:'Claude Sonnet 4',color:'#f5a623'},
   groq:{url:'https://api.groq.com/openai/v1/chat/completions',model:'llama-3.3-70b-versatile',key:'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',label:'Groq Llama 3.3',color:'#f55036'},
 };
-
-
-
-
-
-
+const VALLEY_KEY='live_264966be983d94d76527a76199bf85182a69e3b19a918159';
+const GITHUB_RAW='https://raw.githubusercontent.com/nanabenyin0246-dev/accra-terminal/master';
+const VALLEY_BASE='https://api.valleyafrica.com/v1';
+const COINGECKO='https://api.coingecko.com/api/v3';
+const FOREX_API='https://api.frankfurter.app/latest?from=USD&to=GHS,NGN,ZAR,KES,EGP,XOF,EUR,GBP';
+const FEAR_API='https://api.alternative.me/fng/?limit=1';
 
 const EXCHANGES={
   GSE:{name:'Ghana Stock Exchange',country:'Ghana',currency:'GHS',flag:'GH',color:'#f5a623'},
@@ -87,7 +87,11 @@ function generateOHLC(seed,days=60){
     p=c;
   }
   return data;
-}let ag=g/p,al=l/p;for(let i=p+1;i<closes.length;i++){const d=closes[i]-closes[i-1];ag=(ag*(p-1)+(d>0?d:0))/p;al=(al*(p-1)+(d<0?-d:0))/p;}return al===0?100:+(100-100/(1+ag/al)).toFixed(2);})();
+}
+
+function generateSignal(closes){
+  if(!closes||closes.length<35) return null;
+  const rsi=(()=>{const p=14;let g=0,l=0;for(let i=1;i<=p;i++){const d=closes[i]-closes[i-1];d>0?g+=d:l-=d;}let ag=g/p,al=l/p;for(let i=p+1;i<closes.length;i++){const d=closes[i]-closes[i-1];ag=(ag*(p-1)+(d>0?d:0))/p;al=(al*(p-1)+(d<0?-d:0))/p;}return al===0?100:+(100-100/(1+ag/al)).toFixed(2);})();
   const ema=(arr,n)=>{if(arr.length<n)return[];const k=2/(n+1);let r=[arr.slice(0,n).reduce((a,b)=>a+b,0)/n];for(let i=n;i<arr.length;i++)r.push(arr[i]*k+r[r.length-1]*(1-k));return r;};
   const e9=ema(closes,9),e21=ema(closes,21);
   const macdLine=ema(closes,12).map((v,i)=>v-(ema(closes,26)[i]||v)).filter(Boolean);
@@ -108,10 +112,10 @@ export default function App(){
   const [page,setPage]=useState('dashboard');
   const [sidebarOpen,setSidebarOpen]=useState(true);
   const [activeEx,setActiveEx]=useState('GSE');
-  const [stocks,_setStocks]=useState(ALL_STOCKS);
+  const [stocks,setStocks]=useState(ALL_STOCKS);
   const [selStock,setSelStock]=useState(ALL_STOCKS.GSE[0]);
-  const [forex,_setForex]=useState({GHS:15.27,NGN:1580,ZAR:18.4,KES:129,EGP:48.5,XOF:610,EUR:0.92,GBP:0.79});
-  const [crypto,_setCrypto]=useState({});
+  const [forex,setForex]=useState({GHS:15.27,NGN:1580,ZAR:18.4,KES:129,EGP:48.5,XOF:610,EUR:0.92,GBP:0.79});
+  const [crypto,setCrypto]=useState({});
   const [fearGreed,setFearGreed]=useState({value:42,label:'Fear'});
   const [botSig,setBotSig]=useState(null);
   const [botCoin,setBotCoin]=useState('bitcoin');
@@ -132,13 +136,14 @@ export default function App(){
   const [botConnected,setBotConnected]=useState(false);
   const [portfolio]=useState([{sym:'BTC',qty:0.012,avg:62000,color:'#f7931a'},{sym:'SOL',qty:2.5,avg:140,color:'#9945ff'},{sym:'MTNGH',qty:1200,avg:1.72,color:'#f5a623'},{sym:'GCB',qty:500,avg:5.80,color:'#00c853'}]);
   const chatEndRef=useRef(null);
+  const botRef=useRef(null);
   const cmdRef=useRef(null);
 
     useEffect(()=>{
     async function fetchBotStatus(){
       try{
         const url=`https://gist.githubusercontent.com/nanabenyin0246-dev/4f5f6918288ddaec0a1fc998af3e6f99/raw/bot_status.json?t=${Date.now()}`;
-        const r=await fetch(url,{cache:"no-store"});
+        const r=await fetch(url,{cache:'no-store'});
         if(r.ok){const d=await r.json();setBotStatus(d);setBotConnected(true);}
         else{setBotConnected(false);}
       }catch{setBotConnected(false);}
@@ -362,7 +367,7 @@ export default function App(){
         {/* PAGE CONTENT */}
         <div style={{flex:1,overflowY:'auto',padding:20}}>
 
-          {/* â•â•â• DASHBOARD â•â•â• */}
+          {/* â•â•â• DASHBOARD â•â•â• */}
           {page==='dashboard'&&(
             <div>
               {/* 3-column layout */}
@@ -543,7 +548,7 @@ export default function App(){
             </div>
           )}
 
-          {/* â•â•â• MARKETS â•â•â• */}
+          {/* â•â•â• MARKETS â•â•â• */}
           {page==='markets'&&(
             <div style={{display:'grid',gridTemplateColumns:'300px 1fr',gap:16}}>
               <div>
@@ -625,7 +630,7 @@ export default function App(){
             </div>
           )}
 
-          {/* â•â•â• CRYPTO â•â•â• */}
+          {/* â•â•â• CRYPTO â•â•â• */}
           {page==='crypto'&&(
             <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:16}}>
               {[
@@ -658,7 +663,7 @@ export default function App(){
             </div>
           )}
 
-          {/* â•â•â• FOREX â•â•â• */}
+          {/* â•â•â• FOREX â•â•â• */}
           {page==='forex'&&(
             <div>
               <div style={{...cardStyle,marginBottom:16}}>
@@ -692,7 +697,7 @@ export default function App(){
             </div>
           )}
 
-          {/* â•â•â• PORTFOLIO â•â•â• */}
+          {/* â•â•â• PORTFOLIO â•â•â• */}
           {page==='portfolio'&&(
             <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:16}}>
               <div style={cardStyle}>
@@ -747,7 +752,7 @@ export default function App(){
             </div>
           )}
 
-          {/* â•â•â• RISK RADAR â•â•â• */}
+          {/* â•â•â• RISK RADAR â•â•â• */}
           {page==='risk'&&(
             <div style={cardStyle}>
               <div style={headerStyle}>Risk Radar - Pan-African Intelligence</div>
@@ -777,7 +782,7 @@ export default function App(){
             </div>
           )}
 
-          {/* â•â•â• SUPPLY CHAIN â•â•â• */}
+          {/* â•â•â• SUPPLY CHAIN â•â•â• */}
           {page==='supply'&&(
             <div style={cardStyle}>
               <div style={headerStyle}>Supply Chain Intelligence - GSE Stocks</div>
@@ -800,7 +805,7 @@ export default function App(){
             </div>
           )}
 
-          {/* â•â•â• POLITICS â•â•â• */}
+          {/* â•â•â• POLITICS â•â•â• */}
           {page==='map'&&(
             <div>
               <div style={{...cardStyle,marginBottom:16}}>
@@ -827,7 +832,7 @@ export default function App(){
             </div>
           )}
 
-          {/* â•â•â• BOT SIGNALS â•â•â• */}
+          {/* â•â•â• BOT SIGNALS â•â•â• */}
           {page==='bot'&&(
             <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:16}}>
               <div style={cardStyle}>
@@ -876,7 +881,7 @@ export default function App(){
             </div>
           )}
 
-          {/* â•â•â• FREEDOM TRACKER â•â•â• */}
+          {/* â•â•â• FREEDOM TRACKER â•â•â• */}
           {page==='freedom'&&(
             <div style={cardStyle}>
               <div style={headerStyle}>Freedom Tracker - Financial Independence</div>
@@ -917,7 +922,7 @@ export default function App(){
             </div>
           )}
 
-          {/* â•â•â• NEWS â•â•â• */}
+          {/* â•â•â• NEWS â•â•â• */}
           {page==='news'&&(
             <div style={cardStyle}>
               <div style={headerStyle}>Market Intelligence Feed</div>
@@ -946,7 +951,7 @@ export default function App(){
             </div>
           )}
 
-          {/* â•â•â• AI ASSISTANT â•â•â• */}
+          {/* â•â•â• AI ASSISTANT â•â•â• */}
           {page==='ai'&&(
             <div style={{display:'grid',gridTemplateColumns:'1fr 280px',gap:16,height:'calc(100vh - 140px)'}}>
               <div style={{...cardStyle,display:'flex',flexDirection:'column',padding:0,overflow:'hidden'}}>
@@ -1013,7 +1018,7 @@ export default function App(){
             </div>
           )}
 
-          {/* â•â•â• ALERTS â•â•â• */}
+          {/* â•â•â• ALERTS â•â•â• */}
           {page==='alerts'&&(
             <div style={cardStyle}>
               <div style={headerStyle}>All Alerts - {RISK_EVENTS.filter(e=>!dismissedRisks.has(e.id)).length} Active</div>
@@ -1033,7 +1038,7 @@ export default function App(){
             </div>
           )}
 
-          {/* â•â•â• SETTINGS â•â•â• */}
+          {/* â•â•â• SETTINGS â•â•â• */}
 
           {page==='botlive'&&(
             <div>
