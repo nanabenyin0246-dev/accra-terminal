@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef, useCallback } from "react";
+import { useEffect, useState, useRef } from "react";
 
 const LW_CDN='https://unpkg.com/lightweight-charts@4.2.0/dist/lightweight-charts.standalone.production.js';
 function loadScript(src){return new Promise((res,rej)=>{if(document.querySelector(`script[src="${src}"]`)){res();return;}const s=document.createElement('script');s.src=src;s.onload=res;s.onerror=rej;document.head.appendChild(s);});}
@@ -7,12 +7,12 @@ const AI_CONFIG={
   anthropic:{url:'https://api.anthropic.com/v1/messages',model:'claude-sonnet-4-20250514',key:null,label:'Claude Sonnet 4',color:'#f5a623'},
   groq:{url:'https://api.groq.com/openai/v1/chat/completions',model:'llama-3.3-70b-versatile',key:'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',label:'Groq Llama 3.3',color:'#f55036'},
 };
-const VALLEY_KEY='live_264966be983d94d76527a76199bf85182a69e3b19a918159';
 
-const VALLEY_BASE='https://api.valleyafrica.com/v1';
-const COINGECKO='https://api.coingecko.com/api/v3';
-const FOREX_API='https://api.frankfurter.app/latest?from=USD&to=GHS,NGN,ZAR,KES,EGP,XOF,EUR,GBP';
-const FEAR_API='https://api.alternative.me/fng/?limit=1';
+
+
+
+
+
 
 const EXCHANGES={
   GSE:{name:'Ghana Stock Exchange',country:'Ghana',currency:'GHS',flag:'GH',color:'#f5a623'},
@@ -87,11 +87,7 @@ function generateOHLC(seed,days=60){
     p=c;
   }
   return data;
-}
-
-function generateSignal(closes){
-  if(!closes||closes.length<35) return null;
-  const rsi=(()=>{const p=14;let g=0,l=0;for(let i=1;i<=p;i++){const d=closes[i]-closes[i-1];d>0?g+=d:l-=d;}let ag=g/p,al=l/p;for(let i=p+1;i<closes.length;i++){const d=closes[i]-closes[i-1];ag=(ag*(p-1)+(d>0?d:0))/p;al=(al*(p-1)+(d<0?-d:0))/p;}return al===0?100:+(100-100/(1+ag/al)).toFixed(2);})();
+}let ag=g/p,al=l/p;for(let i=p+1;i<closes.length;i++){const d=closes[i]-closes[i-1];ag=(ag*(p-1)+(d>0?d:0))/p;al=(al*(p-1)+(d<0?-d:0))/p;}return al===0?100:+(100-100/(1+ag/al)).toFixed(2);})();
   const ema=(arr,n)=>{if(arr.length<n)return[];const k=2/(n+1);let r=[arr.slice(0,n).reduce((a,b)=>a+b,0)/n];for(let i=n;i<arr.length;i++)r.push(arr[i]*k+r[r.length-1]*(1-k));return r;};
   const e9=ema(closes,9),e21=ema(closes,21);
   const macdLine=ema(closes,12).map((v,i)=>v-(ema(closes,26)[i]||v)).filter(Boolean);
@@ -112,10 +108,10 @@ export default function App(){
   const [page,setPage]=useState('dashboard');
   const [sidebarOpen,setSidebarOpen]=useState(true);
   const [activeEx,setActiveEx]=useState('GSE');
-  const [stocks,setStocks]=useState(ALL_STOCKS);
+  const [stocks,_setStocks]=useState(ALL_STOCKS);
   const [selStock,setSelStock]=useState(ALL_STOCKS.GSE[0]);
-  const [forex,setForex]=useState({GHS:15.27,NGN:1580,ZAR:18.4,KES:129,EGP:48.5,XOF:610,EUR:0.92,GBP:0.79});
-  const [crypto,setCrypto]=useState({});
+  const [forex,_setForex]=useState({GHS:15.27,NGN:1580,ZAR:18.4,KES:129,EGP:48.5,XOF:610,EUR:0.92,GBP:0.79});
+  const [crypto,_setCrypto]=useState({});
   const [fearGreed,setFearGreed]=useState({value:42,label:'Fear'});
   const [botSig,setBotSig]=useState(null);
   const [botCoin,setBotCoin]=useState('bitcoin');
@@ -136,7 +132,6 @@ export default function App(){
   const [botConnected,setBotConnected]=useState(false);
   const [portfolio]=useState([{sym:'BTC',qty:0.012,avg:62000,color:'#f7931a'},{sym:'SOL',qty:2.5,avg:140,color:'#9945ff'},{sym:'MTNGH',qty:1200,avg:1.72,color:'#f5a623'},{sym:'GCB',qty:500,avg:5.80,color:'#00c853'}]);
   const chatEndRef=useRef(null);
-  const botRef=useRef(null);
   const cmdRef=useRef(null);
 
     useEffect(()=>{
