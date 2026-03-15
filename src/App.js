@@ -136,6 +136,8 @@ export default function App(){
   const [botConnected,setBotConnected]=useState(false);
   const [aiLoading,setAiLoading]=useState(false);
   const [aiRec,setAiRec]=useState('');
+  const [pendingStrategy,setPendingStrategy]=useState(null);
+  const [approving,setApproving]=useState(false);
   const [portfolio]=useState([{sym:'BTC',qty:0.012,avg:62000,color:'#f7931a'},{sym:'SOL',qty:2.5,avg:140,color:'#9945ff'},{sym:'MTNGH',qty:1200,avg:1.72,color:'#f5a623'},{sym:'GCB',qty:500,avg:5.80,color:'#00c853'}]);
   const chatEndRef=useRef(null);
   const botRef=useRef(null);
@@ -221,6 +223,25 @@ export default function App(){
       setBotStrategy(updated);
       await sendChat('Based on current market conditions analyze and confirm this strategy change: '+JSON.stringify(newStrategy));
     }catch(e){console.error(e);}
+  }
+
+  async function approveStrategy(strategy){
+    setApproving(true);
+    try{
+      const payload={files:{'bot_strategy.json':{content:JSON.stringify({
+        ...strategy,
+        last_updated:new Date().toISOString(),
+        updated_by:'terminal_ai'
+      },null,2)}}};
+      await fetch('https://api.github.com/gists/4f5f6918288ddaec0a1fc998af3e6f99',{
+        method:'PATCH',
+        headers:{'Authorization':'Bearer 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','Content-Type':'application/json'},
+        body:JSON.stringify(payload)});
+      setBotStrategy(prev=>({...prev,...strategy}));
+      setPendingStrategy(null);
+      setAiRec('Strategy approved and sent to bot! Changes will take effect next cycle.');
+    }catch(e){setAiRec('Failed to send strategy to bot. Try again.');}
+    setApproving(false);
   }
 
   async function sendChat(text){
@@ -1237,6 +1258,21 @@ export default function App(){
                       {aiLoading?'Analyzing market...':'Ask AI for Strategy'}
                     </button>
                     {aiRec&&(<div style={{marginTop:8,padding:'8px 10px',background:C.bg3,borderRadius:5,fontSize:12,color:C.text2,lineHeight:1.6,border:`1px solid ${C.border}`}}><b style={{color:C.gold}}>AI Recommendation:</b><br/>{aiRec}</div>)}
+{pendingStrategy&&(
+  <div style={{marginTop:8}}>
+    <div style={{fontSize:11,color:C.text3,marginBottom:4}}>Pending: Mode={pendingStrategy.mode} | Market={pendingStrategy.market_condition} | Confidence={pendingStrategy.min_confidence}%</div>
+    <div style={{display:'flex',gap:6}}>
+      <button onClick={()=>approveStrategy(pendingStrategy)}
+        style={{flex:1,padding:'8px',background:`${C.green}20`,border:`1px solid ${C.green}`,borderRadius:5,color:C.green,fontWeight:700,fontSize:12,cursor:'pointer'}}>
+        {approving?'Sending to Bot...':'APPROVE - Send to Bot'}
+      </button>
+      <button onClick={()=>setPendingStrategy(null)}
+        style={{padding:'8px 12px',background:`${C.red}20`,border:`1px solid ${C.red}`,borderRadius:5,color:C.red,fontWeight:600,fontSize:12,cursor:'pointer'}}>
+        Reject
+      </button>
+    </div>
+  </div>
+)}
                   </div>
                 </div>
               ):(
