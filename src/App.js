@@ -1130,8 +1130,8 @@ export default function App(){
                 <div style={{...cardStyle,flex:1,padding:'12px 16px'}}>
                   <div style={{display:'flex',justifyContent:'space-between',alignItems:'center'}}>
                     <div>
-                      <div style={{fontSize:16,fontWeight:600,color:C.text}}>ACCRA SUPER BOT v8</div>
-                      <div style={{fontSize:12,color:C.text3}}>Universal Multi-Market Engine</div>
+                      <div style={{fontSize:16,fontWeight:600,color:C.text}}>ACCRA BOT v9 - MULTI-AI</div>
+                      <div style={{fontSize:12,color:C.text3}}>Groq + Gemini + OpenRouter</div>
                     </div>
                     <div style={{display:'flex',alignItems:'center',gap:8}}>
                       <div style={{width:8,height:8,borderRadius:'50%',background:botConnected?C.green:C.red}}></div>
