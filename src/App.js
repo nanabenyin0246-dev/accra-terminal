@@ -1230,7 +1230,7 @@ export default function App(){
                       {[['crypto','Crypto'],['stocks','Stocks'],['hfm','HFM/Forex']].map(([k,label])=>(
                         <div key={k} style={{display:'flex',justifyContent:'space-between',padding:'4px 0'}}>
                           <span style={{fontSize:12,color:C.text2}}>{label}</span>
-                          <div onClick={()=>setBotStrategy(prev=>({...prev,[k+'_enabled']:!prev[k+'_enabled']}))}
+                          <div onClick={async()=>{const newVal=!botStrategy[k+'_enabled'];setBotStrategy(prev=>({...prev,[k+'_enabled']:newVal}));try{const s={...botStrategy,[k+'_enabled']:newVal,updated_by:'terminal',last_updated:new Date().toISOString()};await fetch('https://api.github.com/gists/4f5f6918288ddaec0a1fc998af3e6f99',{method:'PATCH',headers:{'Authorization':'Bearer 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','Content-Type':'application/json'},body:JSON.stringify({files:{'bot_strategy.json':{content:JSON.stringify(s,null,2)}}})});}catch(e){console.error(e);}}}
                             style={{width:36,height:20,borderRadius:10,cursor:'pointer',position:'relative',
                               background:botStrategy[k+'_enabled']?C.green:C.border}}>
                             <div style={{position:'absolute',top:2,left:botStrategy[k+'_enabled']?18:2,
