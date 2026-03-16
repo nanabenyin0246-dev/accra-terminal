@@ -134,8 +134,8 @@ export default function App(){
   const [botStatus,setBotStatus]=useState(null);
   const [botStrategy,setBotStrategy]=useState({mode:'balanced',min_confidence:35,max_open_trades:5,crypto_enabled:true,stocks_enabled:true,hfm_enabled:true,avoid_assets:[],prefer_assets:[],market_condition:'neutral'});
   const [botConnected,setBotConnected]=useState(false);
-  const [portfolio,setPortfolio]=useState(null);
-  const [portfolioLoading,setPortfolioLoading]=useState(false);
+  const [binancePortfolio,setBinancePortfolio]=useState(null);
+  const [binanceLoading,setBinanceLoading]=useState(false);
   const [aiLoading,setAiLoading]=useState(false);
   const [aiRec,setAiRec]=useState('');
   const [pendingStrategy,setPendingStrategy]=useState(null);
@@ -228,7 +228,7 @@ export default function App(){
   }
 
   async function fetchPortfolio(){
-    setPortfolioLoading(true);
+    setBinanceLoading(true);
     try{
       const BINANCE_KEY='dPQMhz8C6BkfT9zVDYO23zMRj14adjZxNmD12ebcRxFzMUueBv0FINYVEfEnHLnG';
       const ts=Date.now();
@@ -239,7 +239,7 @@ export default function App(){
       const sol=prices['SOL']||0;
       const btc=prices['BTC']||0;
       const eth=prices['ETH']||0;
-      setPortfolio({
+      setBinancePortfolio({
         sol_price:sol,btc_price:btc,eth_price:eth,
         sol_value:(0.2897*sol).toFixed(2),
         usdt:27.42,
@@ -248,7 +248,7 @@ export default function App(){
         last_updated:new Date().toLocaleTimeString()
       });
     }catch(e){console.error(e);}
-    setPortfolioLoading(false);
+    setBinanceLoading(false);
   }
 
   async function approveStrategy(strategy){
@@ -1152,18 +1152,18 @@ export default function App(){
           {page==='botlive'&&(
             <div>
               {/* Portfolio Tracker */}
-              {portfolio&&(
+                {binancePortfolio&&(
                 <div style={{...cardStyle,marginBottom:16,background:`linear-gradient(135deg,${C.bg2},${C.bg3})`}}>
                   <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:12}}>
                     <div style={{fontSize:14,fontWeight:700,color:C.gold}}>REAL PORTFOLIO - BINANCE</div>
-                    <div style={{fontSize:11,color:C.text3}}>Updated: {portfolio.last_updated}</div>
+                    <div style={{fontSize:11,color:C.text3}}>Updated: {binancePortfolio.last_updated}</div>
                   </div>
                   <div style={{display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:12}}>
                     {[
-                      ['USDT Balance','$'+portfolio.usdt,C.text],
-                      ['SOL Holdings','$'+portfolio.sol_value,C.green],
-                      ['Total Value','$'+portfolio.total,C.gold],
-                      ['PnL',''+portfolio.pnl_pct+'%',parseFloat(portfolio.pnl_pct)>=0?C.green:C.red],
+                      ['USDT Balance','$'+binancePortfolio.usdt,C.text],
+                      ['SOL Holdings','$'+binancePortfolio.sol_value,C.green],
+                      ['Total Value','$'+binancePortfolio.total,C.gold],
+                      ['PnL',''+binancePortfolio.pnl_pct+'%',parseFloat(binancePortfolio.pnl_pct)>=0?C.green:C.red],
                     ].map(([label,val,color])=>(
                       <div key={label} style={{textAlign:'center',padding:'10px 8px',background:C.bg2,borderRadius:8,border:`1px solid ${C.border}`}}>
                         <div style={{fontSize:11,color:C.text3,marginBottom:4}}>{label}</div>
@@ -1172,16 +1172,16 @@ export default function App(){
                     ))}
                   </div>
                   <div style={{marginTop:10,display:'flex',gap:8,fontSize:11,color:C.text3}}>
-                    <span>SOL: ${portfolio.sol_price?.toFixed(2)}</span>
-                    <span>BTC: ${portfolio.btc_price?.toLocaleString()}</span>
-                    <span>ETH: ${portfolio.eth_price?.toFixed(2)}</span>
+                    <span>SOL: ${binancePortfolio.sol_price?.toFixed(2)}</span>
+                    <span>BTC: ${binancePortfolio.btc_price?.toLocaleString()}</span>
+                    <span>ETH: ${binancePortfolio.eth_price?.toFixed(2)}</span>
                   </div>
                 </div>
               )}
-              {!portfolio&&(
+                {!binancePortfolio&&(
                 <button onClick={fetchPortfolio}
                   style={{width:'100%',padding:12,marginBottom:16,background:`${C.gold}18`,border:`1px solid ${C.gold}`,borderRadius:8,color:C.gold,fontWeight:700,fontSize:14,cursor:'pointer'}}>
-                  {portfolioLoading?'Loading Portfolio...':'Load Real Portfolio'}
+                    {binanceLoading?'Loading Portfolio...':'Load Real Portfolio'}
                 </button>
               )}
               {/* Bot Connection Status */}
