@@ -230,8 +230,8 @@ export default function App(){
   async function fetchPortfolio(){
     setBinanceLoading(true);
     try{
-      const BINANCE_KEY='dPQMhz8C6BkfT9zVDYO23zMRj14adjZxNmD12ebcRxFzMUueBv0FINYVEfEnHLnG';
-      const ts=Date.now();
+      
+      
       const r=await fetch(`https://api.binance.com/api/v3/ticker/24hr`,{cache:'no-store'});
       const tickers=await r.json();
       const prices={};
