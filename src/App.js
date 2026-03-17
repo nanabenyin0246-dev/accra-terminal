@@ -136,8 +136,6 @@ export default function App(){
   const [botConnected,setBotConnected]=useState(false);
   const [portfolio,setPortfolio]=useState(null);
   const [portfolioLoading,setPortfolioLoading]=useState(false);
-  const [binancePortfolio,setBinancePortfolio]=useState(null);
-  const [binanceLoading,setBinanceLoading]=useState(false);
   const [aiLoading,setAiLoading]=useState(false);
   const [aiRec,setAiRec]=useState('');
   const [pendingStrategy,setPendingStrategy]=useState(null);
@@ -230,29 +228,21 @@ export default function App(){
   }
 
   async function fetchPortfolio(){
-    setBinanceLoading(true);
+    setPortfolioLoading(true);
     try{
-      
-      
-      const r=await fetch(`https://api.binance.com/api/v3/ticker/24hr`,{cache:'no-store'});
+      const r=await fetch('https://api.binance.com/api/v3/ticker/24hr',{cache:'no-store'});
       const tickers=await r.json();
       const prices={};
       tickers.forEach(t=>{if(t.symbol.endsWith('USDT'))prices[t.symbol.replace('USDT','')]=parseFloat(t.lastPrice);});
-      const sol=prices['SOL']||0;
-      const btc=prices['BTC']||0;
-      const eth=prices['ETH']||0;
-      setBinancePortfolio({
-        sol_price:sol,btc_price:btc,eth_price:eth,
-        sol_value:(0.2897*sol).toFixed(2),
-        usdt:27.42,
+      const sol=prices['SOL']||0,btc=prices['BTC']||0,eth=prices['ETH']||0;
+      setPortfolio({sol_price:sol,btc_price:btc,eth_price:eth,
+        sol_value:(0.2897*sol).toFixed(2),usdt:27.42,
         total:(27.42+0.2897*sol).toFixed(2),
         pnl_pct:(((27.42+0.2897*sol)-48)/48*100).toFixed(1),
-        last_updated:new Date().toLocaleTimeString()
-      });
+        last_updated:new Date().toLocaleTimeString()});
     }catch(e){console.error(e);}
-    setBinanceLoading(false);
+    setPortfolioLoading(false);
   }
-
   async function approveStrategy(strategy){
     setApproving(true);
     try{
@@ -1153,39 +1143,8 @@ export default function App(){
 
           {page==='botlive'&&(
             <div>
-              {/* Portfolio Tracker */}
-                {binancePortfolio&&(
-                <div style={{...cardStyle,marginBottom:16,background:`linear-gradient(135deg,${C.bg2},${C.bg3})`}}>
-                  <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:12}}>
-                    <div style={{fontSize:14,fontWeight:700,color:C.gold}}>REAL PORTFOLIO - BINANCE</div>
-                    <div style={{fontSize:11,color:C.text3}}>Updated: {binancePortfolio.last_updated}</div>
-                  </div>
-                  <div style={{display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:12}}>
-                    {[
-                      ['USDT Balance','$'+binancePortfolio.usdt,C.text],
-                      ['SOL Holdings','$'+binancePortfolio.sol_value,C.green],
-                      ['Total Value','$'+binancePortfolio.total,C.gold],
-                      ['PnL',''+binancePortfolio.pnl_pct+'%',parseFloat(binancePortfolio.pnl_pct)>=0?C.green:C.red],
-                    ].map(([label,val,color])=>(
-                      <div key={label} style={{textAlign:'center',padding:'10px 8px',background:C.bg2,borderRadius:8,border:`1px solid ${C.border}`}}>
-                        <div style={{fontSize:11,color:C.text3,marginBottom:4}}>{label}</div>
-                        <div style={{fontSize:16,fontWeight:700,color}}>{val}</div>
-                      </div>
-                    ))}
-                  </div>
-                  <div style={{marginTop:10,display:'flex',gap:8,fontSize:11,color:C.text3}}>
-                    <span>SOL: ${binancePortfolio.sol_price?.toFixed(2)}</span>
-                    <span>BTC: ${binancePortfolio.btc_price?.toLocaleString()}</span>
-                    <span>ETH: ${binancePortfolio.eth_price?.toFixed(2)}</span>
-                  </div>
-                </div>
-              )}
-                {!binancePortfolio&&(
-                <button onClick={fetchPortfolio}
-                  style={{width:'100%',padding:12,marginBottom:16,background:`${C.gold}18`,border:`1px solid ${C.gold}`,borderRadius:8,color:C.gold,fontWeight:700,fontSize:14,cursor:'pointer'}}>
-                    {binanceLoading?'Loading Portfolio...':'Load Real Portfolio'}
-                </button>
-              )}
+              {!portfolio&&(<button onClick={fetchPortfolio} style={{width:'100%',padding:12,marginBottom:16,background:'#f0b90b18',border:'1px solid #f0b90b',borderRadius:8,color:'#f0b90b',fontWeight:700,fontSize:14,cursor:'pointer'}}>{portfolioLoading?'Loading...':'Load Real Portfolio'}</button>)}
+              {portfolio&&(<div style={{marginBottom:16,padding:16,borderRadius:8,border:'1px solid #f0b90b44',background:'#f0b90b08'}}><div style={{display:'flex',justifyContent:'space-between',marginBottom:12}}><span style={{fontWeight:700,color:'#f0b90b'}}>REAL PORTFOLIO</span><span style={{fontSize:11,opacity:0.5}}>{portfolio.last_updated}</span></div><div style={{display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:8}}>{[['USDT','$'+portfolio.usdt,'#e0e0e0'],['SOL','$'+portfolio.sol_value,'#00d4aa'],['Total','$'+portfolio.total,'#f0b90b'],['PnL',portfolio.pnl_pct+'%',parseFloat(portfolio.pnl_pct)>=0?'#00d4aa':'#ff4444']].map(([l,v,c])=>(<div key={l} style={{textAlign:'center',padding:'8px 4px',background:'#ffffff08',borderRadius:6}}><div style={{fontSize:10,opacity:0.6,marginBottom:2}}>{l}</div><div style={{fontSize:14,fontWeight:700,color:c}}>{v}</div></div>))}</div><div style={{marginTop:8,fontSize:11,opacity:0.5,display:'flex',gap:12}}><span>SOL ${portfolio.sol_price?.toFixed(2)}</span><span>BTC ${portfolio.btc_price?.toLocaleString()}</span><span>ETH ${portfolio.eth_price?.toFixed(2)}</span></div></div>)}
               {/* Bot Connection Status */}
               <div style={{display:'flex',gap:12,marginBottom:16,alignItems:'center'}}>
                 <div style={{...cardStyle,flex:1,padding:'12px 16px'}}>
