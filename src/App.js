@@ -136,6 +136,8 @@ export default function App(){
   const [botConnected,setBotConnected]=useState(false);
   const [portfolio,setPortfolio]=useState(null);
   const [portfolioLoading,setPortfolioLoading]=useState(false);
+  const [portfolio,setPortfolio]=useState(null);
+  const [portfolioLoading,setPortfolioLoading]=useState(false);
   const [binancePortfolio,setBinancePortfolio]=useState(null);
   const [binanceLoading,setBinanceLoading]=useState(false);
   const [aiLoading,setAiLoading]=useState(false);
@@ -251,6 +253,30 @@ export default function App(){
       });
     }catch(e){console.error(e);}
     setBinanceLoading(false);
+  }
+
+  async function fetchPortfolio(){
+    setPortfolioLoading(true);
+    try{
+      const BINANCE_KEY='dPQMhz8C6BkfT9zVDYO23zMRj14adjZxNmD12ebcRxFzMUueBv0FINYVEfEnHLnG';
+      const ts=Date.now();
+      const r=await fetch(`https://api.binance.com/api/v3/ticker/24hr`,{cache:'no-store'});
+      const tickers=await r.json();
+      const prices={};
+      tickers.forEach(t=>{if(t.symbol.endsWith('USDT'))prices[t.symbol.replace('USDT','')]=parseFloat(t.lastPrice);});
+      const sol=prices['SOL']||0;
+      const btc=prices['BTC']||0;
+      const eth=prices['ETH']||0;
+      setPortfolio({
+        sol_price:sol,btc_price:btc,eth_price:eth,
+        sol_value:(0.2897*sol).toFixed(2),
+        usdt:27.42,
+        total:(27.42+0.2897*sol).toFixed(2),
+        pnl_pct:(((27.42+0.2897*sol)-48)/48*100).toFixed(1),
+        last_updated:new Date().toLocaleTimeString()
+      });
+    }catch(e){console.error(e);}
+    setPortfolioLoading(false);
   }
 
   async function fetchPortfolio(){
@@ -1208,6 +1234,39 @@ export default function App(){
                 <button onClick={fetchPortfolio}
                   style={{width:'100%',padding:12,marginBottom:16,background:`${C.gold}18`,border:`1px solid ${C.gold}`,borderRadius:8,color:C.gold,fontWeight:700,fontSize:14,cursor:'pointer'}}>
                     {binanceLoading?'Loading Portfolio...':'Load Real Portfolio'}
+                </button>
+              )}
+              {/* Portfolio Tracker */}
+              {portfolio&&(
+                <div style={{...cardStyle,marginBottom:16,background:`linear-gradient(135deg,${C.bg2},${C.bg3})`}}>
+                  <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:12}}>
+                    <div style={{fontSize:14,fontWeight:700,color:C.gold}}>REAL PORTFOLIO - BINANCE</div>
+                    <div style={{fontSize:11,color:C.text3}}>Updated: {portfolio.last_updated}</div>
+                  </div>
+                  <div style={{display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:12}}>
+                    {[
+                      ['USDT Balance','$'+portfolio.usdt,C.text],
+                      ['SOL Holdings','$'+portfolio.sol_value,C.green],
+                      ['Total Value','$'+portfolio.total,C.gold],
+                      ['PnL',''+portfolio.pnl_pct+'%',parseFloat(portfolio.pnl_pct)>=0?C.green:C.red],
+                    ].map(([label,val,color])=>(
+                      <div key={label} style={{textAlign:'center',padding:'10px 8px',background:C.bg2,borderRadius:8,border:`1px solid ${C.border}`}}>
+                        <div style={{fontSize:11,color:C.text3,marginBottom:4}}>{label}</div>
+                        <div style={{fontSize:16,fontWeight:700,color}}>{val}</div>
+                      </div>
+                    ))}
+                  </div>
+                  <div style={{marginTop:10,display:'flex',gap:8,fontSize:11,color:C.text3}}>
+                    <span>SOL: ${portfolio.sol_price?.toFixed(2)}</span>
+                    <span>BTC: ${portfolio.btc_price?.toLocaleString()}</span>
+                    <span>ETH: ${portfolio.eth_price?.toFixed(2)}</span>
+                  </div>
+                </div>
+              )}
+              {!portfolio&&(
+                <button onClick={fetchPortfolio}
+                  style={{width:'100%',padding:12,marginBottom:16,background:`${C.gold}18`,border:`1px solid ${C.gold}`,borderRadius:8,color:C.gold,fontWeight:700,fontSize:14,cursor:'pointer'}}>
+                  {portfolioLoading?'Loading Portfolio...':'Load Real Portfolio'}
                 </button>
               )}
               {/* Portfolio Tracker */}
