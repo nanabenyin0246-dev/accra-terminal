@@ -136,10 +136,6 @@ export default function App(){
   const [botConnected,setBotConnected]=useState(false);
   const [portfolio,setPortfolio]=useState(null);
   const [portfolioLoading,setPortfolioLoading]=useState(false);
-  const [portfolio,setPortfolio]=useState(null);
-  const [portfolioLoading,setPortfolioLoading]=useState(false);
-  const [portfolio,setPortfolio]=useState(null);
-  const [portfolioLoading,setPortfolioLoading]=useState(false);
   const [binancePortfolio,setBinancePortfolio]=useState(null);
   const [binanceLoading,setBinanceLoading]=useState(false);
   const [aiLoading,setAiLoading]=useState(false);
