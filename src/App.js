@@ -136,6 +136,8 @@ export default function App(){
   const [botConnected,setBotConnected]=useState(false);
   const [realBal,setRealBal]=useState(null);
   const [realBalLoading,setRealBalLoading]=useState(false);
+  const [realBal,setRealBal]=useState(null);
+  const [realBalLoading,setRealBalLoading]=useState(false);
   const [aiLoading,setAiLoading]=useState(false);
   const [aiRec,setAiRec]=useState('');
   const [pendingStrategy,setPendingStrategy]=useState(null);
@@ -225,6 +227,22 @@ export default function App(){
       setBotStrategy(updated);
       await sendChat('Based on current market conditions analyze and confirm this strategy change: '+JSON.stringify(newStrategy));
     }catch(e){console.error(e);}
+  }
+  async function fetchRealBal(){
+    setRealBalLoading(true);
+    try{
+      const resp=await fetch('https://api.binance.com/api/v3/ticker/24hr',{cache:'no-store'});
+      const tickers=await resp.json();
+      const prices={};
+      tickers.forEach(t=>{if(t.symbol.endsWith('USDT'))prices[t.symbol.replace('USDT','')]=parseFloat(t.lastPrice);});
+      const sol=prices['SOL']||0,btc=prices['BTC']||0,eth=prices['ETH']||0;
+      setRealBal({sol_price:sol,btc_price:btc,eth_price:eth,
+        sol_value:(0.2897*sol).toFixed(2),usdt:27.42,
+        total:(27.42+0.2897*sol).toFixed(2),
+        pnl_pct:(((27.42+0.2897*sol)-48)/48*100).toFixed(1),
+        updated:new Date().toLocaleTimeString()});
+    }catch(e){console.error(e);}
+    setRealBalLoading(false);
   }
   async function fetchRealBal(){
     setRealBalLoading(true);
@@ -1142,6 +1160,8 @@ export default function App(){
 
           {page==='botlive'&&(
             <div>
+              {!realBal&&(<button onClick={fetchRealBal} style={{width:'100%',padding:12,marginBottom:16,background:'#f0b90b18',border:'1px solid #f0b90b',borderRadius:8,color:'#f0b90b',fontWeight:700,fontSize:14,cursor:'pointer'}}>{realBalLoading?'Loading...':'Load Real Portfolio'}</button>)}
+              {realBal&&(<div style={{marginBottom:16,padding:16,borderRadius:8,border:'1px solid #f0b90b44',background:'#f0b90b08'}}><div style={{display:'flex',justifyContent:'space-between',marginBottom:12}}><span style={{fontWeight:700,color:'#f0b90b'}}>REAL PORTFOLIO</span><span style={{fontSize:11,opacity:0.5}}>{realBal.updated}</span></div><div style={{display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:8}}>{[['USDT','$'+realBal.usdt,'#e0e0e0'],['SOL','$'+realBal.sol_value,'#00d4aa'],['Total','$'+realBal.total,'#f0b90b'],['PnL',realBal.pnl_pct+'%',parseFloat(realBal.pnl_pct)>=0?'#00d4aa':'#ff4444']].map(([l,v,c])=>(<div key={l} style={{textAlign:'center',padding:'8px 4px',background:'#ffffff08',borderRadius:6}}><div style={{fontSize:10,opacity:0.6,marginBottom:2}}>{l}</div><div style={{fontSize:14,fontWeight:700,color:c}}>{v}</div></div>))}</div></div>)}
               {!realBal&&(<button onClick={fetchRealBal} style={{width:'100%',padding:12,marginBottom:16,background:'#f0b90b18',border:'1px solid #f0b90b',borderRadius:8,color:'#f0b90b',fontWeight:700,fontSize:14,cursor:'pointer'}}>{realBalLoading?'Loading...':'Load Real Portfolio'}</button>)}
               {realBal&&(<div style={{marginBottom:16,padding:16,borderRadius:8,border:'1px solid #f0b90b44',background:'#f0b90b08'}}><div style={{display:'flex',justifyContent:'space-between',marginBottom:12}}><span style={{fontWeight:700,color:'#f0b90b'}}>REAL PORTFOLIO</span><span style={{fontSize:11,opacity:0.5}}>{realBal.updated}</span></div><div style={{display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:8}}>{[['USDT','$'+realBal.usdt,'#e0e0e0'],['SOL','$'+realBal.sol_value,'#00d4aa'],['Total','$'+realBal.total,'#f0b90b'],['PnL',realBal.pnl_pct+'%',parseFloat(realBal.pnl_pct)>=0?'#00d4aa':'#ff4444']].map(([l,v,c])=>(<div key={l} style={{textAlign:'center',padding:'8px 4px',background:'#ffffff08',borderRadius:6}}><div style={{fontSize:10,opacity:0.6,marginBottom:2}}>{l}</div><div style={{fontSize:14,fontWeight:700,color:c}}>{v}</div></div>))}</div></div>)}
               {/* Bot Connection Status */}
