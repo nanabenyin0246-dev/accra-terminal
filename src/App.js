@@ -134,6 +134,8 @@ export default function App(){
   const [botStatus,setBotStatus]=useState(null);
   const [botStrategy,setBotStrategy]=useState({mode:'balanced',min_confidence:35,max_open_trades:5,crypto_enabled:true,stocks_enabled:true,hfm_enabled:true,avoid_assets:[],prefer_assets:[],market_condition:'neutral'});
   const [botConnected,setBotConnected]=useState(false);
+  const [portfolio,setPortfolio]=useState(null);
+  const [portfolioLoading,setPortfolioLoading]=useState(false);
   const [binancePortfolio,setBinancePortfolio]=useState(null);
   const [binanceLoading,setBinanceLoading]=useState(false);
   const [aiLoading,setAiLoading]=useState(false);
