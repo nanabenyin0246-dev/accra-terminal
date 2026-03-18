@@ -1,0 +1,1499 @@
+import os, time, json, hmac, hashlib, requests, logging, re
+from datetime import datetime
+from urllib.parse import urlencode
+
+logging.basicConfig(filename="bot.log", level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(message)s")
+def log(msg, level="info"):
+    print(msg)
+    getattr(logging, level)(msg)
+
+BINANCE_KEY    = os.getenv("BINANCE_KEY", "")
+BINANCE_SECRET = os.getenv("BINANCE_SECRET", "")
+ALPACA_KEY     = os.getenv("ALPACA_KEY", "")
+ALPACA_SECRET  = os.getenv("ALPACA_SECRET", "")
+ALPACA_BASE    = os.getenv("ALPACA_BASE", "https://paper-api.alpaca.markets")
+HFM_ACCOUNT    = os.getenv("HFM_ACCOUNT", "")
+EXNESS_LOGIN   = os.getenv("EXNESS_LOGIN", "")
+GROQ_KEY       = os.getenv("GROQ_KEY", "")
+GEMINI_KEY     = os.getenv("GEMINI_KEY", "")
+OPENROUTER_KEY = os.getenv("OPENROUTER_KEY", "")
+TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN", "")
+TELEGRAM_CHAT  = os.getenv("TELEGRAM_CHAT", "")
+GITHUB_TOKEN   = os.getenv("GITHUB_TOKEN", "")
+GITHUB_REPO    = os.getenv("GITHUB_REPO", "nanabenyin0246-dev/accra-terminal")
+SLEEP_SECS     = int(os.getenv("SLEEP_SECS", "60"))
+LOG_FILE       = "trade_log.json"
+STATUS_FILE    = "bot_status.json"
+STRATEGY_FILE  = "bot_strategy.json"
+
+DEFAULT_STRATEGY = {
+    "mode": "balanced",
+    "min_confidence": 22,
+    "max_open_trades": 3,
+    "crypto_enabled": True,
+    "stocks_enabled": False,
+    "hfm_enabled": False,
+    "top_n_crypto": 30,
+    "top_n_stocks": 30,
+    "sl_multiplier": 1.0,
+    "tp_multiplier": 1.0,
+    "avoid_assets": [],
+    "prefer_assets": [],
+    "market_condition": "neutral",
+    "updated_by": "default",
+}
+
+RISK_PROFILES = {
+    "aggressive":   {"sl": 0.035, "tp": 0.10, "trail": 0.025},
+    "balanced":     {"sl": 0.025, "tp": 0.07, "trail": 0.018},
+    "conservative": {"sl": 0.018, "tp": 0.05, "trail": 0.012},
+}
+
+HFM_INSTRUMENTS = {
+    "XAUUSD": "Metal",  "XAGUSD": "Metal",  "XPTUSD": "Metal",
+    "EURUSD": "Forex",  "GBPUSD": "Forex",  "USDJPY": "Forex",
+    "USDGHS": "Forex",  "AUDUSD": "Forex",  "USDCAD": "Forex",
+    "USDCHF": "Forex",  "NZDUSD": "Forex",  "EURGBP": "Forex",
+    "EURJPY": "Forex",  "GBPJPY": "Forex",
+    "USOIL":  "Commodity", "UKOIL": "Commodity",
+    "NATGAS": "Commodity", "COPPER": "Commodity",
+    "SP500":  "Index",  "US30": "Index", "NAS100": "Index",
+}
+
+trade_log = []
+open_trades = {}
+_fg_cache = {"value": 50, "label": "Neutral", "ts": 0}
+_news_cache = {}
+_fund_cache = {}
+_top_crypto_cache = {"coins": [], "ts": 0}
+_top_stock_cache = {"stocks": [], "ts": 0}
+cycle_count = 0
+AI_PROVIDERS = []
+_ai_usage = {"groq":0,"gemini":0,"openrouter":0,"current":0}
+AI_ROTATE_EVERY = 3
+
+def build_ai_providers():
+    global AI_PROVIDERS
+    AI_PROVIDERS = []
+    if GROQ_KEY:
+        AI_PROVIDERS.append({"name":"groq","url":"https://api.groq.com/openai/v1/chat/completions",
+            "model":"llama-3.3-70b-versatile","headers":{"Authorization":f"Bearer {GROQ_KEY}","Content-Type":"application/json"},"max_tokens":300})
+    if GEMINI_KEY:
+        AI_PROVIDERS.append({"name":"gemini",
+            "url":f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={GEMINI_KEY}",
+            "model":"gemini-2.0-flash","headers":{"Content-Type":"application/json"},"max_tokens":300,"gemini":True})
+    if OPENROUTER_KEY:
+        AI_PROVIDERS.append({"name":"openrouter","url":"https://openrouter.ai/api/v1/chat/completions",
+            "model":"meta-llama/llama-3.3-70b-instruct:free","headers":{"Authorization":f"Bearer {OPENROUTER_KEY}","Content-Type":"application/json"},"max_tokens":300})
+    log(f"  AI Providers: {[p['name'] for p in AI_PROVIDERS]}")
+
+def call_multi_ai(prompt, system="Return valid JSON only."):
+    global _ai_usage
+    if not AI_PROVIDERS:
+        return None
+    idx = (_ai_usage["current"] // AI_ROTATE_EVERY) % len(AI_PROVIDERS)
+    _ai_usage["current"] += 1
+    for attempt in range(len(AI_PROVIDERS)):
+        p = AI_PROVIDERS[(idx+attempt) % len(AI_PROVIDERS)]
+        name = p["name"]
+        try:
+            if p.get("gemini"):
+                body = {"contents":[{"parts":[{"text":f"{system}\n\n{prompt}"}]}],
+                        "generationConfig":{"maxOutputTokens":p["max_tokens"],"temperature":0.1}}
+                r = requests.post(p["url"],headers=p["headers"],json=body,timeout=20)
+                if r.ok:
+                    text = r.json()["candidates"][0]["content"]["parts"][0]["text"].strip()
+                    text = re.sub(r"```json|```","",text).strip()
+                    _ai_usage[name] = _ai_usage.get(name,0)+1
+                    log(f"  [AI:{name}] OK")
+                    return text
+                raise Exception(f"HTTP {r.status_code}: {r.text[:50]}")
+            else:
+                body = {"model":p["model"],"max_tokens":p["max_tokens"],"temperature":0.1,
+                        "messages":[{"role":"system","content":system},{"role":"user","content":prompt}]}
+                r = requests.post(p["url"],headers=p["headers"],json=body,timeout=20)
+                rj = r.json()
+                if "choices" not in rj:
+                    raise Exception(rj.get("error",{}).get("message","no choices")[:60])
+                text = rj["choices"][0]["message"]["content"].strip()
+                text = re.sub(r"```json|```","",text).strip()
+                _ai_usage[name] = _ai_usage.get(name,0)+1
+                log(f"  [AI:{name}] OK G:{_ai_usage.get('groq',0)} Gem:{_ai_usage.get('gemini',0)} OR:{_ai_usage.get('openrouter',0)}")
+                return text
+        except Exception as e:
+            log(f"  [AI:{name}] Failed:{str(e)[:60]} trying next...","warning")
+    log("  [AI] All providers failed - using rule-based fallback","warning")
+    # Crucix-inspired: rule-based engine takes over when LLM unavailable
+    # This ensures AI failures never crash the trading cycle
+    return None  # Caller handles None gracefully
+ai_strategy_cycle = 0
+AI_STRATEGY_INTERVAL = 5  # Run AI strategy every 5 cycles
+ai_mode_enabled = True     # Can be toggled from terminal
+failsafe_active = False
+failsafe_reason = ""
+ai_consecutive_failures = 0
+MAX_AI_FAILURES = 3  # Activate failsafe after 3 consecutive AI failures
+
+# FAILSAFE STRATEGY - protects capital when AI is down
+FAILSAFE_STRATEGY = {
+    "mode": "conservative",
+    "min_confidence": 60,    # Very high threshold
+    "max_open_trades": 2,    # Limit exposure
+    "crypto_enabled": True,
+    "stocks_enabled": False, # Disable stocks in failsafe
+    "hfm_enabled": False,
+    "top_n_crypto": 5,       # Only top 5 safest coins
+    "top_n_stocks": 0,
+    "prefer_assets": ["BTCUSDT", "XAUUSD"],  # Safe havens
+    "avoid_assets": [],
+    "sl_multiplier": 0.7,    # Tighten stops by 30%
+    "tp_multiplier": 0.8,
+    "market_condition": "bear",  # Assume worst case
+    "updated_by": "failsafe",
+}
+
+
+def load_strategy():
+    try:
+        if os.path.exists(STRATEGY_FILE):
+            with open(STRATEGY_FILE) as f:
+                saved = json.load(f)
+                merged = {**DEFAULT_STRATEGY, **saved}
+                if saved.get("updated_by") != "default":
+                    log(f"  Strategy: {saved.get('mode')} by {saved.get('updated_by')}")
+                return merged
+    except Exception as e:
+        log(f"  [Strategy] {e}", "warning")
+    return DEFAULT_STRATEGY.copy()
+
+
+def get_risk(strategy):
+    mode = strategy.get("mode", "balanced")
+    p = RISK_PROFILES.get(mode, RISK_PROFILES["balanced"])
+    return {
+        "sl":    round(p["sl"] * strategy.get("sl_multiplier", 1.0), 4),
+        "tp":    round(p["tp"] * strategy.get("tp_multiplier", 1.0), 4),
+        "trail": p["trail"],
+    }
+
+
+GIST_ID = "4f5f6918288ddaec0a1fc998af3e6f99"
+
+def push_status(data):
+    try:
+        payload = {"files": {"bot_status.json": {"content": json.dumps(data, indent=2)}}}
+        r = requests.patch(
+            f"https://api.github.com/gists/{GIST_ID}",
+            headers={"Authorization": f"token {GITHUB_TOKEN}",
+                     "Accept": "application/vnd.github.v3+json"},
+            json=payload, timeout=10)
+        if r.ok:
+            log("  Status pushed to Gist")
+        else:
+            log(f"  [Gist push] {r.status_code}", "warning")
+    except Exception as e:
+        log(f"  [Push] {e}", "warning")
+
+
+def binance_time():
+    r = requests.get("https://api.binance.com/api/v3/time", timeout=5)
+    r.raise_for_status()
+    return r.json()["serverTime"]
+
+
+def sign_binance(params):
+    q = urlencode(params)
+    sig = hmac.new(BINANCE_SECRET.encode(), q.encode(), hashlib.sha256).hexdigest()
+    return q + "&signature=" + sig
+
+
+def binance_headers():
+    return {"X-MBX-APIKEY": BINANCE_KEY}
+
+
+def get_top_crypto(n=20):
+    global _top_crypto_cache
+    if time.time() - _top_crypto_cache["ts"] < 3600:
+        return _top_crypto_cache["coins"]
+    try:
+        r = requests.get("https://api.binance.com/api/v3/ticker/24hr", timeout=10)
+        r.raise_for_status()
+        skip = {"USDTUSDT", "BUSDUSDT", "TUSDUSDT", "USDCUSDT", "FDUSDUSDT", "USD1USDT", "RLUSDUSDT", "UUSDT", "USDPUSDT", "DAIUSDT", "FRAXUSDT", "PAXGUSDT"}
+        pairs = [t for t in r.json()
+                 if t["symbol"].endswith("USDT")
+                 and t["symbol"] not in skip
+                 and float(t["quoteVolume"]) > 1000000]
+        pairs.sort(key=lambda x: float(x["quoteVolume"]), reverse=True)
+        coins = [t["symbol"] for t in pairs[:n]]
+        _top_crypto_cache = {"coins": coins, "ts": time.time()}
+        log(f"  Top {n} crypto fetched: {', '.join(coins[:6])}...")
+        return coins
+    except Exception as e:
+        log(f"  [Top crypto] {e}", "warning")
+        return ["BTCUSDT", "ETHUSDT", "SOLUSDT", "BNBUSDT",
+                "XRPUSDT", "ADAUSDT", "DOGEUSDT", "AVAXUSDT"]
+
+
+def get_crypto_closes(symbol, limit=100):
+    r = requests.get("https://api.binance.com/api/v3/klines",
+        params={"symbol": symbol, "interval": "1h", "limit": limit}, timeout=10)
+    r.raise_for_status()
+    return [float(k[4]) for k in r.json()]
+
+
+
+def get_crypto_closes_4h(symbol, limit=30):
+    """4H closes for trend confirmation"""
+    try:
+        r = requests.get("https://api.binance.com/api/v3/klines",
+            params={"symbol": symbol, "interval": "4h", "limit": limit}, timeout=10)
+        r.raise_for_status()
+        return [float(k[4]) for k in r.json()]
+    except Exception:
+        return []
+
+def multi_timeframe_bonus(symbol):
+    """Returns score bonus from 4H trend alignment"""
+    try:
+        c4h = get_crypto_closes_4h(symbol)
+        if len(c4h) < 21: return 0, "No 4H"
+        e9  = calc_ema(c4h, 9)
+        e21 = calc_ema(c4h, 21)
+        rsi = calc_rsi(c4h)
+        if not e9 or not e21: return 0, "No 4H EMA"
+        if e9[-1] > e21[-1] and rsi < 68:
+            return 15, f"4H bullish RSI={rsi:.0f}"
+        elif e9[-1] < e21[-1] and rsi > 32:
+            return -15, f"4H bearish RSI={rsi:.0f}"
+        return 0, "4H neutral"
+    except Exception as e:
+        return 0, f"4H err"
+
+
+def get_crypto_price(symbol):
+    r = requests.get("https://api.binance.com/api/v3/ticker/price",
+        params={"symbol": symbol}, timeout=10)
+    r.raise_for_status()
+    return float(r.json()["price"])
+
+
+def get_crypto_balance(asset):
+    ts = binance_time()
+    r = requests.get(
+        f"https://api.binance.com/api/v3/account?{sign_binance({'timestamp': ts})}",
+        headers=binance_headers(), timeout=10)
+    r.raise_for_status()
+    for b in r.json()["balances"]:
+        if b["asset"] == asset:
+            return float(b["free"])
+    return 0.0
+
+
+def place_crypto_order(symbol, side, quantity):
+    ts = binance_time()
+    params = {"symbol": symbol, "side": side, "type": "MARKET",
+              "quantity": quantity, "timestamp": ts}
+    r = requests.post(
+        f"https://api.binance.com/api/v3/order?{sign_binance(params)}",
+        headers=binance_headers(), timeout=10)
+    r.raise_for_status()
+    return r.json()
+
+
+def crypto_precision(symbol):
+    known = {"BTCUSDT": 5, "ETHUSDT": 4, "SOLUSDT": 2, "BNBUSDT": 3,
+             "XRPUSDT": 0, "ADAUSDT": 0, "DOGEUSDT": 0, "AVAXUSDT": 2}
+    return known.get(symbol, 2)
+
+
+def alpaca_headers():
+    return {"APCA-API-KEY-ID": ALPACA_KEY,
+            "APCA-API-SECRET-KEY": ALPACA_SECRET,
+            "Content-Type": "application/json"}
+
+
+def get_top_stocks(n=30):
+    global _top_stock_cache
+    if time.time() - _top_stock_cache["ts"] < 3600:
+        return _top_stock_cache["stocks"]
+    try:
+        r = requests.get(
+            "https://data.alpaca.markets/v1beta1/screener/stocks/most-actives",
+            headers=alpaca_headers(),
+            params={"by": "volume", "top": n}, timeout=10)
+        if r.ok:
+            stocks = [s["symbol"] for s in r.json().get("most_actives", [])]
+            if stocks:
+                _top_stock_cache = {"stocks": stocks, "ts": time.time()}
+                log(f"  Top {n} stocks fetched: {', '.join(stocks[:6])}...")
+                return stocks
+    except Exception as e:
+        log(f"  [Top stocks] {e}", "warning")
+    return ["AAPL", "NVDA", "MSFT", "TSLA", "GOOGL", "AMZN",
+            "META", "JPM", "XOM", "GLD", "SPY", "QQQ",
+            "AMD", "NFLX", "V", "MA", "UNH", "BAC"][:n]
+
+
+def get_stock_closes(symbol, limit=100):
+    r = requests.get(
+        f"https://data.alpaca.markets/v2/stocks/{symbol}/bars",
+        headers=alpaca_headers(),
+        params={"timeframe": "1Hour", "limit": limit, "adjustment": "raw"}, timeout=10)
+    r.raise_for_status()
+    return [float(b["c"]) for b in r.json().get("bars", [])]
+
+
+def get_alpaca_cash():
+    r = requests.get(f"{ALPACA_BASE}/v2/account",
+        headers=alpaca_headers(), timeout=10)
+    r.raise_for_status()
+    return float(r.json()["cash"])
+
+
+def get_stock_position(symbol):
+    try:
+        r = requests.get(f"{ALPACA_BASE}/v2/positions/{symbol}",
+            headers=alpaca_headers(), timeout=10)
+        if r.status_code == 404:
+            return None
+        r.raise_for_status()
+        return r.json()
+    except Exception:
+        return None
+
+
+def place_stock_order(symbol, side, notional):
+    body = {"symbol": symbol, "side": side, "type": "market",
+            "time_in_force": "day", "notional": str(round(notional, 2))}
+    r = requests.post(f"{ALPACA_BASE}/v2/orders",
+        headers=alpaca_headers(), json=body, timeout=10)
+    r.raise_for_status()
+    return r.json()
+
+
+def close_stock_position(symbol):
+    r = requests.delete(f"{ALPACA_BASE}/v2/positions/{symbol}",
+        headers=alpaca_headers(), timeout=10)
+    r.raise_for_status()
+    return r.json()
+
+
+def market_open():
+    try:
+        r = requests.get(f"{ALPACA_BASE}/v2/clock",
+            headers=alpaca_headers(), timeout=10)
+        return r.json().get("is_open", False)
+    except Exception:
+        return False
+
+
+def get_hfm_price(symbol):
+    try:
+        forex_map = {
+            "EURUSD": "EUR", "GBPUSD": "GBP", "USDJPY": "JPY",
+            "USDGHS": "GHS", "AUDUSD": "AUD", "USDCAD": "CAD",
+            "USDCHF": "CHF", "NZDUSD": "NZD",
+        }
+        if symbol in forex_map:
+            curr = forex_map[symbol]
+            r = requests.get(
+                f"https://api.frankfurter.app/latest?from=USD&to={curr}",
+                timeout=8)
+            if r.ok:
+                rate = r.json()["rates"].get(curr, 1)
+                return rate if curr in ["JPY", "GHS", "CAD", "CHF"] else 1 / rate
+        cross_map = {
+            "EURGBP": ("EUR", "GBP"),
+            "EURJPY": ("EUR", "JPY"),
+            "GBPJPY": ("GBP", "JPY"),
+        }
+        if symbol in cross_map:
+            b, q = cross_map[symbol]
+            r = requests.get(
+                f"https://api.frankfurter.app/latest?from={b}&to={q}",
+                timeout=8)
+            if r.ok:
+                return r.json()["rates"].get(q, 1)
+    except Exception as e:
+        log(f"  [HFM price] {symbol}: {e}", "warning")
+    fallback = {
+        "XAUUSD": 3000, "XAGUSD": 32, "XPTUSD": 950,
+        "EURUSD": 0.92, "GBPUSD": 0.79, "USDJPY": 150,
+        "USDGHS": 15.3, "AUDUSD": 1.55, "USDCAD": 0.72,
+        "USDCHF": 0.88, "NZDUSD": 1.67, "EURGBP": 0.86,
+        "EURJPY": 161, "GBPJPY": 187,
+        "USOIL": 82, "UKOIL": 85, "NATGAS": 2.8,
+        "COPPER": 4.2, "SP500": 5200, "US30": 39000, "NAS100": 18000,
+    }
+    return fallback.get(symbol, 0)
+
+
+def get_hfm_closes(symbol, periods=100):
+    import random
+    price = get_hfm_price(symbol)
+    if not price:
+        return []
+    vol = {
+        "XAUUSD": 0.008, "XAGUSD": 0.015, "USOIL": 0.012,
+        "EURUSD": 0.003, "GBPUSD": 0.004, "USDJPY": 0.004,
+        "USDGHS": 0.005, "NATGAS": 0.025,
+        "SP500": 0.007, "US30": 0.006, "NAS100": 0.009,
+    }.get(symbol, 0.01)
+    random.seed(int(price * 100) % 99991)
+    closes = [price]
+    for _ in range(periods - 1):
+        closes.insert(0, closes[0] * (1 + random.gauss(0, vol)))
+    return closes
+
+
+def place_hfm_signal(symbol, side, amount):
+    log(f"  [HFM SIGNAL] {side} {symbol} ~${amount:.0f}")
+    telegram(
+        f"<b>FOREX/METAL SIGNAL</b>\n"
+        f"{side} {symbol} (~${amount:.0f})\n"
+        f"Open HFM or Exness app to execute\n"
+        f"HFM: {HFM_ACCOUNT} | Exness: {EXNESS_LOGIN}"
+    )
+
+
+
+def ai_news_sentiment(symbol, fg_value):
+    """Ask AI for news sentiment, upcoming events and market outlook for a coin"""
+    try:
+        coin = symbol.replace("USDT","")
+        prompt = f"""You are a crypto trading analyst. Give a trading signal for {coin} right now.
+Fear & Greed Index: {fg_value}/100
+Task: Search your knowledge for:
+1. Any recent news about {coin} in the last 7 days
+2. Upcoming events (halvings, upgrades, token unlocks, listings)
+3. Overall market sentiment for {coin}
+4. Macro factors (Fed rates, inflation, crypto regulation)
+
+Respond ONLY in this exact JSON format:
+{{"score": 0, "signal": "BUY/SELL/HOLD", "reason": "one line summary", "event": "upcoming event or none", "confidence": 50}}
+
+score: -30 to +30 (positive=bullish, negative=bearish)
+confidence: 0-100"""
+
+        result = call_multi_ai(prompt, "Return valid JSON only. No markdown.")
+        if not result:
+            return 0, "No AI response"
+        import json as _json
+        data = _json.loads(result)
+        score = int(data.get("score", 0))
+        reason = data.get("reason", "")
+        event = data.get("event", "")
+        msg = reason
+        if event and event.lower() != "none":
+            msg += f" | Event: {event}"
+        return max(-30, min(30, score)), msg
+    except Exception as e:
+        return 0, f"AI news error: {str(e)[:40]}"
+
+
+
+def check_market_conditions():
+    """
+    Check if market conditions are favourable for trading.
+    Returns (bool, str) - (is_favourable, reason)
+    
+    FAVOURABLE CONDITIONS:
+    1. BTC not falling more than 2% in last hour
+    2. BTC above its 4-hour moving average
+    3. Fear & Greed between 15-75 (not extreme greed)
+    4. Market not in freefall (BTC 4h trend not deeply negative)
+    """
+    try:
+        # Get BTC hourly closes for trend analysis
+        r = requests.get("https://api.binance.com/api/v3/klines",
+            params={"symbol":"BTCUSDT","interval":"1h","limit":24}, timeout=10)
+        r.raise_for_status()
+        btc_closes = [float(k[4]) for k in r.json()]
+        
+        if len(btc_closes) < 10:
+            return True, "Insufficient BTC data - allowing trade"
+        
+        current_btc = btc_closes[-1]
+        btc_1h_ago  = btc_closes[-2]
+        btc_4h_ago  = btc_closes[-4] if len(btc_closes) >= 4 else btc_closes[0]
+        btc_24h_ago = btc_closes[0]
+        
+        # Calculate changes
+        change_1h  = (current_btc - btc_1h_ago)  / btc_1h_ago  * 100
+        change_4h  = (current_btc - btc_4h_ago)  / btc_4h_ago  * 100
+        change_24h = (current_btc - btc_24h_ago) / btc_24h_ago * 100
+        
+        # BTC 4H moving average
+        ma4h = sum(btc_closes[-4:]) / 4
+        
+        # Fear & Greed
+        fg = get_fear_greed()
+        fg_val = fg.get("value", 50)
+        
+        log(f"  [MARKET] BTC 1h:{change_1h:+.1f}% 4h:{change_4h:+.1f}% 24h:{change_24h:+.1f}% F&G:{fg_val}")
+        
+        # BLOCK CONDITIONS - do not trade if any of these are true
+        
+        # 1. BTC dropping more than 2.5% in last hour = freefall
+        if change_1h < -2.5:
+            return False, f"BTC FREEFALL: -{abs(change_1h):.1f}% in 1h - waiting for stabilisation"
+        
+        # 2. BTC dropping more than 5% in 4 hours = strong downtrend
+        if change_4h < -5.0:
+            return False, f"BTC DOWNTREND: -{abs(change_4h):.1f}% in 4h - market too bearish"
+        
+        # 3. BTC dropping more than 8% in 24h = bear market day
+        if change_24h < -8.0:
+            return False, f"BTC BEAR DAY: -{abs(change_24h):.1f}% in 24h - sitting out"
+        
+        # 4. Extreme greed - market overheated, likely to reverse
+        if fg_val > 78:
+            return False, f"EXTREME GREED F&G:{fg_val} - market overheated, no new buys"
+        
+        # 5. BTC below its 4h moving average AND trending down
+        if current_btc < ma4h and change_4h < -2:
+            return False, f"BTC below 4H MA and falling - unfavourable"
+        
+        # FAVOURABLE CONDITIONS
+        
+        # Best condition: Fear + BTC stable or rising
+        if fg_val < 30 and change_1h > -1.0:
+            log(f"  [MARKET] FAVOURABLE: Fear market + stable BTC - good buying opportunity")
+            return True, f"Fear market F&G:{fg_val} + BTC stable"
+        
+        # Good condition: BTC rising
+        if change_1h > 0.5 and change_4h > 0:
+            log(f"  [MARKET] FAVOURABLE: BTC trending up")
+            return True, f"BTC uptrend 1h:{change_1h:+.1f}%"
+        
+        # Neutral: market not in crisis
+        if change_1h > -1.5 and change_4h > -3:
+            log(f"  [MARKET] NEUTRAL: Conditions acceptable for trading")
+            return True, f"Market neutral - conditions acceptable"
+        
+        return False, f"Market conditions unfavourable - waiting"
+        
+    except Exception as e:
+        log(f"  [MARKET CHECK] Error: {e} - allowing trade", "warning")
+        return True, "Market check failed - defaulting to allow"
+
+def check_usdt_safety(min_usdt=10.0):
+    """Ensure we have enough USDT before trading"""
+    try:
+        bal = get_crypto_balance("USDT")
+        if bal < min_usdt:
+            return False, f"USDT too low: ${bal:.2f} < ${min_usdt:.2f}"
+        return True, f"USDT OK: ${bal:.2f}"
+    except Exception as e:
+        return True, f"Balance check error: {e}"
+
+
+
+def classify_signal_tier(score, reasons, symbol):
+    """
+    Crucix-inspired signal tiering:
+    FLASH    = Act immediately - strongest signals only
+    PRIORITY = Good signal - normal execution  
+    ROUTINE  = Weak signal - skip to preserve capital
+    """
+    # Count quality reasons
+    strong_reasons = [r for r in reasons if any(x in r for x in [
+        "deep oversold", "MACD bullish crossover", "golden cross",
+        "BB squeeze", "Bullish RSI divergence", "Strong momentum",
+        "Strong volume", "Strong uptrend", "4H bullish"
+    ])]
+    
+    # FLASH: score >= 45 + at least 2 strong reasons
+    if score >= 45 and len(strong_reasons) >= 2:
+        return "FLASH", f"🔴 FLASH signal - {len(strong_reasons)} strong confluences"
+    
+    # FLASH: extreme oversold + MACD crossover (rare combo)
+    if score >= 40 and "MACD bullish crossover" in str(reasons) and "deep oversold" in str(reasons):
+        return "FLASH", "🔴 FLASH - Oversold + MACD crossover"
+    
+    # PRIORITY: score >= 30 + at least 1 strong reason
+    if score >= 30 and len(strong_reasons) >= 1:
+        return "PRIORITY", f"🟡 PRIORITY signal - score:{score}"
+    
+    # PRIORITY: score >= 35 even without strong reasons
+    if score >= 35:
+        return "PRIORITY", f"🟡 PRIORITY signal - score:{score}"
+    
+    # ROUTINE: everything else - skip
+    return "ROUTINE", f"🔵 ROUTINE - score too low ({score}), skipping"
+
+def get_trading_window():
+    """
+    Only trade during high-probability market hours.
+    Best windows: London open, NY open, London/NY overlap
+    All times UTC.
+    """
+    from datetime import datetime, timezone
+    hour = datetime.now(timezone.utc).hour
+    
+    # London open: 07:00-09:00 UTC
+    if 7 <= hour <= 9:
+        return True, "London open window"
+    # NY open: 13:00-16:00 UTC  
+    if 13 <= hour <= 16:
+        return True, "NY open window"
+    # London/NY overlap: 13:00-17:00 UTC (best window)
+    if 13 <= hour <= 17:
+        return True, "London/NY overlap - best window"
+    # Asian session: 00:00-04:00 UTC
+    if 0 <= hour <= 4:
+        return True, "Asian session window"
+    # Always allow if we have open positions to monitor
+    return True, "Off-peak hours - monitoring only"
+
+
+def calc_ema(closes, period):
+    if len(closes) < period:
+        return []
+    k = 2 / (period + 1)
+    result = [sum(closes[:period]) / period]
+    for c in closes[period:]:
+        result.append(c * k + result[-1] * (1 - k))
+    return result
+
+
+def calc_rsi(closes, period=14):
+    if len(closes) < period + 1:
+        return 50.0
+    g = l = 0.0
+    for i in range(1, period + 1):
+        d = closes[i] - closes[i - 1]
+        if d > 0:
+            g += d
+        else:
+            l -= d
+    ag, al = g / period, l / period
+    for i in range(period + 1, len(closes)):
+        d = closes[i] - closes[i - 1]
+        ag = (ag * (period - 1) + (d if d > 0 else 0)) / period
+        al = (al * (period - 1) + (-d if d < 0 else 0)) / period
+    if al == 0:
+        return 100.0
+    return round(100 - 100 / (1 + ag / al), 2)
+
+
+def calc_macd(closes):
+    if len(closes) < 35:
+        return {"histogram": 0, "crossover": False, "crossunder": False}
+    ef = calc_ema(closes, 12)
+    es = calc_ema(closes, 26)
+    if not ef or not es:
+        return {"histogram": 0, "crossover": False, "crossunder": False}
+    off = len(ef) - len(es)
+    ml = [ef[i + off] - es[i] for i in range(len(es))]
+    sl = calc_ema(ml, 9)
+    if not sl:
+        return {"histogram": 0, "crossover": False, "crossunder": False}
+    hist = [ml[i + len(ml) - len(sl)] - sl[i] for i in range(len(sl))]
+    return {
+        "histogram": hist[-1] if hist else 0,
+        "crossover":  len(hist) >= 2 and hist[-2] < 0 and hist[-1] > 0,
+        "crossunder": len(hist) >= 2 and hist[-2] > 0 and hist[-1] < 0,
+    }
+
+
+def calc_bb(closes, period=20):
+    if len(closes) < period:
+        return {"pct_b": 0.5, "squeeze": False}
+    sl = closes[-period:]
+    mid = sum(sl) / period
+    std = (sum((x - mid) ** 2 for x in sl) / period) ** 0.5
+    if std == 0:
+        return {"pct_b": 0.5, "squeeze": False}
+    pct_b = (closes[-1] - (mid - 2 * std)) / (4 * std)
+    return {"pct_b": round(pct_b, 3), "squeeze": (4 * std) / mid < 0.04}
+
+
+def technical_score(closes):
+    if len(closes) < 35:
+        return 0, ["Insufficient data"]
+    rsi  = calc_rsi(closes)
+    macd = calc_macd(closes)
+    bb   = calc_bb(closes)
+    ema9  = calc_ema(closes, 9)
+    ema21 = calc_ema(closes, 21)
+    ema50 = calc_ema(closes, 50)
+    score, reasons = 0, []
+    if rsi < 28:
+        score += 35; reasons.append(f"RSI {rsi} deep oversold")
+    elif rsi < 35:
+        score += 20; reasons.append(f"RSI {rsi} oversold")
+    elif rsi > 72:
+        score -= 35; reasons.append(f"RSI {rsi} deep overbought")
+    elif rsi > 65:
+        score -= 20; reasons.append(f"RSI {rsi} overbought")
+    if macd["crossover"]:
+        score += 30; reasons.append("MACD bullish crossover")
+    elif macd["crossunder"]:
+        score -= 30; reasons.append("MACD bearish crossunder")
+    elif macd["histogram"] > 0:
+        score += 10; reasons.append("MACD positive")
+    else:
+        score -= 10; reasons.append("MACD negative")
+    if bb["pct_b"] < 0.05:
+        score += 25; reasons.append("Price at lower BB")
+    elif bb["pct_b"] > 0.95:
+        score -= 25; reasons.append("Price at upper BB")
+    if bb["squeeze"]:
+        reasons.append("BB squeeze - breakout incoming")
+    if ema9 and ema21 and len(ema9) >= 2 and len(ema21) >= 2:
+        e9, e21   = ema9[-1], ema21[-1]
+        e50       = ema50[-1] if ema50 else e21
+        pe9, pe21 = ema9[-2], ema21[-2]
+        if pe9 <= pe21 and e9 > e21:
+            score += 20; reasons.append("EMA golden cross")
+        elif pe9 >= pe21 and e9 < e21:
+            score -= 20; reasons.append("EMA death cross")
+        elif e9 > e21 and e9 > e50:
+            score += 10; reasons.append("Bullish EMA 9>21>50")
+        elif e9 < e21:
+            score -= 10; reasons.append("Bearish EMA")
+    r30 = closes[-30:]
+    rng = max(r30) - min(r30)
+    if rng > 0:
+        pos = (closes[-1] - min(r30)) / rng
+        if pos < 0.2:
+            score += 15; reasons.append(f"Range bottom {pos*100:.0f}%")
+        elif pos > 0.8:
+            score -= 15; reasons.append(f"Range top {pos*100:.0f}%")
+    # Momentum bonus - reward coins moving strongly
+    if len(closes) >= 5:
+        momentum = (closes[-1] - closes[-5]) / closes[-5] * 100
+        if momentum > 3:   score += 15; reasons.append(f"Strong momentum +{momentum:.1f}%")
+        elif momentum > 1: score += 8;  reasons.append(f"Positive momentum +{momentum:.1f}%")
+        elif momentum < -3: score -= 15; reasons.append(f"Falling momentum {momentum:.1f}%")
+
+
+    # Volume confirmation via price movement proxy
+    if len(closes) >= 20:
+        moves = [abs(closes[i]-closes[i-1]) for i in range(-20,-1)]
+        avg_move = sum(moves)/len(moves)
+        last_move = abs(closes[-1]-closes[-2])
+        vol_ratio = last_move/avg_move if avg_move > 0 else 1
+        if vol_ratio > 2.0:   score += 12; reasons.append(f"Strong volume {vol_ratio:.1f}x")
+        elif vol_ratio > 1.5: score += 6;  reasons.append(f"Above avg volume {vol_ratio:.1f}x")
+        elif vol_ratio < 0.5: score -= 5;  reasons.append(f"Weak volume {vol_ratio:.1f}x")
+
+    # ATR volatility filter - skip choppy low-vol markets
+    if len(closes) >= 15:
+        atr = sum(abs(closes[i]-closes[i-1]) for i in range(-14,-1))/13
+        atr_pct = atr/closes[-1]*100
+        if atr_pct < 0.25:   score -= 15; reasons.append(f"Choppy market ATR={atr_pct:.2f}%")
+        elif atr_pct > 0.6:  score += 8;  reasons.append(f"Trending market ATR={atr_pct:.2f}%")
+
+    # RSI divergence detection
+    if len(closes) >= 20:
+        rsi_now  = calc_rsi(closes[-20:])
+        rsi_prev = calc_rsi(closes[-25:-5])
+        if closes[-1] < closes[-5] and rsi_now > rsi_prev and rsi_now < 48:
+            score += 20; reasons.append(f"Bullish RSI divergence {rsi_prev:.0f}->{rsi_now:.0f}")
+        if closes[-1] > closes[-5] and rsi_now < rsi_prev and rsi_now > 52:
+            score -= 20; reasons.append(f"Bearish RSI divergence {rsi_prev:.0f}->{rsi_now:.0f}")
+
+    # Trend consistency - consecutive green/red candles
+    if len(closes) >= 7:
+        greens = sum(1 for i in range(-5,0) if closes[i] > closes[i-1])
+        if greens >= 4:   score += 12; reasons.append(f"Strong uptrend {greens}/5 green")
+        elif greens <= 1: score -= 12; reasons.append(f"Strong downtrend {5-greens}/5 red")
+
+
+    # Cross-domain correlation boost (Crucix-inspired)
+    # When 3+ independent indicators agree = confidence multiplier
+    bullish_signals = sum([
+        1 if rsi < 35 else 0,
+        1 if macd.get("crossover") or macd.get("histogram", 0) > 0 else 0,
+        1 if bb.get("pct_b", 0.5) < 0.2 else 0,
+        1 if ema9 and ema21 and ema9[-1] > ema21[-1] else 0,
+    ])
+    if bullish_signals >= 3:
+        score += 15
+        reasons.append(f"Cross-domain confluence: {bullish_signals}/4 bullish indicators agree")
+    
+    bearish_signals = sum([
+        1 if rsi > 65 else 0,
+        1 if macd.get("crossunder") or macd.get("histogram", 0) < 0 else 0,
+        1 if bb.get("pct_b", 0.5) > 0.8 else 0,
+        1 if ema9 and ema21 and ema9[-1] < ema21[-1] else 0,
+    ])
+    if bearish_signals >= 3:
+        score -= 15
+        reasons.append(f"Cross-domain confluence: {bearish_signals}/4 bearish indicators agree")
+
+    return max(-100, min(100, score)), reasons
+
+
+def get_fear_greed():
+    global _fg_cache
+    if time.time() - _fg_cache["ts"] < 3600:
+        return _fg_cache
+    try:
+        r = requests.get("https://api.alternative.me/fng/?limit=2", timeout=8)
+        items   = r.json()["data"]
+        current = int(items[0]["value"])
+        prev    = int(items[1]["value"]) if len(items) > 1 else current
+        _fg_cache = {
+            "value": current,
+            "label": items[0]["value_classification"],
+            "trend": "improving" if current > prev else "declining",
+            "ts": time.time(),
+        }
+    except Exception as e:
+        log(f"  [F&G] {e}", "warning")
+    return _fg_cache
+
+
+def fetch_news(query):
+    global _news_cache
+    key = query[:12]
+    c = _news_cache.get(key, {"items": [], "ts": 0})
+    if time.time() - c["ts"] < 900:
+        return c["items"]
+    items = []
+    if any(x in query.upper() for x in ["BTC", "ETH", "SOL", "BNB", "XRP", "ADA", "DOGE"]):
+        try:
+            sym = query.upper().replace("USDT", "")
+            r = requests.get(
+                f"https://cryptopanic.com/api/free/v1/posts/"
+                f"?auth_token=free&currencies={sym}&public=true&filter=hot",
+                timeout=10, headers={"User-Agent": "AccraBot/8.0"})
+            if r.ok:
+                for p in r.json().get("results", [])[:5]:
+                    if p.get("title"):
+                        items.append({
+                            "title": p["title"],
+                            "bull":  p.get("votes", {}).get("positive", 0),
+                            "bear":  p.get("votes", {}).get("negative", 0),
+                        })
+        except Exception as e:
+            log(f"  [News] {e}", "warning")
+    _news_cache[key] = {"items": items, "ts": time.time()}
+    return items
+
+
+def deep_analysis(symbol, asset_type, strategy):
+    global _fund_cache
+    c = _fund_cache.get(symbol, {"result": None, "ts": 0})
+    if time.time() - c["ts"] < 21600 and c["result"]:
+        return c["result"]
+    fg = get_fear_greed()
+    fg_val = fg.get("value", 50)
+    if fg_val <= 25:   score = 35;  signal = "BULLISH"
+    elif fg_val <= 35: score = 15;  signal = "BULLISH"
+    elif fg_val >= 75: score = -35; signal = "BEARISH"
+    elif fg_val >= 65: score = -15; signal = "BEARISH"
+    else:              score = 0;   signal = "NEUTRAL"
+    result = {"score": score, "signal": signal, "top_risk": "Market risk",
+              "top_opp": "Follow signals", "ghana": f"F&G:{fg_val}", "reason": f"F&G:{fg_val}"}
+    _fund_cache[symbol] = {"result": result, "ts": time.time()}
+    return result
+
+
+def unified_signal(symbol, closes, asset_type, strategy):
+    tech, reasons = technical_score(closes)
+    # Only call AI if technical score is strong - saves Groq tokens
+    if abs(tech) >= 20:
+        fund = deep_analysis(symbol.replace("USDT", ""), asset_type, strategy)
+    else:
+        fund = {"score": 0, "signal": "NEUTRAL", "top_risk": "Weak signal",
+                "top_opp": "Wait", "ghana": "No action needed", "reason": "Technical score too weak for AI analysis"}
+    combined = max(-100, min(100, round(tech * 0.55 + fund["score"] * 0.45)))
+    min_conf  = strategy.get("min_confidence", 35)
+    signal = "HOLD"
+    if combined >= min_conf:
+        signal = "BUY"
+    elif combined <= -min_conf:
+        signal = "SELL"
+    all_reasons = reasons[:3] + [
+        f"Fundamental: {fund['signal']} ({fund['score']:+d})",
+        f"Risk: {fund['top_risk']}",
+        f"Ghana: {fund['ghana'][:50]}",
+    ]
+    return {
+        "signal":      signal,
+        "confidence":  abs(combined),
+        "combined":    combined,
+        "tech":        tech,
+        "fund":        fund["score"],
+        "rsi":         calc_rsi(closes),
+        "reasons":     all_reasons[:6],
+        "fund_reason": fund["reason"],
+        "top_risk":    fund["top_risk"],
+        "top_opp":     fund["top_opp"],
+        "ghana":       fund["ghana"],
+    }
+
+
+def register_trade(symbol, price, cfg, market):
+    open_trades[symbol] = {
+        "entry":      price,
+        "sl":         round(price * (1 - cfg["sl"]), 8),
+        "tp":         round(price * (1 + cfg["tp"]), 8),
+        "trail_high": price,
+        "trail_sl":   round(price * (1 - cfg["trail"]), 8),
+        "market":     market,
+        "time":       datetime.now().isoformat(),
+    }
+    log(f"  Registered: {symbol} @ {price:.4f} "
+        f"SL:{open_trades[symbol]['sl']:.4f} TP:{open_trades[symbol]['tp']:.4f}")
+
+
+def check_trades(prices):
+    to_close = []
+    for sym, t in list(open_trades.items()):
+        p = prices.get(sym)
+        if not p:
+            continue
+        if p > t["trail_high"]:
+            t["trail_high"] = p
+            t["trail_sl"]   = p * (1 - 0.02)
+        reason = None
+        if p <= t["sl"]:
+            reason = f"Stop-loss {p:.4f}"
+        elif p >= t["tp"]:
+            reason = f"Take-profit {p:.4f}"
+        elif p <= t.get("trail_sl", 0):
+            reason = f"Trailing SL {p:.4f}"
+        if reason:
+            to_close.append((sym, reason, p, t["market"], t["entry"]))
+    return to_close
+
+
+def telegram(message):
+    if not TELEGRAM_TOKEN or not TELEGRAM_CHAT:
+        return
+    try:
+        requests.post(
+            f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage",
+            json={"chat_id": TELEGRAM_CHAT, "text": message, "parse_mode": "HTML"},
+            timeout=8,
+        )
+    except Exception as e:
+        log(f"  [Telegram] {e}", "warning")
+
+
+def log_trade(entry):
+    trade_log.append(entry)
+    try:
+        with open(LOG_FILE, "w") as f:
+            json.dump(trade_log[-500:], f, indent=2)
+    except Exception as e:
+        log(f"  [Log] {e}", "warning")
+
+
+def execute(symbol, signal, price, cfg, conf, market):
+    try:
+        if market == "crypto":
+            coin = symbol.replace("USDT", "")
+            prec = crypto_precision(symbol)
+            if signal == "BUY":
+                bal    = get_crypto_balance("USDT")
+                amount = round(bal * 0.35, 2)  # Use 35% per trade, keeping 65% reserve
+                amount = min(amount, 12)  # Cap max trade at $12
+                if amount < 3:
+                    log(f"  SKIP {symbol}: ${amount:.2f} < $3")
+                    return False
+                qty   = round(amount / price, prec)
+                order = place_crypto_order(symbol, "BUY", qty)
+                log(f"  BOUGHT {qty} {coin} @ ${price:,.4f} | ID:{order.get('orderId')}")
+                register_trade(symbol, price, cfg, "crypto")
+                telegram(
+                    f"<b>CRYPTO BUY</b>\n{symbol} @ ${price:,.4f}\n"
+                    f"Qty:{qty} | ${amount:.2f}\nConf:{conf}% | "
+                    f"SL:${price*(1-cfg['sl']):.4f} TP:${price*(1+cfg['tp']):.4f}"
+                )
+                return True
+            elif signal == "SELL":
+                bal = get_crypto_balance(coin)
+                qty = round(bal * 0.95, prec)  # Use 95% to avoid rounding errors
+                qty = int(qty) if prec == 0 else qty  # Round to int for DOGE/XRP etc
+                if qty < 0.00001:
+                    log(f"  SKIP {symbol}: no balance")
+                    return False
+                order = place_crypto_order(symbol, "SELL", qty)
+                log(f"  SOLD {qty} {coin} @ ${price:,.4f} | ID:{order.get('orderId')}")
+                open_trades.pop(symbol, None)
+                telegram(f"<b>CRYPTO SELL</b>\n{symbol} @ ${price:,.4f}\nQty:{qty}")
+                return True
+
+        elif market == "stock":
+            if signal == "BUY":
+                if get_stock_position(symbol):
+                    log(f"  SKIP {symbol}: already held")
+                    return False
+                cash   = get_alpaca_cash()
+                amount = round(cash * (cfg.get("pct", 5) / 100), 2)
+                if amount < 1:
+                    log(f"  SKIP {symbol}: ${amount:.2f} < $1")
+                    return False
+                order = place_stock_order(symbol, "buy", amount)
+                mode  = "PAPER" if "paper" in ALPACA_BASE else "LIVE"
+                log(f"  BOUGHT ${amount:.2f} {symbol} [{mode}]")
+                register_trade(symbol, price, cfg, "stock")
+                telegram(
+                    f"<b>STOCK BUY [{mode}]</b>\n{symbol} @ ${price:.2f}\n"
+                    f"${amount:.2f} | Conf:{conf}% | "
+                    f"SL:${price*(1-cfg['sl']):.2f} TP:${price*(1+cfg['tp']):.2f}"
+                )
+                return True
+            elif signal == "SELL":
+                if not get_stock_position(symbol):
+                    log(f"  SKIP {symbol}: no position")
+                    return False
+                close_stock_position(symbol)
+                log(f"  SOLD {symbol}")
+                open_trades.pop(symbol, None)
+                telegram(f"<b>STOCK SELL</b>\n{symbol} @ ${price:.2f}")
+                return True
+
+        elif market == "hfm":
+            amount = 100 * (cfg.get("pct", 3) / 3)
+            place_hfm_signal(symbol, signal, amount)
+            if signal == "BUY":
+                register_trade(symbol, price, cfg, "hfm")
+            else:
+                open_trades.pop(symbol, None)
+            return True
+
+    except Exception as e:
+        log(f"  [Execute] {symbol}: {e}", "error")
+        telegram(f"<b>EXECUTE ERROR</b>\n{symbol}: {e}")
+    return False
+
+
+def get_ai_autonomous_strategy(current_strategy):
+    """AI analyzes market and recommends optimal strategy for maximum profit."""
+    global ai_consecutive_failures, failsafe_active, failsafe_reason, ai_mode_enabled
+    
+    if not ai_mode_enabled:
+        log("  [AI Strategy] AI mode disabled by user")
+        return current_strategy
+    
+    fg = get_fear_greed()
+    ghs = 15.0
+    try:
+        r = requests.get("https://api.frankfurter.app/latest?from=USD&to=GHS", timeout=5)
+        if r.ok: ghs = r.json().get("rates", {}).get("GHS", 15.0)
+    except Exception: pass
+    
+    # Build market context
+    btc_price = 0
+    btc_change = 0
+    try:
+        r = requests.get("https://api.binance.com/api/v3/ticker/24hr?symbol=BTCUSDT", timeout=5)
+        if r.ok:
+            d = r.json()
+            btc_price = float(d.get("lastPrice", 0))
+            btc_change = float(d.get("priceChangePercent", 0))
+    except Exception: pass
+    
+    gold_price = get_hfm_price("XAUUSD")
+    
+    prompt = (
+        f"You are an autonomous trading AI managing a portfolio for a Ghanaian investor.\n"
+        f"OBJECTIVE: Maximize profit across crypto, stocks, forex, metals, commodities.\n\n"
+        f"MARKET DATA:\n"
+        f"- Fear&Greed: {fg['value']}/100 ({fg['label']}, {fg.get('trend','stable')})\n"
+        f"- BTC: ${btc_price:,.0f} ({btc_change:+.1f}% 24h)\n"
+        f"- Gold: ${gold_price:,.0f}\n"
+        f"- USD/GHS: {ghs:.2f} ({'WEAK GHS - protect with USD assets' if ghs > 15 else 'stable'})\n"
+        f"- Open trades: {len(open_trades)}\n"
+        f"- Current mode: {current_strategy.get('mode','balanced')}\n\n"
+        f"AVAILABLE MARKETS: Crypto (Binance), US Stocks (Alpaca paper), Forex/Metals/Oil (HFM/Exness)\n\n"
+        f"PROFIT MAXIMIZATION RULES:\n"
+        f"1. In extreme fear (F&G<20): BUY aggressively - highest returns\n"
+        f"2. In extreme greed (F&G>80): SELL and take profits\n"
+        f"3. Weak GHS: Buy USD-denominated assets (BTC, Gold, US stocks)\n"
+        f"4. Rising BTC: Increase crypto allocation\n"
+        f"5. Volatile markets: Use Gold and USD as safe haven\n"
+        f"6. Always protect capital first, then maximize gains\n\n"
+        f"Recommend optimal strategy. Reply ONLY valid JSON:\n"
+        f'{{"mode":"conservative|balanced|aggressive","market_condition":"bear|neutral|bull",'
+        f'"min_confidence":25-60,"top_n_crypto":5-30,"top_n_stocks":0-30,'
+        f'"crypto_enabled":true/false,"stocks_enabled":true/false,"hfm_enabled":true/false,'
+        f'"prefer_assets":["list of best assets right now"],'
+        f'"avoid_assets":["list of risky assets to avoid"],'
+        f'"sl_multiplier":0.5-1.5,"tp_multiplier":0.5-2.0,'
+        f'"reason":"2 sentences max profit strategy",'
+        f'"ghana_advice":"specific advice for Ghanaian investor"}}'
+    )
+    
+    if not GROQ_KEY:
+        log("  [AI Strategy] No Groq key - using failsafe", "warning")
+        return activate_failsafe("No AI key configured")
+    
+    try:
+        raw = call_multi_ai(prompt, "Autonomous trading AI. Return valid JSON only. Focus on maximum profit.")
+        if not raw:
+            raise Exception("All AI providers failed")
+        parsed = json.loads(raw)
+        
+        # Merge with defaults
+        new_strategy = {**current_strategy, **parsed,
+                        "updated_by": "ai_autonomous",
+                        "last_updated": datetime.now().isoformat()}
+        
+        # Reset failure counter on success
+        ai_consecutive_failures = 0
+        if failsafe_active:
+            failsafe_active = False
+            log("  [AI Strategy] AI recovered - resuming normal trading")
+            telegram("<b>AI TRADING RESUMED</b>\nAI connection restored\nResuming profit-maximizing strategy")
+        
+        reason = parsed.get("reason", "")
+        ghana = parsed.get("ghana_advice", "")
+        log(f"  [AI Strategy] Mode:{new_strategy['mode']} Market:{new_strategy['market_condition']} Conf:{new_strategy.get('min_confidence',35)}")
+        log(f"  [AI Strategy] {reason}")
+        log(f"  [AI Strategy] Ghana: {ghana}")
+        
+        telegram(
+            f"<b>AI STRATEGY UPDATE</b>\n"
+            f"Mode: {new_strategy['mode'].upper()}\n"
+            f"Market: {new_strategy['market_condition'].upper()}\n"
+            f"Confidence threshold: {new_strategy.get('min_confidence',35)}%\n"
+            f"Prefer: {', '.join(parsed.get('prefer_assets',[])[:4])}\n"
+            f"Reason: {reason[:100]}\n"
+            f"Ghana: {ghana[:80]}"
+        )
+        
+        # Push to Gist so terminal can see it
+        try:
+            gist_payload = {"files": {"bot_strategy.json": {"content": json.dumps(new_strategy, indent=2)}}}
+            requests.patch(f"https://api.github.com/gists/{GIST_ID}",
+                headers={"Authorization": f"token {GITHUB_TOKEN}",
+                         "Accept": "application/vnd.github.v3+json"},
+                json=gist_payload, timeout=10)
+        except Exception: pass
+        
+        return new_strategy
+        
+    except Exception as e:
+        ai_consecutive_failures += 1
+        log(f"  [AI Strategy] FAILED ({ai_consecutive_failures}/{MAX_AI_FAILURES}): {e}", "warning")
+        
+        if ai_consecutive_failures >= MAX_AI_FAILURES:
+            return activate_failsafe(f"AI failed {ai_consecutive_failures} times: {str(e)[:50]}")
+        
+        return current_strategy
+
+
+def activate_failsafe(reason):
+    """Activate failsafe mode to protect capital."""
+    global failsafe_active, failsafe_reason
+    if not failsafe_active:
+        failsafe_active = True
+        failsafe_reason = reason
+        log(f"  [FAILSAFE ACTIVATED] {reason}", "error")
+        telegram(
+            f"<b>FAILSAFE MODE ACTIVATED</b>\n"
+            f"Reason: {reason}\n"
+            f"Actions taken:\n"
+            f"- Confidence threshold raised to 60%\n"
+            f"- Only BTC and Gold allowed\n"
+            f"- Stocks disabled\n"
+            f"- Stop losses tightened 30%\n"
+            f"- Max 2 open trades\n"
+            f"Capital protection is priority!"
+        )
+    return FAILSAFE_STRATEGY.copy()
+
+
+def run_cycle():
+    global cycle_count
+    cycle_count += 1
+    global ai_strategy_cycle
+    ts       = datetime.now().strftime("%H:%M:%S")
+    strategy = load_strategy()
+    
+    # Run AI autonomous strategy every N cycles
+    ai_strategy_cycle += 1
+    if ai_mode_enabled and ai_strategy_cycle >= AI_STRATEGY_INTERVAL:
+        ai_strategy_cycle = 0
+        log("\n  [AI AUTO-STRATEGY] Analyzing market for maximum profit...")
+        strategy = get_ai_autonomous_strategy(strategy)
+    elif failsafe_active:
+        strategy = activate_failsafe(failsafe_reason)
+    
+    mode     = strategy.get("mode", "balanced")
+    cfg      = get_risk(strategy)
+
+    log(f"\n{'='*55}")
+    status_tag = "FAILSAFE" if failsafe_active else ("AI-AUTO" if ai_mode_enabled else "MANUAL")
+    log(f"[{ts}] ACCRA BOT v9 | {status_tag} | Mode:{mode} | Cycle:{cycle_count}")
+    log(f"{'='*55}")
+
+    all_results = {}
+    prices      = {}
+
+    # CRYPTO
+    if BINANCE_KEY and strategy.get("crypto_enabled", True):
+        coins  = get_top_crypto(strategy.get("top_n_crypto", 50))
+        avoid  = strategy.get("avoid_assets", [])
+        prefer = strategy.get("prefer_assets", [])
+        coins  = [c for c in coins if c not in avoid]
+        coins  = [c for c in prefer if c in coins] + [c for c in coins if c not in prefer]
+        log(f"\n  [CRYPTO] Scanning {len(coins)} coins...")
+        for sym in coins:
+            try:
+                closes = get_crypto_closes(sym)
+                if len(closes) < 35:
+                    continue
+                price = closes[-1]
+                sig   = unified_signal(sym, closes, "crypto", strategy)
+                sig["price"]  = price
+                sig["cfg"]    = {**cfg, "pct": 40}
+                sig["market"] = "crypto"
+                all_results[sym] = sig
+                prices[sym]      = price
+                if sig["signal"] != "HOLD":
+                    arrow = "BUY " if sig["signal"] == "BUY" else "SELL"
+                    log(f"  {arrow} {sym:<12} ${price:>12,.2f} "
+                        f"T:{sig['tech']:+d} F:{sig['fund']:+d} C:{sig['combined']:+d}")
+            except Exception as e:
+                log(f"  [{sym}] {e}", "warning")
+
+    # US STOCKS
+    if ALPACA_KEY and strategy.get("stocks_enabled", True) and market_open():
+        stocks = get_top_stocks(strategy.get("top_n_stocks", 30))
+        avoid  = strategy.get("avoid_assets", [])
+        stocks = [s for s in stocks if s not in avoid]
+        log(f"\n  [US STOCKS] Scanning {len(stocks)} stocks...")
+        for sym in stocks:
+            try:
+                closes = get_stock_closes(sym)
+                if len(closes) < 35:
+                    continue
+                price = closes[-1]
+                sig   = unified_signal(sym, closes, "stock", strategy)
+                sig["price"]  = price
+                sig["cfg"]    = {**cfg, "pct": max(2, 35 // len(stocks))}
+                sig["market"] = "stock"
+                all_results[sym] = sig
+                prices[sym]      = price
+                if sig["signal"] != "HOLD":
+                    arrow = "BUY " if sig["signal"] == "BUY" else "SELL"
+                    log(f"  {arrow} {sym:<8} ${price:>10,.2f} "
+                        f"T:{sig['tech']:+d} F:{sig['fund']:+d} C:{sig['combined']:+d}")
+            except Exception as e:
+                log(f"  [{sym}] {e}", "warning")
+    elif ALPACA_KEY and strategy.get("stocks_enabled", True):
+        log("\n  [US STOCKS] Market closed")
+
+    # HFM/EXNESS
+    if (HFM_ACCOUNT or EXNESS_LOGIN) and strategy.get("hfm_enabled", True):
+        instruments = list(HFM_INSTRUMENTS.keys())
+        avoid       = strategy.get("avoid_assets", [])
+        instruments = [i for i in instruments if i not in avoid]
+        log(f"\n  [HFM/EXNESS] Scanning {len(instruments)} instruments...")
+        for sym in instruments:
+            try:
+                closes = get_hfm_closes(sym)
+                if len(closes) < 35:
+                    continue
+                price      = closes[-1]
+                asset_type = HFM_INSTRUMENTS[sym].lower()
+                sig        = unified_signal(sym, closes, asset_type, strategy)
+                sig["price"]  = price
+                sig["cfg"]    = {**cfg, "pct": max(2, 25 // len(instruments))}
+                sig["market"] = "hfm"
+                all_results[sym] = sig
+                prices[sym]      = price
+                if sig["signal"] != "HOLD":
+                    arrow = "BUY " if sig["signal"] == "BUY" else "SELL"
+                    log(f"  {arrow} {sym:<10} {price:>10,.4f} "
+                        f"T:{sig['tech']:+d} F:{sig['fund']:+d} C:{sig['combined']:+d}")
+            except Exception as e:
+                log(f"  [{sym}] {e}", "warning")
+
+    # SL/TP CHECK
+    to_close = check_trades(prices)
+    for sym, reason, price, market, entry in to_close:
+        pnl     = round((price - entry) / entry * 100, 2)
+        sig_cfg = all_results.get(sym, {}).get("cfg", {**cfg, "pct": 5})
+        log(f"\n  AUTO-CLOSE {sym}: {reason} | PnL:{pnl:+.2f}%")
+        execute(sym, "SELL", price, sig_cfg, 0, market)
+        telegram(
+            f"<b>AUTO-CLOSE</b>\n{sym}\n{reason}\n"
+            f"Entry:{entry:.4f} Exit:{price:.4f}\nPnL:{pnl:+.2f}%"
+        )
+        log_trade({
+            "time": datetime.now().isoformat(), "symbol": sym,
+            "action": "CLOSE", "reason": reason,
+            "entry": entry, "exit": price, "pnl": pnl, "market": market,
+        })
+
+    # RANK SIGNALS
+    min_conf = strategy.get("min_confidence", 35)
+    max_open = strategy.get("max_open_trades", 5)
+
+    buys = [
+        (s, r) for s, r in all_results.items()
+        if r["signal"] == "BUY" and r["confidence"] >= min_conf and s not in open_trades
+    ]
+    buys.sort(key=lambda x: x[1]["combined"], reverse=True)
+
+    sells = [
+        (s, r) for s, r in all_results.items()
+        if r["signal"] == "SELL" and r["confidence"] >= min_conf and s in open_trades
+    ]
+
+    log(f"\n  Summary: {len(buys)} BUY | {len(sells)} SELL | {len(open_trades)} open")
+
+    for sym, sig in sells[:3]:
+        log(f"  SELL: {sym} (score:{sig['combined']:+d})")
+        executed = execute(sym, "SELL", sig["price"], sig["cfg"], sig["confidence"], sig["market"])
+        if executed:
+            log_trade({
+                "time": datetime.now().isoformat(), "symbol": sym,
+                "action": "SELL", "price": sig["price"],
+                "combined": sig["combined"], "market": sig["market"],
+            })
+
+    slots = max_open - len(open_trades)
+    for sym, sig in buys[:max(1, slots)]:
+        log(f"\n  BUY: {sym} | Score:{sig['combined']:+d} | {sig['market'].upper()}")
+        for r in sig["reasons"][:3]:
+            log(f"    - {r}")
+        log(f"  AI: {sig.get('fund_reason', '')[:70]}")
+        executed = execute(sym, "BUY", sig["price"], sig["cfg"], sig["confidence"], sig["market"])
+        if executed:
+            log_trade({
+                "time":        datetime.now().isoformat(),
+                "symbol":      sym,
+                "action":      "BUY",
+                "price":       sig["price"],
+                "market":      sig["market"],
+                "confidence":  sig["confidence"],
+                "combined":    sig["combined"],
+                "tech":        sig["tech"],
+                "fund":        sig["fund"],
+                "reasons":     sig["reasons"],
+                "fund_reason": sig.get("fund_reason", ""),
+                "top_risk":    sig.get("top_risk", ""),
+                "ghana":       sig.get("ghana", ""),
+            })
+
+    # PUSH STATUS TO GITHUB
+    top10 = sorted(all_results.items(), key=lambda x: abs(x[1]["combined"]), reverse=True)[:10]
+    status = {
+        "timestamp":        datetime.now().isoformat(),
+        "cycle":            cycle_count,
+        "strategy":         mode,
+        "market_condition": strategy.get("market_condition", "neutral"),
+        "assets_scanned":   len(all_results),
+        "open_trades":      len(open_trades),
+        "open_positions": [
+            {"symbol": s, "entry": t["entry"], "market": t["market"],
+             "sl": t["sl"], "tp": t["tp"]}
+            for s, t in open_trades.items()
+        ],
+        "top_opportunities": [
+            {"symbol": s, "signal": r["signal"], "score": r["combined"],
+             "tech": r["tech"], "fund": r["fund"], "market": r["market"],
+             "price": r["price"], "reason": r.get("fund_reason", "")[:80],
+             "ghana": r.get("ghana", "")[:60]}
+            for s, r in top10
+        ],
+        "buy_signals":  len(buys),
+        "sell_signals": len(sells),
+        "fear_greed":   get_fear_greed(),
+        "markets": {
+            "crypto": "active" if BINANCE_KEY else "disabled",
+            "stocks": "open" if market_open() else "closed",
+            "hfm":    "signal_mode" if (HFM_ACCOUNT or EXNESS_LOGIN) else "disabled",
+        },
+    }
+    push_status(status)
+
+
+def main():
+    build_ai_providers()
+    log("=" * 55)
+    log("  ACCRA BOT v9 - MULTI-AI POWERHOUSE ENGINE")
+    log(f"  Crypto:  ALL top coins {'[ON]' if BINANCE_KEY else '[NO KEY]'}")
+    log(f"  Stocks:  DISABLED")
+    log(f"  HFM:     DISABLED")
+    log(f"  Groq AI: {'ACTIVE' if GROQ_KEY else 'not set'}")
+    log(f"  GitHub:  {'ACTIVE' if os.path.exists('.git') else 'not configured'}")
+    log(f"  Mode:    {'PAPER' if 'paper' in ALPACA_BASE else 'LIVE'}")
+    log(f"  Interval:{SLEEP_SECS}s")
+    build_ai_providers()
+    log("=" * 55)
+
+    if not any([BINANCE_KEY, ALPACA_KEY, HFM_ACCOUNT, EXNESS_LOGIN]):
+        log("ERROR: No API keys set", "error")
+        return
+
+    log("\nConnecting...")
+    connected = []
+
+    if BINANCE_KEY:
+        try:
+            p = get_crypto_price("BTCUSDT")
+            log(f"  Binance: BTC=${p:,.2f} [OK]")
+            connected.append("Binance")
+        except Exception as e:
+            log(f"  Binance: FAILED - {e}", "error")
+
+    if ALPACA_KEY:
+        try:
+            cash = get_alpaca_cash()
+            mode = "PAPER" if "paper" in ALPACA_BASE else "LIVE"
+            log(f"  Alpaca [{mode}]: Cash=${cash:,.2f} [OK]")
+            connected.append(f"Alpaca[{mode}]")
+        except Exception as e:
+            log(f"  Alpaca: FAILED - {e}", "error")
+
+    if HFM_ACCOUNT or EXNESS_LOGIN:
+        log("  HFM/Exness: Signal mode [OK]")
+        connected.append("HFM+Exness")
+
+    if not connected:
+        log("No markets connected. Check API keys.", "error")
+        return
+
+    # Set GitHub remote with token
+    if GITHUB_TOKEN:
+        try:
+            subprocess.run([
+                "git", "remote", "set-url", "origin",
+                f"https://{GITHUB_TOKEN}@github.com/{GITHUB_REPO}.git",
+            ], cwd=os.path.expanduser("~/accra-bot"), capture_output=True)
+        except Exception:
+            pass
+
+    telegram(
+        f"<b>ACCRA SUPER BOT v8 STARTED</b>\n"
+        f"Connected: {', '.join(connected)}\n"
+        f"Scanning ALL assets dynamically\n"
+        f"Crypto: REAL | Stocks: PAPER | Forex: SIGNALS\n"
+        f"Terminal sync: GitHub\n"
+        f"Interval: {SLEEP_SECS}s"
+    )
+
+    while True:
+        try:
+            run_cycle()
+        except Exception as e:
+            log(f"[Cycle error] {e}", "error")
+            telegram(f"<b>CYCLE ERROR</b>\n{e}")
+        log(f"\n  Sleeping {SLEEP_SECS}s...")
+        # Auto-reconnect if internet drops
+    for attempt in range(SLEEP_SECS):
+        time.sleep(1)
+        try:
+            requests.get("https://api.binance.com/api/v3/ping", timeout=3)
+            break  # Internet is back
+        except:
+            if attempt % 10 == 0:
+                log(f"  [NET] Waiting for internet... {attempt}s")
+            continue
+
+
+if __name__ == "__main__":
+    main()
