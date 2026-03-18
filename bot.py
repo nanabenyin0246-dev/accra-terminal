@@ -182,16 +182,26 @@ GIST_ID = "4f5f6918288ddaec0a1fc998af3e6f99"
 
 def push_status(data):
     try:
-        payload = {"files": {"bot_status.json": {"content": json.dumps(data, indent=2)}}}
-        r = requests.patch(
-            f"https://api.github.com/gists/{GIST_ID}",
-            headers={"Authorization": f"token {GITHUB_TOKEN}",
-                     "Accept": "application/vnd.github.v3+json"},
-            json=payload, timeout=10)
+        import base64
+        content_str = json.dumps(data, indent=2)
+        headers = {"Authorization": f"token {GITHUB_TOKEN}",
+                   "Accept": "application/vnd.github.v3+json"}
+        r = requests.get(
+            f"https://api.github.com/repos/{GITHUB_REPO}/contents/bot_status.json",
+            headers=headers, timeout=10)
+        payload = {
+            "message": "bot status update",
+            "content": base64.b64encode(content_str.encode()).decode()
+        }
         if r.ok:
-            log("  Status pushed to Gist")
+            payload["sha"] = r.json()["sha"]
+        r2 = requests.put(
+            f"https://api.github.com/repos/{GITHUB_REPO}/contents/bot_status.json",
+            headers=headers, json=payload, timeout=10)
+        if r2.ok:
+            log("  Status pushed to GitHub")
         else:
-            log(f"  [Gist push] {r.status_code}", "warning")
+            log(f"  [Status push] {r2.status_code}", "warning")
     except Exception as e:
         log(f"  [Push] {e}", "warning")
 
