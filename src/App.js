@@ -136,8 +136,6 @@ export default function App(){
   const [botConnected,setBotConnected]=useState(false);
   const [realBal,setRealBal]=useState(null);
   const [realBalLoading,setRealBalLoading]=useState(false);
-  const [realBal,setRealBal]=useState(null);
-  const [realBalLoading,setRealBalLoading]=useState(false);
   const [aiLoading,setAiLoading]=useState(false);
   const [aiRec,setAiRec]=useState('');
   const [pendingStrategy,setPendingStrategy]=useState(null);
