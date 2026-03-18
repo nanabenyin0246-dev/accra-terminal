@@ -1144,6 +1144,11 @@ export default function App(){
             <div>
               {!realBal&&(<button onClick={fetchRealBal} style={{width:'100%',padding:12,marginBottom:16,background:'#f0b90b18',border:'1px solid #f0b90b',borderRadius:8,color:'#f0b90b',fontWeight:700,fontSize:14,cursor:'pointer'}}>{realBalLoading?'Loading...':'Load Real Portfolio'}</button>)}
               {realBal&&(<div style={{marginBottom:16,padding:16,borderRadius:8,border:'1px solid #f0b90b44',background:'#f0b90b08'}}><div style={{display:'flex',justifyContent:'space-between',marginBottom:12}}><span style={{fontWeight:700,color:'#f0b90b'}}>REAL PORTFOLIO</span><span style={{fontSize:11,opacity:0.5}}>{realBal.updated}</span></div><div style={{display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:8}}>{[['USDT','$'+realBal.usdt,'#e0e0e0'],['SOL','$'+realBal.sol_value,'#00d4aa'],['Total','$'+realBal.total,'#f0b90b'],['PnL',realBal.pnl_pct+'%',parseFloat(realBal.pnl_pct)>=0?'#00d4aa':'#ff4444']].map(([l,v,c])=>(<div key={l} style={{textAlign:'center',padding:'8px 4px',background:'#ffffff08',borderRadius:6}}><div style={{fontSize:10,opacity:0.6,marginBottom:2}}>{l}</div><div style={{fontSize:14,fontWeight:700,color:c}}>{v}</div></div>))}</div></div>)}
+              {/* Market Status */}
+              <div style={{marginBottom:12,padding:10,borderRadius:6,background:'#00d4aa11',border:'1px solid #00d4aa44',display:'flex',justifyContent:'space-between',alignItems:'center'}}>
+                <span style={{fontSize:11,color:'#00d4aa',fontWeight:700}}>● MARKET FILTER ACTIVE</span>
+                <span style={{fontSize:10,opacity:0.5}}>Bot trades only in favourable conditions</span>
+              </div>
               {/* Bot Connection Status */}
               <div style={{display:'flex',gap:12,marginBottom:16,alignItems:'center'}}>
                 <div style={{...cardStyle,flex:1,padding:'12px 16px'}}>
