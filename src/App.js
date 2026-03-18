@@ -1164,7 +1164,73 @@ export default function App(){
               {realBal&&(<div style={{marginBottom:16,padding:16,borderRadius:8,border:'1px solid #f0b90b44',background:'#f0b90b08'}}><div style={{display:'flex',justifyContent:'space-between',marginBottom:12}}><span style={{fontWeight:700,color:'#f0b90b'}}>REAL PORTFOLIO</span><span style={{fontSize:11,opacity:0.5}}>{realBal.updated}</span></div><div style={{display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:8}}>{[['USDT','$'+realBal.usdt,'#e0e0e0'],['SOL','$'+realBal.sol_value,'#00d4aa'],['Total','$'+realBal.total,'#f0b90b'],['PnL',realBal.pnl_pct+'%',parseFloat(realBal.pnl_pct)>=0?'#00d4aa':'#ff4444']].map(([l,v,c])=>(<div key={l} style={{textAlign:'center',padding:'8px 4px',background:'#ffffff08',borderRadius:6}}><div style={{fontSize:10,opacity:0.6,marginBottom:2}}>{l}</div><div style={{fontSize:14,fontWeight:700,color:c}}>{v}</div></div>))}</div></div>)}
               {!realBal&&(<button onClick={fetchRealBal} style={{width:'100%',padding:12,marginBottom:16,background:'#f0b90b18',border:'1px solid #f0b90b',borderRadius:8,color:'#f0b90b',fontWeight:700,fontSize:14,cursor:'pointer'}}>{realBalLoading?'Loading...':'Load Real Portfolio'}</button>)}
               {realBal&&(<div style={{marginBottom:16,padding:16,borderRadius:8,border:'1px solid #f0b90b44',background:'#f0b90b08'}}><div style={{display:'flex',justifyContent:'space-between',marginBottom:12}}><span style={{fontWeight:700,color:'#f0b90b'}}>REAL PORTFOLIO</span><span style={{fontSize:11,opacity:0.5}}>{realBal.updated}</span></div><div style={{display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:8}}>{[['USDT','$'+realBal.usdt,'#e0e0e0'],['SOL','$'+realBal.sol_value,'#00d4aa'],['Total','$'+realBal.total,'#f0b90b'],['PnL',realBal.pnl_pct+'%',parseFloat(realBal.pnl_pct)>=0?'#00d4aa':'#ff4444']].map(([l,v,c])=>(<div key={l} style={{textAlign:'center',padding:'8px 4px',background:'#ffffff08',borderRadius:6}}><div style={{fontSize:10,opacity:0.6,marginBottom:2}}>{l}</div><div style={{fontSize:14,fontWeight:700,color:c}}>{v}</div></div>))}</div></div>)}
-              {/* Bot Connection Status */}
+              
+              {/* Market Condition Banner */}
+              <div style={{marginBottom:16,padding:12,borderRadius:8,
+                background: gistData?.market_ok===false ? '#ff444418' : '#00d4aa18',
+                border: `1px solid ${gistData?.market_ok===false ? '#ff4444' : '#00d4aa'}44`}}>
+                <div style={{display:'flex',justifyContent:'space-between',alignItems:'center'}}>
+                  <div style={{display:'flex',alignItems:'center',gap:8}}>
+                    <div style={{width:8,height:8,borderRadius:'50%',
+                      background:gistData?.market_ok===false?'#ff4444':'#00d4aa',
+                      boxShadow:`0 0 6px ${gistData?.market_ok===false?'#ff4444':'#00d4aa'}`}}/>
+                    <span style={{fontSize:12,fontWeight:700,color:gistData?.market_ok===false?'#ff4444':'#00d4aa'}}>
+                      {gistData?.market_ok===false ? 'MARKET FILTER ACTIVE - Waiting for conditions' : 'MARKET CONDITIONS FAVOURABLE'}
+                    </span>
+                  </div>
+                  <span style={{fontSize:11,opacity:0.6}}>{gistData?.market_reason||''}</span>
+                </div>
+                <div style={{marginTop:8,display:'flex',gap:16,fontSize:11,opacity:0.7}}>
+                  <span>BTC 1h: {gistData?.btc_1h||'--'}</span>
+                  <span>BTC 4h: {gistData?.btc_4h||'--'}</span>
+                  <span>F&G: {gistData?.fear_greed||'--'}</span>
+                  <span>Mode: {gistData?.mode||'--'}</span>
+                </div>
+              </div>
+
+              {/* Live Signal Feed */}
+              {gistData?.recent_signals?.length > 0 && (
+                <div style={{marginBottom:16,padding:12,borderRadius:8,background:C.bg2,border:`1px solid ${C.border}`}}>
+                  <div style={{fontSize:12,fontWeight:700,color:C.gold,marginBottom:8}}>⚡ LIVE SIGNAL FEED</div>
+                  {gistData.recent_signals.slice(0,5).map((s,i)=>(
+                    <div key={i} style={{display:'flex',justifyContent:'space-between',alignItems:'center',
+                      padding:'6px 0',borderBottom:i<4?`1px solid ${C.border}`:'none'}}>
+                      <div style={{display:'flex',alignItems:'center',gap:8}}>
+                        <span style={tierStyle(s.tier||'PRIORITY')}>{s.tier||'PRIORITY'}</span>
+                        <span style={{fontSize:12,fontWeight:700,color:s.signal==='BUY'?C.green:C.red}}>{s.signal}</span>
+                        <span style={{fontSize:12,color:C.text}}>{s.symbol}</span>
+                      </div>
+                      <div style={{textAlign:'right'}}>
+                        <div style={{fontSize:11,color:C.gold}}>Score: {s.score}</div>
+                        <div style={{fontSize:10,opacity:0.5}}>{s.reason||''}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {/* Performance Stats */}
+              {gistData?.stats && (
+                <div style={{marginBottom:16,padding:12,borderRadius:8,
+                  background:`linear-gradient(135deg,${C.bg2},${C.bg3})`,
+                  border:`1px solid ${C.border}`}}>
+                  <div style={{fontSize:12,fontWeight:700,color:C.gold,marginBottom:10}}>📊 PERFORMANCE STATS</div>
+                  <div style={{display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:8}}>
+                    {[
+                      ['Win Rate', (gistData.stats.win_rate||0)+'%', parseFloat(gistData.stats.win_rate||0)>=50?C.green:C.red],
+                      ['Total Trades', gistData.stats.total_trades||0, C.text],
+                      ['Profit', '$'+(gistData.stats.total_profit||'0.00'), parseFloat(gistData.stats.total_profit||0)>=0?C.green:C.red],
+                      ['Open', gistData.stats.open_trades||0, C.gold],
+                    ].map(([l,v,c])=>(
+                      <div key={l} style={{textAlign:'center',padding:'8px 4px',background:C.bg2,borderRadius:6}}>
+                        <div style={{fontSize:10,opacity:0.6,marginBottom:2}}>{l}</div>
+                        <div style={{fontSize:14,fontWeight:700,color:c}}>{v}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+{/* Bot Connection Status */}
               <div style={{display:'flex',gap:12,marginBottom:16,alignItems:'center'}}>
                 <div style={{...cardStyle,flex:1,padding:'12px 16px'}}>
                   <div style={{display:'flex',justifyContent:'space-between',alignItems:'center'}}>
