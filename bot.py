@@ -513,7 +513,7 @@ def trade_existing_assets(strategy, cfg):
     """
     try:
         usdt_bal = get_crypto_balance("USDT")
-        if usdt_bal > 5:
+        if usdt_bal > 4:
             return  # Have enough USDT, normal trading handles it
 
         log(f"  [ASSET TRADE] USDT low (${usdt_bal:.2f}) - scanning existing assets...")
@@ -543,7 +543,7 @@ def trade_existing_assets(strategy, cfg):
             try:
                 price = get_crypto_price(symbol)
                 value = free * price
-                if value >= 3:  # Only consider assets worth $3+
+                if value >= 2:  # Only consider assets worth $2+
                     tradeable.append({
                         "asset": asset,
                         "symbol": symbol,
