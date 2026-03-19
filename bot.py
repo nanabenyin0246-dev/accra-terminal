@@ -312,7 +312,7 @@ def place_crypto_order(symbol, side, quantity):
 
 
 def crypto_precision(symbol):
-    known = {"BTCUSDT": 5, "ETHUSDT": 4, "SOLUSDT": 2, "BNBUSDT": 3,
+    known = {"BTCUSDT": 5, "ETHUSDT": 4, "SOLUSDT": 2, "BNBUSDT": 3, "LINKUSDT": 1, "AVAXUSDT": 1, "LTCUSDT": 2,
              "XRPUSDT": 0, "ADAUSDT": 0, "DOGEUSDT": 0, "AVAXUSDT": 2}
     return known.get(symbol, 2)
 
@@ -1009,6 +1009,9 @@ def execute(symbol, signal, price, cfg, conf, market):
                     log(f"  SKIP {symbol}: ${amount:.2f} < $3")
                     return False
                 qty   = round(amount / price, prec)
+                # Check minimum notional ($10)
+                if qty * price < 10:
+                    qty = round(10.5 / price, prec)
                 order = place_crypto_order(symbol, "BUY", qty)
                 log(f"  BOUGHT {qty} {coin} @ ${price:,.4f} | ID:{order.get('orderId')}")
                 register_trade(symbol, price, cfg, "crypto")
