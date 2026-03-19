@@ -117,6 +117,12 @@ def call_multi_ai(prompt, system="Return valid JSON only."):
                 if r.ok:
                     text = r.json()["candidates"][0]["content"]["parts"][0]["text"].strip()
                     text = re.sub(r"```json|```","",text).strip()
+                    # Fix unterminated JSON strings
+                    try:
+                        import json as _j
+                        _j.loads(text)
+                    except:
+                        text = text[:text.rfind('}')+1] if '}' in text else None
                     _ai_usage[name] = _ai_usage.get(name,0)+1
                     log(f"  [AI:{name}] OK")
                     return text
@@ -324,7 +330,7 @@ def place_crypto_order(symbol, side, quantity):
 
 
 def crypto_precision(symbol):
-    known = {"BTCUSDT": 5, "ETHUSDT": 4, "SOLUSDT": 2, "BNBUSDT": 3, "LINKUSDT": 1, "AVAXUSDT": 1, "LTCUSDT": 2,
+    known = {"BTCUSDT": 5, "ETHUSDT": 4, "SOLUSDT": 2, "BNBUSDT": 3, "LINKUSDT": 1, "AVAXUSDT": 1, "LTCUSDT": 2, "BARDUSDT": 0, "UNIUSDT": 2, "FETUSDT": 1, "WLDUSDT": 1, "ROBOUSDT": 0,
              "XRPUSDT": 0, "ADAUSDT": 0, "DOGEUSDT": 0, "AVAXUSDT": 2}
     return known.get(symbol, 2)
 
@@ -1254,12 +1260,8 @@ def execute(symbol, signal, price, cfg, conf, market):
             prec = crypto_precision(symbol)
             if signal == "BUY":
                 bal    = get_crypto_balance("USDT")
-                # Kelly Criterion sizing (awesome-ai-in-finance)
-                # Estimate win rate from recent trade log
-                wins = sum(1 for t in trade_log[-20:] if t.get('pnl',0) > 0)
-                total = max(len(trade_log[-20:]), 1)
-                win_rate = wins / total if total > 0 else 0.4
-                amount = kelly_position_size(win_rate, 0.05, 0.025, bal)
+                # Position sizing - 40% of balance, max $15
+                amount = round(bal * 0.40, 2)
                 amount = min(amount, 15)  # Never more than $15
                 amount = min(amount, 12)  # Cap max trade at $12
                 if amount < 3:
@@ -1476,6 +1478,20 @@ def activate_failsafe(reason):
 def run_cycle():
     global cycle_count
     cycle_count += 1
+
+    # ASSET TRADING - runs every cycle when USDT is low
+    try:
+        _usdt = get_crypto_balance("USDT")
+        log(f"  [ASSET MODE] USDT check: ${_usdt:.2f}")
+        if _usdt < 4:
+            log(f"  [ASSET MODE] LOW USDT - activating asset trading!")
+            strategy_now = load_strategy()
+            trade_existing_assets(strategy_now, {})
+        else:
+            log(f"  [ASSET MODE] USDT OK - normal trading mode")
+    except Exception as _e:
+        import traceback
+        log(f"  [ASSET MODE] ERROR: {traceback.format_exc()[:200]}", "warning")
     global ai_strategy_cycle
     ts       = datetime.now().strftime("%H:%M:%S")
     strategy = load_strategy()
