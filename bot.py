@@ -907,6 +907,25 @@ def technical_score(closes):
         elif greens <= 1: score -= 12; reasons.append(f"Strong downtrend {5-greens}/5 red")
 
 
+    # ADX Trend Strength Filter (awesome-ai-in-finance)
+    adx = calc_adx(closes)
+    if adx > 30:
+        score += 12; reasons.append(f"Strong trend ADX={adx:.0f}")
+    elif adx < 18:
+        score -= 10; reasons.append(f"Weak trend ADX={adx:.0f} - avoid")
+
+    # Sharpe Ratio quality filter
+    sharpe = calc_sharpe_ratio(closes[-30:] if len(closes)>=30 else closes)
+    if sharpe > 1.0:
+        score += 10; reasons.append(f"Good Sharpe ratio {sharpe:.1f}")
+    elif sharpe < -1.0:
+        score -= 10; reasons.append(f"Poor Sharpe {sharpe:.1f}")
+
+    # Mean Reversion Signal (awesome-ai-in-finance)
+    mr_score, mr_reason = calc_mean_reversion_score(closes)
+    if mr_score != 0:
+        score += mr_score; reasons.append(f"MeanRev: {mr_reason}")
+
     # Cross-domain correlation boost (Crucix-inspired)
     # When 3+ independent indicators agree = confidence multiplier
     bullish_signals = sum([
@@ -930,6 +949,109 @@ def technical_score(closes):
         reasons.append(f"Cross-domain confluence: {bearish_signals}/4 bearish indicators agree")
 
     return max(-100, min(100, score)), reasons
+
+
+
+def calc_adx(closes, period=14):
+    """
+    Average Directional Index - measures trend strength
+    ADX > 25 = strong trend (good to trade)
+    ADX < 20 = weak/no trend (avoid)
+    From: awesome-ai-in-finance ADX strategy
+    """
+    if len(closes) < period * 2:
+        return 20.0  # neutral default
+    try:
+        highs  = [closes[i] * 1.005 for i in range(len(closes))]  # estimate
+        lows   = [closes[i] * 0.995 for i in range(len(closes))]
+        tr_list = []
+        dm_plus = []
+        dm_minus = []
+        for i in range(1, len(closes)):
+            tr = max(highs[i] - lows[i],
+                     abs(highs[i] - closes[i-1]),
+                     abs(lows[i] - closes[i-1]))
+            tr_list.append(tr)
+            up   = highs[i] - highs[i-1]
+            down = lows[i-1] - lows[i]
+            dm_plus.append(up if up > down and up > 0 else 0)
+            dm_minus.append(down if down > up and down > 0 else 0)
+        def smooth(lst, p):
+            s = sum(lst[:p])
+            result = [s]
+            for v in lst[p:]:
+                s = s - s/p + v
+                result.append(s)
+            return result
+        atr_s  = smooth(tr_list, period)
+        dmp_s  = smooth(dm_plus, period)
+        dmm_s  = smooth(dm_minus, period)
+        di_plus  = [100 * dmp_s[i] / atr_s[i] if atr_s[i] else 0 for i in range(len(atr_s))]
+        di_minus = [100 * dmm_s[i] / atr_s[i] if atr_s[i] else 0 for i in range(len(atr_s))]
+        dx = [100 * abs(di_plus[i] - di_minus[i]) / (di_plus[i] + di_minus[i])
+              if (di_plus[i] + di_minus[i]) > 0 else 0 for i in range(len(di_plus))]
+        if len(dx) < period:
+            return 20.0
+        adx = sum(dx[-period:]) / period
+        return round(adx, 2)
+    except:
+        return 20.0
+
+def calc_sharpe_ratio(closes, risk_free=0.02):
+    """
+    Sharpe Ratio - risk adjusted return score
+    Higher = better risk/reward
+    From: awesome-ai-in-finance portfolio optimization
+    """
+    if len(closes) < 10:
+        return 0.0
+    returns = [(closes[i] - closes[i-1]) / closes[i-1] for i in range(1, len(closes))]
+    if not returns:
+        return 0.0
+    avg_ret = sum(returns) / len(returns)
+    variance = sum((r - avg_ret)**2 for r in returns) / len(returns)
+    std_dev = variance ** 0.5
+    if std_dev == 0:
+        return 0.0
+    daily_rf = risk_free / 365
+    sharpe = (avg_ret - daily_rf) / std_dev
+    return round(sharpe * (252**0.5), 2)  # annualized
+
+def calc_mean_reversion_score(closes):
+    """
+    Mean reversion signal - price far from mean = likely to return
+    From: awesome-ai-in-finance mean reversion strategies
+    Returns: positive = oversold (buy), negative = overbought (sell)
+    """
+    if len(closes) < 20:
+        return 0, "Insufficient data"
+    mean_20 = sum(closes[-20:]) / 20
+    current = closes[-1]
+    deviation = (current - mean_20) / mean_20 * 100
+    if deviation < -8:
+        return 20, f"Strong mean reversion opportunity -{abs(deviation):.1f}% below avg"
+    elif deviation < -4:
+        return 10, f"Mean reversion signal -{abs(deviation):.1f}% below avg"
+    elif deviation > 8:
+        return -20, f"Overbought {deviation:.1f}% above avg - mean reversion risk"
+    elif deviation > 4:
+        return -10, f"Extended {deviation:.1f}% above avg"
+    return 0, "Price near mean"
+
+def kelly_position_size(win_rate, avg_win, avg_loss, balance):
+    """
+    Kelly Criterion - optimal position sizing
+    From: awesome-ai-in-finance Kelly Criterion sizing
+    Returns optimal trade size in USDT
+    """
+    if avg_loss == 0:
+        return balance * 0.1
+    b = avg_win / avg_loss  # win/loss ratio
+    p = win_rate            # win probability
+    q = 1 - p               # loss probability
+    kelly = (b * p - q) / b
+    kelly = max(0.05, min(kelly, 0.35))  # cap between 5% and 35%
+    return round(balance * kelly, 2)
 
 
 def get_fear_greed():
@@ -1097,7 +1219,13 @@ def execute(symbol, signal, price, cfg, conf, market):
             prec = crypto_precision(symbol)
             if signal == "BUY":
                 bal    = get_crypto_balance("USDT")
-                amount = round(bal * 0.35, 2)  # Use 35% per trade, keeping 65% reserve
+                # Kelly Criterion sizing (awesome-ai-in-finance)
+                # Estimate win rate from recent trade log
+                wins = sum(1 for t in trade_log[-20:] if t.get('pnl',0) > 0)
+                total = max(len(trade_log[-20:]), 1)
+                win_rate = wins / total if total > 0 else 0.4
+                amount = kelly_position_size(win_rate, 0.05, 0.025, bal)
+                amount = min(amount, 15)  # Never more than $15
                 amount = min(amount, 12)  # Cap max trade at $12
                 if amount < 3:
                     log(f"  SKIP {symbol}: ${amount:.2f} < $3")
