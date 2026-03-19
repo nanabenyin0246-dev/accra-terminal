@@ -1,20 +1,39 @@
 {
-  "timestamp": "2026-03-19T15:02:20.732821",
-  "cycle": 4,
-  "strategy": "balanced",
-  "market_condition": "neutral",
-  "assets_scanned": 29,
-  "open_trades": 0,
-  "open_positions": [],
+  "timestamp": "2026-03-19T15:03:36.654501",
+  "cycle": 5,
+  "strategy": "aggressive",
+  "market_condition": "bear",
+  "assets_scanned": 50,
+  "open_trades": 1,
+  "open_positions": [
+    {
+      "symbol": "COPPER",
+      "entry": 4.2,
+      "market": "hfm",
+      "sl": 4.053,
+      "tp": 4.83
+    }
+  ],
   "top_opportunities": [
+    {
+      "symbol": "COPPER",
+      "signal": "BUY",
+      "score": 62,
+      "tech": 84,
+      "fund": 35,
+      "market": "hfm",
+      "price": 4.2,
+      "reason": "F&G:23",
+      "ghana": "F&G:23"
+    },
     {
       "symbol": "UNIUSDT",
       "signal": "BUY",
-      "score": 57,
-      "tech": 75,
+      "score": 50,
+      "tech": 62,
       "fund": 35,
       "market": "crypto",
-      "price": 3.538,
+      "price": 3.546,
       "reason": "F&G:23",
       "ghana": "F&G:23"
     },
@@ -25,18 +44,18 @@
       "tech": 60,
       "fund": 35,
       "market": "crypto",
-      "price": 0.04478,
+      "price": 0.04491,
       "reason": "F&G:23",
       "ghana": "F&G:23"
     },
     {
-      "symbol": "TAOUSDT",
+      "symbol": "AVAXUSDT",
       "signal": "BUY",
-      "score": 46,
-      "tech": 55,
+      "score": 44,
+      "tech": 52,
       "fund": 35,
       "market": "crypto",
-      "price": 246.6,
+      "price": 9.45,
       "reason": "F&G:23",
       "ghana": "F&G:23"
     },
@@ -47,7 +66,7 @@
       "tech": 50,
       "fund": 35,
       "market": "crypto",
-      "price": 0.6074,
+      "price": 0.6068,
       "reason": "F&G:23",
       "ghana": "F&G:23"
     },
@@ -58,7 +77,7 @@
       "tech": 45,
       "fund": 35,
       "market": "crypto",
-      "price": 2123.95,
+      "price": 2124.35,
       "reason": "F&G:23",
       "ghana": "F&G:23"
     },
@@ -69,13 +88,13 @@
       "tech": 45,
       "fund": 35,
       "market": "crypto",
-      "price": 0.3324,
+      "price": 0.333,
       "reason": "F&G:23",
       "ghana": "F&G:23"
     },
     {
       "symbol": "KITEUSDT",
-      "signal": "BUY",
+      "signal": "HOLD",
       "score": 39,
       "tech": 43,
       "fund": 35,
@@ -85,40 +104,29 @@
       "ghana": "F&G:23"
     },
     {
-      "symbol": "LINKUSDT",
-      "signal": "BUY",
+      "symbol": "TAOUSDT",
+      "signal": "HOLD",
       "score": 38,
       "tech": 40,
       "fund": 35,
       "market": "crypto",
-      "price": 8.94,
+      "price": 247.5,
       "reason": "F&G:23",
       "ghana": "F&G:23"
     },
     {
-      "symbol": "FETUSDT",
-      "signal": "BUY",
-      "score": 36,
-      "tech": 36,
+      "symbol": "USDCHF",
+      "signal": "HOLD",
+      "score": 38,
+      "tech": 40,
       "fund": 35,
-      "market": "crypto",
-      "price": 0.2037,
-      "reason": "F&G:23",
-      "ghana": "F&G:23"
-    },
-    {
-      "symbol": "AVAXUSDT",
-      "signal": "BUY",
-      "score": 35,
-      "tech": 35,
-      "fund": 35,
-      "market": "crypto",
-      "price": 9.43,
+      "market": "hfm",
+      "price": 0.79389,
       "reason": "F&G:23",
       "ghana": "F&G:23"
     }
   ],
-  "buy_signals": 16,
+  "buy_signals": 7,
   "sell_signals": 0,
   "fear_greed": {
     "value": 23,
