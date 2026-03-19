@@ -503,6 +503,100 @@ confidence: 0-100"""
 
 
 
+
+def trade_existing_assets(strategy, cfg):
+    """
+    When USDT is empty, trade existing assets for profit.
+    - If asset score is SELL → sell it back to USDT
+    - If asset was sold and price dips → rebuy it cheaper
+    This keeps the bot active even with zero USDT.
+    """
+    try:
+        usdt_bal = get_crypto_balance("USDT")
+        if usdt_bal > 5:
+            return  # Have enough USDT, normal trading handles it
+
+        log(f"  [ASSET TRADE] USDT low (${usdt_bal:.2f}) - scanning existing assets...")
+
+        # Get all non-USDT balances
+        from urllib.parse import urlencode
+        import hmac, hashlib
+        ts = binance_time()
+        from urllib.parse import urlencode
+        q = urlencode({"timestamp": ts})
+        sig = hmac.new(BINANCE_SECRET.encode(), q.encode(), hashlib.sha256).hexdigest()
+        r = requests.get(
+            f"https://api.binance.com/api/v3/account?{q}&signature={sig}",
+            headers={"X-MBX-APIKEY": BINANCE_KEY}, timeout=10)
+
+        if not r.ok:
+            return
+
+        tradeable = []
+        skip = {"USDT","BNB","BUSD","TUSD","USDC","FDUSD"}
+        for b in r.json()["balances"]:
+            asset = b["asset"]
+            free = float(b["free"])
+            if asset in skip or free <= 0:
+                continue
+            symbol = f"{asset}USDT"
+            try:
+                price = get_crypto_price(symbol)
+                value = free * price
+                if value >= 3:  # Only consider assets worth $3+
+                    tradeable.append({
+                        "asset": asset,
+                        "symbol": symbol,
+                        "qty": free,
+                        "price": price,
+                        "value": value
+                    })
+            except:
+                continue
+
+        if not tradeable:
+            log("  [ASSET TRADE] No tradeable assets found")
+            return
+
+        log(f"  [ASSET TRADE] Found {len(tradeable)} tradeable assets")
+
+        for t in tradeable:
+            sym = t["symbol"]
+            try:
+                closes = get_crypto_closes(sym, 50)
+                if len(closes) < 20:
+                    continue
+
+                score, reasons = technical_score(closes)
+                fg = get_fear_greed()
+                fg_score = 0
+                if fg["value"] < 30: fg_score = 15
+                elif fg["value"] > 70: fg_score = -15
+                final_score = score + fg_score
+
+                log(f"  [ASSET TRADE] {sym} Score:{final_score} Value:${t['value']:.2f}")
+
+                # SELL signal on existing asset → convert to USDT
+                if final_score < -20 and sym not in open_trades:
+                    prec = crypto_precision(sym)
+                    qty = int(t["qty"] * 0.95) if prec == 0 else round(t["qty"] * 0.95, prec)
+                    if qty * t["price"] >= 3:
+                        try:
+                            order = place_crypto_order(sym, "SELL", qty)
+                            proceeds = float(order.get("cummulativeQuoteQty", 0))
+                            log(f"  [ASSET TRADE] SOLD {qty} {t['asset']} → ${proceeds:.2f} USDT")
+                            telegram(f"<b>ASSET TRADE SELL</b>\n{sym} Score:{final_score}\nSold {qty} → ${proceeds:.2f} USDT\nBot reinvesting profits!")
+                        except Exception as e:
+                            log(f"  [ASSET TRADE] Sell error {sym}: {e}", "warning")
+
+            except Exception as e:
+                log(f"  [ASSET TRADE] Error {sym}: {e}", "warning")
+                continue
+
+    except Exception as e:
+        log(f"  [ASSET TRADE] Main error: {e}", "warning")
+
+
 def check_market_conditions():
     """
     Check if market conditions are favourable for trading.
