@@ -16,6 +16,9 @@ ALPACA_BASE    = os.getenv("ALPACA_BASE", "https://paper-api.alpaca.markets")
 HFM_ACCOUNT    = os.getenv("HFM_ACCOUNT", "")
 EXNESS_LOGIN   = os.getenv("EXNESS_LOGIN", "")
 GROQ_KEY       = os.getenv("GROQ_KEY", "")
+MISTRAL_KEY    = os.getenv("MISTRAL_KEY", "")
+CEREBRAS_KEY   = os.getenv("CEREBRAS_KEY", "")
+DEEPSEEK_KEY   = os.getenv("DEEPSEEK_KEY", "")
 GEMINI_KEY     = os.getenv("GEMINI_KEY", "")
 OPENROUTER_KEY = os.getenv("OPENROUTER_KEY", "")
 TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN", "")
@@ -86,6 +89,15 @@ def build_ai_providers():
     if OPENROUTER_KEY:
         AI_PROVIDERS.append({"name":"openrouter","url":"https://openrouter.ai/api/v1/chat/completions",
             "model":"meta-llama/llama-3.3-70b-instruct:free","headers":{"Authorization":f"Bearer {OPENROUTER_KEY}","Content-Type":"application/json"},"max_tokens":300})
+    if MISTRAL_KEY:
+        AI_PROVIDERS.append({"name":"mistral","url":"https://api.mistral.ai/v1/chat/completions",
+            "model":"mistral-small-latest","headers":{"Authorization":f"Bearer {MISTRAL_KEY}","Content-Type":"application/json"},"max_tokens":300})
+    if CEREBRAS_KEY:
+        AI_PROVIDERS.append({"name":"cerebras","url":"https://api.cerebras.ai/v1/chat/completions",
+            "model":"llama-4-scout-17b-16e-instruct","headers":{"Authorization":f"Bearer {CEREBRAS_KEY}","Content-Type":"application/json"},"max_tokens":300})
+    if DEEPSEEK_KEY:
+        AI_PROVIDERS.append({"name":"deepseek","url":"https://api.deepseek.com/chat/completions",
+            "model":"deepseek-chat","headers":{"Authorization":f"Bearer {DEEPSEEK_KEY}","Content-Type":"application/json"},"max_tokens":300})
     log(f"  AI Providers: {[p['name'] for p in AI_PROVIDERS]}")
 
 def call_multi_ai(prompt, system="Return valid JSON only."):
@@ -576,16 +588,39 @@ def trade_existing_assets(strategy, cfg):
 
                 log(f"  [ASSET TRADE] {sym} Score:{final_score} Value:${t['value']:.2f}")
 
-                # SELL signal on existing asset → convert to USDT
-                if final_score < -20 and sym not in open_trades:
+                # Smart asset cycling - sell weakest to buy strongest
+                # Sell if: score < 0 OR asset is in profit > 3%
+                in_trade = sym in open_trades
+                entry_price = open_trades.get(sym, {}).get("entry", t["price"])
+                profit_pct = (t["price"] - entry_price) / entry_price * 100 if entry_price else 0
+
+                should_sell = False
+                sell_reason = ""
+
+                if final_score < -10 and not in_trade:
+                    should_sell = True
+                    sell_reason = f"Bearish score {final_score}"
+                elif profit_pct > 3 and not in_trade:
+                    should_sell = True
+                    sell_reason = f"Taking profit +{profit_pct:.1f}%"
+                elif profit_pct < -5 and not in_trade:
+                    should_sell = True
+                    sell_reason = f"Stop loss -{abs(profit_pct):.1f}%"
+
+                if should_sell:
                     prec = crypto_precision(sym)
                     qty = int(t["qty"] * 0.95) if prec == 0 else round(t["qty"] * 0.95, prec)
-                    if qty * t["price"] >= 3:
+                    if qty * t["price"] >= 2:
                         try:
                             order = place_crypto_order(sym, "SELL", qty)
                             proceeds = float(order.get("cummulativeQuoteQty", 0))
-                            log(f"  [ASSET TRADE] SOLD {qty} {t['asset']} → ${proceeds:.2f} USDT")
-                            telegram(f"<b>ASSET TRADE SELL</b>\n{sym} Score:{final_score}\nSold {qty} → ${proceeds:.2f} USDT\nBot reinvesting profits!")
+                            log(f"  [ASSET TRADE] SOLD {qty} {t['asset']} → ${proceeds:.2f} USDT | {sell_reason}")
+                            telegram(
+                                f"<b>ASSET TRADE</b>\n"
+                                f"SOLD {t['asset']} → ${proceeds:.2f} USDT\n"
+                                f"Reason: {sell_reason}\n"
+                                f"Bot will reinvest in stronger coin!"
+                            )
                         except Exception as e:
                             log(f"  [ASSET TRADE] Sell error {sym}: {e}", "warning")
 
