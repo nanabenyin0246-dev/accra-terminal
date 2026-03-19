@@ -1479,6 +1479,16 @@ def run_cycle():
     global ai_strategy_cycle
     ts       = datetime.now().strftime("%H:%M:%S")
     strategy = load_strategy()
+
+    # ===== ASSET TRADING WHEN USDT LOW =====
+    try:
+        usdt_now = get_crypto_balance("USDT")
+        if usdt_now < 4:
+            log(f"  [ASSET TRADE] USDT=${usdt_now:.2f} - activating asset trading mode...")
+            trade_existing_assets(strategy, {})
+    except Exception as e:
+        log(f"  [ASSET TRADE] Error: {e}", "warning")
+
     
     # Run AI autonomous strategy every N cycles
     ai_strategy_cycle += 1
