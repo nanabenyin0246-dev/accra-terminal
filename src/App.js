@@ -252,7 +252,7 @@ export default function App(){
       },null,2)}}};
       await fetch('https://api.github.com/gists/4f5f6918288ddaec0a1fc998af3e6f99',{
         method:'PATCH',
-        headers:{'Authorization':'Bearer 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','Content-Type':'application/json'},
+        headers:{'Authorization':'Bearer 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','Content-Type':'application/json'},
         body:JSON.stringify(payload)});
       setBotStrategy(prev=>({...prev,...strategy}));
       setPendingStrategy(null);
@@ -1254,7 +1254,7 @@ export default function App(){
                       {[['crypto','Crypto'],['stocks','Stocks'],['hfm','HFM/Forex']].map(([k,label])=>(
                         <div key={k} style={{display:'flex',justifyContent:'space-between',padding:'4px 0'}}>
                           <span style={{fontSize:12,color:C.text2}}>{label}</span>
-                          <div onClick={async()=>{const newVal=!botStrategy[k+'_enabled'];setBotStrategy(prev=>({...prev,[k+'_enabled']:newVal}));try{const s={...botStrategy,[k+'_enabled']:newVal,updated_by:'terminal',last_updated:new Date().toISOString()};await fetch('https://api.github.com/gists/4f5f6918288ddaec0a1fc998af3e6f99',{method:'PATCH',headers:{'Authorization':'Bearer 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','Content-Type':'application/json'},body:JSON.stringify({files:{'bot_strategy.json':{content:JSON.stringify(s,null,2)}}})});}catch(e){console.error(e);}}}
+                          <div onClick={async()=>{const newVal=!botStrategy[k+'_enabled'];setBotStrategy(prev=>({...prev,[k+'_enabled']:newVal}));try{const s={...botStrategy,[k+'_enabled']:newVal,updated_by:'terminal',last_updated:new Date().toISOString()};await fetch('https://api.github.com/gists/4f5f6918288ddaec0a1fc998af3e6f99',{method:'PATCH',headers:{'Authorization':'Bearer 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','Content-Type':'application/json'},body:JSON.stringify({files:{'bot_strategy.json':{content:JSON.stringify(s,null,2)}}})});}catch(e){console.error(e);}}}
                             style={{width:36,height:20,borderRadius:10,cursor:'pointer',position:'relative',
                               background:botStrategy[k+'_enabled']?C.green:C.border}}>
                             <div style={{position:'absolute',top:2,left:botStrategy[k+'_enabled']?18:2,
@@ -1377,6 +1377,75 @@ export default function App(){
     </div>
   );
 }
+
+
+  useEffect(()=>{
+    const G='4f5f6918288ddaec0a1fc998af3e6f99';
+    const TK='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';
+    const push=async()=>{
+      try{
+        const b=crypto?.bitcoin?.usd_24h_change||0;
+        const f=fearGreed?.value||50;
+        const g=Math.min(100,
+          RISK_EVENTS.filter(e=>!dismissedRisks.has(e.id)&&e.severity==='HIGH').length*15+
+          RISK_EVENTS.filter(e=>!dismissedRisks.has(e.id)&&e.severity==='CRITICAL').length*25+
+          (forex?.GHS>16?10:forex?.GHS>15?5:0)+(f<20?5:f>80?8:0));
+        const payload={
+          timestamp:new Date().toISOString(),
+          source:'accra_terminal_v16',
+          global_risk_score:g,
+          risk_level:g>70?'CRITICAL':g>45?'HIGH':g>25?'MEDIUM':'LOW',
+          crypto:{
+            btc_price:crypto?.bitcoin?.usd||0,
+            btc_24h_change:b,
+            btc_trend:b>4?'STRONG_UP':b>1.5?'UP':b<-4?'STRONG_DOWN':b<-1.5?'DOWN':'NEUTRAL',
+            eth_price:crypto?.ethereum?.usd||0,
+            sol_price:crypto?.solana?.usd||0,
+            fear_greed:f,
+            fear_greed_label:fearGreed?.label||'Neutral',
+          },
+          fx_stress:{
+            GHS:{rate:forex?.GHS,trend:forex?.GHS>16?'CRISIS':forex?.GHS>15.5?'WEAK':'STABLE'},
+            NGN:{rate:forex?.NGN,trend:forex?.NGN>1700?'CRISIS':forex?.NGN>1600?'WEAK':'STABLE'},
+            ZAR:{rate:forex?.ZAR,trend:forex?.ZAR>20?'CRISIS':forex?.ZAR>19?'WEAK':'STABLE'},
+          },
+          active_risks:RISK_EVENTS.filter(e=>!dismissedRisks.has(e.id)).map(e=>({
+            id:e.id,title:e.title,severity:e.severity,region:e.region||'',
+            score:e.severity==='CRITICAL'?25:e.severity==='HIGH'?15:8,
+            affects_crypto:['war','conflict','sanction','fed','inflation','fomc'].some(k=>e.title.toLowerCase().includes(k)),
+            affects_gold:['gold','inflation','war','conflict','fed'].some(k=>e.title.toLowerCase().includes(k)),
+            affects_oil:['oil','opec','iran','gulf','crude'].some(k=>e.title.toLowerCase().includes(k)),
+            affects_african_stocks:['ecg','cedi','naira','imf','ghana','nigeria','kenya'].some(k=>e.title.toLowerCase().includes(k)),
+          })),
+          political:typeof POLITICAL_RISK!=='undefined'?Object.entries(POLITICAL_RISK).map(([code,pol])=>({
+            country_code:code,exchange:pol.exchangeImpact,approval:pol.approvalPct,
+            risk_level:pol.riskLevel,
+            instability_score:Math.min(100,(100-pol.approvalPct)+(pol.riskLevel==='HIGH'?30:pol.riskLevel==='MEDIUM'?15:0)),
+          })):[],
+          recommendations:[
+            ...(g>65?[{action:'REDUCE_EXPOSURE',priority:'HIGH'}]:[]),
+            ...(f<=20?[{action:'ACCUMULATE_BTC',priority:'HIGH'}]:[]),
+            ...(f>=85?[{action:'TAKE_PROFITS',priority:'HIGH'}]:[]),
+            ...(forex?.GHS>16?[{action:'FAVOR_HARD_ASSETS',priority:'HIGH'}]:[]),
+            ...(b>4&&f<70?[{action:'INCREASE_CRYPTO_WEIGHT',priority:'MEDIUM'}]:[]),
+          ],
+          quick_signals:{
+            mode_suggestion:g>65?'conservative':g>35?'balanced':'aggressive',
+            btc_favorable:f<45&&b>-6,
+          },
+        };
+        await fetch('https://api.github.com/gists/'+G,{
+          method:'PATCH',
+          headers:{'Authorization':'Bearer '+TK,'Content-Type':'application/json'},
+          body:JSON.stringify({files:{'terminal_intelligence.json':{content:JSON.stringify(payload)}}}),
+        });
+        console.log('[INTEL] Pushed to bot',new Date().toLocaleTimeString());
+      }catch(e){console.warn('[INTEL]',e.message);}
+    };
+    push();
+    const t=setInterval(push,300000);
+    return()=>clearInterval(t);
+  },[fearGreed,crypto,forex,dismissedRisks]);
 
 function TradingChart({data,color='#f5a623'}){
   const ref=useRef(null);
