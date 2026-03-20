@@ -330,7 +330,7 @@ def place_crypto_order(symbol, side, quantity):
 
 
 def crypto_precision(symbol):
-    known = {"BTCUSDT": 5, "ETHUSDT": 4, "SOLUSDT": 2, "BNBUSDT": 3, "LINKUSDT": 1, "AVAXUSDT": 1, "LTCUSDT": 2, "BARDUSDT": 0, "UNIUSDT": 2, "FETUSDT": 1, "WLDUSDT": 1, "ROBOUSDT": 0,
+    known = {"BTCUSDT": 5, "ETHUSDT": 4, "SOLUSDT": 2, "BNBUSDT": 3, "LINKUSDT": 1, "AVAXUSDT": 1, "LTCUSDT": 2, "BARDUSDT": 0, "UNIUSDT": 2, "FETUSDT": 1, "WLDUSDT": 1, "ROBOUSDT": 0, "NIGHTUSDT": 0, "ADAUSDT": 0, "DOGEUSDT": 0, "PEPEUSDT": 0, "XRPUSDT": 0, "NEARUSDT": 0,
              "XRPUSDT": 0, "ADAUSDT": 0, "DOGEUSDT": 0, "AVAXUSDT": 2}
     return known.get(symbol, 2)
 
@@ -948,6 +948,26 @@ def technical_score(closes):
         elif greens <= 1: score -= 12; reasons.append(f"Strong downtrend {5-greens}/5 red")
 
 
+    # VWAP Signal (from polyrec/txbabaxyz)
+    vwap, vwap_dev = calc_vwap(closes, 20)
+    if vwap_dev < -3:
+        score += 15; reasons.append(f"Price {abs(vwap_dev):.1f}% below VWAP - undervalued")
+    elif vwap_dev < -1:
+        score += 7; reasons.append(f"Price below VWAP -{abs(vwap_dev):.1f}%")
+    elif vwap_dev > 3:
+        score -= 15; reasons.append(f"Price {vwap_dev:.1f}% above VWAP - overvalued")
+    elif vwap_dev > 1:
+        score -= 7; reasons.append(f"Price above VWAP +{vwap_dev:.1f}%")
+
+    # Fade Impulse Signal (from polyrec fade_impulse strategy)
+    if len(closes) >= 5:
+        impulse = (closes[-1] - closes[-3]) / closes[-3] * 100
+        prev_impulse = (closes[-3] - closes[-5]) / closes[-5] * 100
+        if impulse > 5 and prev_impulse < 1:
+            score -= 10; reasons.append(f"Impulse spike {impulse:.1f}% - fade signal")
+        elif impulse < -5 and prev_impulse > -1:
+            score += 10; reasons.append(f"Impulse drop {impulse:.1f}% - reversal likely")
+
     # ADX Trend Strength Filter (awesome-ai-in-finance)
     adx = calc_adx(closes)
     if adx > 30:
@@ -1093,6 +1113,64 @@ def kelly_position_size(win_rate, avg_win, avg_loss, balance):
     kelly = (b * p - q) / b
     kelly = max(0.05, min(kelly, 0.35))  # cap between 5% and 35%
     return round(balance * kelly, 2)
+
+
+
+def calc_vwap(closes, period=20):
+    """
+    Volume Weighted Average Price (from polyrec/txbabaxyz)
+    Price below VWAP = undervalued = BUY signal
+    Price above VWAP = overvalued = SELL signal
+    Uses estimated volume from price momentum as proxy
+    """
+    if len(closes) < period:
+        return closes[-1], 0
+    try:
+        prices = closes[-period:]
+        # Estimate volume proxy from price changes
+        volumes = [abs(prices[i] - prices[i-1]) / prices[i-1] * 1000000
+                   for i in range(1, len(prices))]
+        volumes.insert(0, volumes[0] if volumes else 1)
+        # VWAP = sum(price * volume) / sum(volume)
+        total_vol = sum(volumes)
+        if total_vol == 0:
+            return closes[-1], 0
+        vwap = sum(p * v for p, v in zip(prices, volumes)) / total_vol
+        deviation = (closes[-1] - vwap) / vwap * 100
+        return round(vwap, 6), round(deviation, 2)
+    except:
+        return closes[-1], 0
+
+def get_crypto_closes_with_volume(symbol, limit=50):
+    """Get OHLCV data for better VWAP calculation (from polyrec)"""
+    try:
+        r = requests.get("https://api.binance.com/api/v3/klines",
+            params={"symbol": symbol, "interval": "1h", "limit": limit}, timeout=10)
+        r.raise_for_status()
+        klines = r.json()
+        closes  = [float(k[4]) for k in klines]
+        volumes = [float(k[5]) for k in klines]
+        highs   = [float(k[2]) for k in klines]
+        lows    = [float(k[3]) for k in klines]
+        return closes, volumes, highs, lows
+    except Exception:
+        return [], [], [], []
+
+def calc_vwap_real(closes, volumes, period=20):
+    """Real VWAP using actual volume data"""
+    if len(closes) < period or len(volumes) < period:
+        return closes[-1] if closes else 0, 0
+    try:
+        p = closes[-period:]
+        v = volumes[-period:]
+        total_v = sum(v)
+        if total_v == 0:
+            return p[-1], 0
+        vwap = sum(px * vx for px, vx in zip(p, v)) / total_v
+        deviation = (p[-1] - vwap) / vwap * 100
+        return round(vwap, 6), round(deviation, 2)
+    except:
+        return closes[-1], 0
 
 
 def get_fear_greed():
@@ -1268,9 +1346,12 @@ def execute(symbol, signal, price, cfg, conf, market):
                     log(f"  SKIP {symbol}: ${amount:.2f} < $3")
                     return False
                 qty   = round(amount / price, prec)
-                # Check minimum notional ($10)
-                if qty * price < 10:
-                    qty = round(10.5 / price, prec)
+                # Ensure minimum $5 notional value
+                if qty * price < 5:
+                    qty = round(5.5 / price, prec)
+                # Round to correct precision
+                if prec == 0:
+                    qty = int(qty)
                 order = place_crypto_order(symbol, "BUY", qty)
                 log(f"  BOUGHT {qty} {coin} @ ${price:,.4f} | ID:{order.get('orderId')}")
                 register_trade(symbol, price, cfg, "crypto")
@@ -1495,6 +1576,9 @@ def run_cycle():
     global ai_strategy_cycle
     ts       = datetime.now().strftime("%H:%M:%S")
     strategy = load_strategy()
+    try:
+        log_intel_summary()
+    except:pass
 
     # ===== ASSET TRADING WHEN USDT LOW =====
     try:
@@ -1544,6 +1628,11 @@ def run_cycle():
                 sig["price"]  = price
                 sig["cfg"]    = {**cfg, "pct": 40}
                 sig["market"] = "crypto"
+                try:
+                    _ms,_mc2,_mr=apply_multidim_intelligence(sym,sig["signal"],sig.get("combined",0),sig.get("confidence",0),market)
+                    sig["combined"]=_ms;sig["confidence"]=_mc2
+                    if _mr:sig["reasons"]=sig.get("reasons",[])+_mr
+                except:pass
                 all_results[sym] = sig
                 prices[sym]      = price
                 if sig["signal"] != "HOLD":
@@ -1569,6 +1658,11 @@ def run_cycle():
                 sig["price"]  = price
                 sig["cfg"]    = {**cfg, "pct": max(2, 35 // len(stocks))}
                 sig["market"] = "stock"
+                try:
+                    _ms,_mc2,_mr=apply_multidim_intelligence(sym,sig["signal"],sig.get("combined",0),sig.get("confidence",0),market)
+                    sig["combined"]=_ms;sig["confidence"]=_mc2
+                    if _mr:sig["reasons"]=sig.get("reasons",[])+_mr
+                except:pass
                 all_results[sym] = sig
                 prices[sym]      = price
                 if sig["signal"] != "HOLD":
@@ -1597,6 +1691,11 @@ def run_cycle():
                 sig["price"]  = price
                 sig["cfg"]    = {**cfg, "pct": max(2, 25 // len(instruments))}
                 sig["market"] = "hfm"
+                try:
+                    _ms,_mc2,_mr=apply_multidim_intelligence(sym,sig["signal"],sig.get("combined",0),sig.get("confidence",0),market)
+                    sig["combined"]=_ms;sig["confidence"]=_mc2
+                    if _mr:sig["reasons"]=sig.get("reasons",[])+_mr
+                except:pass
                 all_results[sym] = sig
                 prices[sym]      = price
                 if sig["signal"] != "HOLD":
@@ -1705,6 +1804,227 @@ def run_cycle():
         },
     }
     push_status(status)
+
+    log_intel_summary()
+    show_intel_signals(all_results)
+    try:
+        _pp={s:r["price"] for s,r in all_results.items() if r.get("price")}
+        if _pp: run_poly_cycle(all_results,_pp)
+    except Exception as _pe: print(f"  [POLY] {str(_pe)[:40]}")
+
+
+def run_poly_cycle(all_results, current_prices):
+    import json, os, hashlib, time as _t, requests as _rq
+    from datetime import datetime as _dt
+    pf="polymarket_paper.json"
+    try: state=json.load(open(pf))
+    except: state={"balance":10000.0,"starting_balance":10000.0,"trades":[],
+                   "open_positions":{},"total_pnl":0.0,"wins":0,"losses":0}
+    sports=["nhl","nba","nfl","mlb","stanley cup","world cup","fifa","super bowl"]
+    try:
+        _r=_rq.get("https://gamma-api.polymarket.com/markets",
+            params={"limit":200,"active":"true","closed":"false"},timeout=10)
+        raw=_r.json() if _r.ok else {}
+        mkts=raw if isinstance(raw,list) else raw.get("markets",[])
+        mkts=[m for m in mkts if not any(s in m.get("question","").lower() for s in sports)]
+    except: mkts=[]
+    sym_kw={"BTCUSDT":["bitcoin","btc"],"ETHUSDT":["ethereum","eth"],
+            "SOLUSDT":["solana","sol"],"XAUUSD":["gold","xau"],
+            "USOIL":["oil","crude","brent"]}
+    bets=0
+    for sym,res in all_results.items():
+        if sym not in sym_kw or res.get("signal") not in ("BUY","SELL"): continue
+        if res.get("confidence",0)<45 or state["balance"]<2: continue
+        kws=sym_kw[sym]
+        rel=[m for m in mkts if any(k in m.get("question","").lower() for k in kws)
+             and any(d in m.get("question","").lower() for d in ["above","below","higher","lower","price","hit"])]
+        if not rel: continue
+        m=rel[0]; q=m.get("question","").lower()
+        bet=round(min(max(state["balance"]*0.02*(res["confidence"]/100),1.0),20.0),2)
+        try: yp=float(m.get("outcomePrices",["0.5"])[0])
+        except: yp=0.5
+        side="YES" if (res["signal"]=="BUY" and any(k in q for k in ["above","higher","rise","hit"])) else "NO"
+        ep=yp if side=="YES" else 1-yp
+        tid=hashlib.md5(f"{sym}{_t.time()}".encode()).hexdigest()[:8]
+        trade={"id":tid,"time":_dt.now().isoformat(),"symbol":sym,
+               "question":m.get("question","")[:60],"signal":res["signal"],
+               "side":side,"amount":bet,"entry":ep,"confidence":res["confidence"],
+               "status":"OPEN","pnl":0.0,"bot_price":res.get("price",0)}
+        state["balance"]-=bet
+        state["open_positions"][tid]=trade
+        state["trades"].append(trade)
+        print(f"  [POLY BET] {side} ${bet:.1f} | {m.get('question','')[:52]}")
+        bets+=1
+        if bets>=2: break
+    for tid,t in list(state["open_positions"].items()):
+        age=(_dt.now()-_dt.fromisoformat(t["time"])).total_seconds()/3600
+        if age<1: continue
+        cur=current_prices.get(t["symbol"],0)
+        if not cur: continue
+        up=cur>t["bot_price"]
+        won=(t["signal"]=="BUY" and t["side"]=="YES" and up) or             (t["signal"]=="BUY" and t["side"]=="NO" and not up) or             (t["signal"]=="SELL" and t["side"]=="NO" and up) or             (t["signal"]=="SELL" and t["side"]=="YES" and not up)
+        pnl=t["amount"]*0.9 if won else -t["amount"]
+        if won: state["balance"]+=t["amount"]+pnl; state["wins"]+=1
+        else: state["losses"]+=1
+        state["total_pnl"]+=pnl
+        t.update({"pnl":pnl,"status":"WON" if won else "LOST"})
+        del state["open_positions"][tid]
+        print(f"  [POLY] {'WIN' if won else 'LOSS'}: {t['question'][:40]} ${pnl:+.2f}")
+    try: json.dump(state,open(pf,"w"))
+    except: pass
+    total=state["wins"]+state["losses"]
+    wr=(state["wins"]/total*100) if total else 0
+    roi=((state["balance"]-10000)/10000*100)
+    print(f"  [POLY PAPER] ${state['balance']:.0f} ROI:{roi:+.1f}% WR:{wr:.0f}% ({state['wins']}W/{state['losses']}L)")
+
+def apply_multidim_intelligence(sym,signal,score,confidence,market):
+    import requests as _rq, time as _t
+    adj=0; ac=0; reasons=[]
+    is_oil=sym in("USOIL","UKOIL","NATGAS","GOIL","SEPLAT")
+    is_gold=sym in("XAUUSD","XAGUSD","NEWGOLD")
+    is_crypto=market=="crypto" or sym.endswith("USDT")
+    is_btc=sym=="BTCUSDT"
+    global _hz_val,_hz_ts,_nk_val,_nk_ts,_wx_val,_wx_ts,_cg_val,_cg_ts
+    try: _hz_val
+    except: _hz_val="UNKNOWN";_hz_ts=0
+    try: _nk_val
+    except: _nk_val=False;_nk_ts=0
+    try: _wx_val
+    except: _wx_val=0;_wx_ts=0
+    try: _cg_val
+    except: _cg_val=[];_cg_ts=0
+    now=_t.time()
+    if now-_hz_ts>900:
+        try:
+            _r=_rq.get("https://www.hormuztracker.com/",timeout=6,headers={"User-Agent":"Mozilla/5.0"})
+            _txt=_r.text.lower() if _r.ok else ""
+            _hz_val="CLOSED" if any(k in _txt for k in ["closed","suspended","blocked"]) else                     "DISRUPTED" if any(k in _txt for k in ["disrupted","warning","restricted"]) else "OPEN"
+            _hz_ts=now
+        except: pass
+    if _hz_val in("CLOSED","DISRUPTED"):
+        _osig=55 if _hz_val=="CLOSED" else 25
+        if is_oil and signal=="BUY": adj+=_osig;ac+=15;reasons.append(f"HORMUZ {_hz_val} +{_osig}")
+        elif is_gold and signal=="BUY": adj+=_osig//3;reasons.append(f"Hormuz {_hz_val} safe-haven")
+        elif is_oil and signal=="SELL": adj-=_osig//2
+    if now-_nk_ts>3600:
+        try:
+            from datetime import datetime as _dt,timedelta as _td
+            _cut=(_dt.now()-_td(days=7)).strftime("%Y-%m-%dT%H:%M:%S")
+            _r2=_rq.get("https://earthquake.usgs.gov/fdsnws/event/1/query",
+                params={"format":"geojson","starttime":_cut,"minmagnitude":"3.5",
+                        "latitude":"41.3","longitude":"129.0","maxradiuskm":"150"},timeout=8)
+            if _r2.ok:
+                _sh=[f for f in _r2.json().get("features",[]) if f["properties"].get("depth",100)<20]
+                _nk_val=any(f["properties"]["mag"]>=4.5 for f in _sh)
+            _nk_ts=now
+        except: pass
+    if _nk_val:
+        if is_gold and signal=="BUY": adj+=20;ac+=10;reasons.append("DPRK seismic - gold safe haven")
+        elif is_btc and signal=="BUY": adj+=8;reasons.append("DPRK threat - BTC hedge")
+    if now-_wx_ts>1800:
+        try:
+            _r3=_rq.get("https://api.open-meteo.com/v1/forecast",
+                params={"latitude":"7.9","longitude":"-1.0","daily":"precipitation_sum",
+                        "forecast_days":"3","timezone":"auto"},timeout=6)
+            if _r3.ok:
+                _p=_r3.json().get("daily",{}).get("precipitation_sum",[0,0,0])
+                _wx_val=max(_p[:3]) if _p else 0
+            _wx_ts=now
+        except: pass
+    if _wx_val>50:
+        if sym in("MTNGH","GCB","GGBL","FML","UNIL","BOPP") and signal=="BUY":
+            adj-=12;reasons.append(f"Ghana flood {_wx_val:.0f}mm")
+        elif is_gold and signal=="BUY": adj+=8;reasons.append(f"Flood safe-haven")
+    if now-_cg_ts>7200:
+        _trades=[]
+        for _url in ["https://senatestockwatcher.com/api/transactions",
+                     "https://housestockwatcher.com/api/transactions/month"]:
+            try:
+                _rc=_rq.get(_url,timeout=8,headers={"User-Agent":"AccraBot/1.0"})
+                if _rc.ok:
+                    _raw=_rc.json()
+                    _trades+=_raw if isinstance(_raw,list) else _raw.get("transactions",[])
+            except: pass
+        _cg_val=_trades; _cg_ts=now
+    _base=sym.upper().replace("USDT","").replace("USD","")
+    _st=[t for t in _cg_val if _base in t.get("ticker","").upper()
+         or _base.lower() in str(t.get("asset_description",t.get("asset",""))).lower()]
+    if _st:
+        _cb=sum(1 for t in _st if any(k in t.get("type","").lower() for k in ["purchase","buy"]))
+        _cs=sum(1 for t in _st if any(k in t.get("type","").lower() for k in ["sale","sell"]))
+        if _cb>_cs and signal=="BUY": adj+=min(20,_cb*7);reasons.append(f"Congress buying {sym} ({_cb}x)")
+        elif _cs>_cb and signal=="SELL": adj+=min(15,_cs*5);reasons.append(f"Congress selling {sym} ({_cs}x)")
+    global _fg_val
+    try: _fg=_fg_val
+    except: _fg=50
+    if is_crypto:
+        if signal=="BUY":
+            if _fg<=20: adj+=22;ac+=15;reasons.append(f"Extreme Fear {_fg} - buy zone")
+            elif _fg<=35: adj+=12;ac+=8;reasons.append(f"Fear {_fg} - favorable")
+            elif _fg>=85: adj-=22;ac-=15;reasons.append(f"Extreme Greed {_fg} - overbought")
+            elif _fg>=70: adj-=10;reasons.append(f"Greed {_fg} - caution")
+        elif signal=="SELL":
+            if _fg>=80: adj+=15;reasons.append(f"Greed {_fg} confirms sell")
+            elif _fg<=20: adj-=15;reasons.append(f"Fear {_fg} - hold not sell")
+    fs=score+adj; fc=max(0,min(100,confidence+ac))
+    if adj!=0: log(f"  [INTEL] {sym}: {score:+d}->{fs:+d} conf:{confidence}%->{fc}% | {reasons[0] if reasons else ''}")
+    return fs,fc,reasons[:3]
+
+def log_intel_summary():
+    import requests as _rq
+    from datetime import datetime as _dt,timedelta as _td
+    print("\n"+"="*55)
+    print("  ACCRA INTELLIGENCE REPORT")
+    print("="*55)
+    global _hz_val,_nk_val,_wx_val
+    try: _hz=_hz_val
+    except: _hz="UNKNOWN"
+    try: _nk=_nk_val
+    except: _nk=False
+    try: _wx=_wx_val
+    except: _wx=0
+    print(f"  MARITIME: Hormuz={_hz} {'***OIL SHOCK***' if _hz=='CLOSED' else ''}")
+    print(f"  SEISMIC : {'***DPRK THREAT***' if _nk else 'No DPRK activity'}")
+    print(f"  WEATHER : Ghana={_wx:.0f}mm {'***FLOOD***' if _wx>50 else 'OK'}")
+    try:
+        _r=_rq.get("https://gamma-api.polymarket.com/markets",
+            params={"limit":200,"active":"true","closed":"false"},timeout=8)
+        if _r.ok:
+            _sports=["nhl","nba","nfl","mlb","stanley cup","world cup","fifa","super bowl"]
+            _raw=_r.json(); _mkts=_raw if isinstance(_raw,list) else _raw.get("markets",[])
+            _mkts=[m for m in _mkts if not any(s in m.get("question","").lower() for s in _sports)]
+            _cats={"WAR/GEO":["war","ceasefire","ukraine","taiwan","iran","military","sanctions"],
+                   "CRYPTO":["bitcoin price","btc above","btc below","ethereum price","crypto market"],
+                   "OIL/GOLD":["oil price","gold price","brent","wti","opec","gold above"],
+                   "AFRICA":["ghana","nigeria","naira","cedi","imf africa"],
+                   "FED/MACRO":["federal reserve","fed rate","interest rate","inflation rate","recession"]}
+            print("  POLYMARKET:")
+            for _cat,_kws in _cats.items():
+                _m=[m for m in _mkts if any(k in m.get("question","").lower() for k in _kws)]
+                if _m:
+                    print(f"    [{_cat}] {len(_m)} markets")
+                    for _mx in _m[:2]:
+                        try:
+                            _yp=float(_mx.get("outcomePrices",["0.5"])[0])
+                            _side="YES" if _yp>0.5 else "NO "
+                            print(f"      {_side}:{_yp:.0%} | {_mx.get('question','')[:55]}")
+                        except: print(f"      {_mx.get('question','')[:55]}")
+    except Exception as _e: print(f"  POLY: {str(_e)[:40]}")
+    print("="*55)
+
+def show_intel_signals(all_results):
+    _all=[(s,r) for s,r in all_results.items() if r.get("signal") in ("BUY","SELL")]
+    _all.sort(key=lambda x:abs(x[1].get("combined",0)),reverse=True)
+    if not _all: return
+    print("  SIGNAL INTELLIGENCE SCORES:")
+    for _sym,_res in _all[:8]:
+        _reasons=_res.get("reasons",[])
+        _intel=[r for r in _reasons if any(k in r.lower() for k in
+            ["hormuz","dprk","flood","congress","fear","greed","iran","war","taiwan","ceasefire"])]
+        _tech=[r for r in _reasons if r not in _intel]
+        print(f"    {_sym:<12} {_res.get('signal','?'):<5} score:{_res.get('combined',0):+d} conf:{_res.get('confidence',0)}%")
+        if _intel: print(f"      [INTEL] {_intel[0][:55]}")
+        if _tech: print(f"      [TECH]  {_tech[0][:55]}")
 
 
 def main():
