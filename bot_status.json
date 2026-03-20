@@ -1,15 +1,56 @@
 {
-  "timestamp": "2026-03-20T07:59:13.038302",
-  "cycle": 4,
-  "strategy": "balanced",
-  "market_condition": "neutral",
-  "assets_scanned": 30,
-  "open_trades": 0,
-  "open_positions": [],
+  "timestamp": "2026-03-20T08:00:45.360152",
+  "cycle": 5,
+  "strategy": "aggressive",
+  "market_condition": "bull",
+  "assets_scanned": 51,
+  "open_trades": 1,
+  "open_positions": [
+    {
+      "symbol": "COPPER",
+      "entry": 4.2,
+      "market": "hfm",
+      "sl": 4.053,
+      "tp": 4.83
+    }
+  ],
   "top_opportunities": [
     {
-      "symbol": "WLDUSDT",
+      "symbol": "COPPER",
       "signal": "BUY",
+      "score": 66,
+      "tech": 91,
+      "fund": 35,
+      "market": "hfm",
+      "price": 4.2,
+      "reason": "F&G:11",
+      "ghana": "F&G:11"
+    },
+    {
+      "symbol": "USDCAD",
+      "signal": "HOLD",
+      "score": 43,
+      "tech": 49,
+      "fund": 35,
+      "market": "hfm",
+      "price": 0.72,
+      "reason": "F&G:11",
+      "ghana": "F&G:11"
+    },
+    {
+      "symbol": "USDCHF",
+      "signal": "HOLD",
+      "score": 42,
+      "tech": 47,
+      "fund": 35,
+      "market": "hfm",
+      "price": 0.79389,
+      "reason": "F&G:11",
+      "ghana": "F&G:11"
+    },
+    {
+      "symbol": "WLDUSDT",
+      "signal": "HOLD",
       "score": 33,
       "tech": 32,
       "fund": 35,
@@ -19,35 +60,35 @@
       "ghana": "F&G:11"
     },
     {
-      "symbol": "PHAUSDT",
-      "signal": "BUY",
+      "symbol": "XPTUSD",
+      "signal": "HOLD",
       "score": 33,
-      "tech": 32,
+      "tech": 31,
+      "fund": 35,
+      "market": "hfm",
+      "price": 950,
+      "reason": "F&G:11",
+      "ghana": "F&G:11"
+    },
+    {
+      "symbol": "PHAUSDT",
+      "signal": "HOLD",
+      "score": 30,
+      "tech": 25,
       "fund": 35,
       "market": "crypto",
-      "price": 0.0396,
+      "price": 0.0391,
       "reason": "F&G:11",
       "ghana": "F&G:11"
     },
     {
       "symbol": "SOLUSDT",
-      "signal": "BUY",
+      "signal": "HOLD",
       "score": 27,
       "tech": 20,
       "fund": 35,
       "market": "crypto",
-      "price": 89.44,
-      "reason": "F&G:11",
-      "ghana": "F&G:11"
-    },
-    {
-      "symbol": "EURUSDT",
-      "signal": "HOLD",
-      "score": -11,
-      "tech": -48,
-      "fund": 35,
-      "market": "crypto",
-      "price": 1.157,
+      "price": 89.4,
       "reason": "F&G:11",
       "ghana": "F&G:11"
     },
@@ -58,7 +99,7 @@
       "tech": 18,
       "fund": 0,
       "market": "crypto",
-      "price": 236.59,
+      "price": 236.74,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     },
@@ -69,7 +110,7 @@
       "tech": -18,
       "fund": 0,
       "market": "crypto",
-      "price": 0.2163,
+      "price": 0.2165,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     },
@@ -80,45 +121,12 @@
       "tech": 18,
       "fund": 0,
       "market": "crypto",
-      "price": 0.464,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
-    },
-    {
-      "symbol": "BTCUSDT",
-      "signal": "HOLD",
-      "score": -9,
-      "tech": -16,
-      "fund": 0,
-      "market": "crypto",
-      "price": 70871.13,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
-    },
-    {
-      "symbol": "PEPEUSDT",
-      "signal": "HOLD",
-      "score": -9,
-      "tech": -17,
-      "fund": 0,
-      "market": "crypto",
-      "price": 3.44e-06,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
-    },
-    {
-      "symbol": "KATUSDT",
-      "signal": "HOLD",
-      "score": -9,
-      "tech": -17,
-      "fund": 0,
-      "market": "crypto",
-      "price": 0.01119,
+      "price": 0.461,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     }
   ],
-  "buy_signals": 3,
+  "buy_signals": 1,
   "sell_signals": 0,
   "fear_greed": {
     "value": 11,
