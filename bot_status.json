@@ -1,12 +1,31 @@
 {
-  "timestamp": "2026-03-20T12:07:44.290142",
-  "cycle": 4,
-  "strategy": "balanced",
-  "market_condition": "neutral",
-  "assets_scanned": 29,
-  "open_trades": 0,
-  "open_positions": [],
+  "timestamp": "2026-03-20T12:08:53.578985",
+  "cycle": 5,
+  "strategy": "aggressive",
+  "market_condition": "bull",
+  "assets_scanned": 51,
+  "open_trades": 1,
+  "open_positions": [
+    {
+      "symbol": "COPPER",
+      "entry": 4.2,
+      "market": "hfm",
+      "sl": 4.053,
+      "tp": 4.83
+    }
+  ],
   "top_opportunities": [
+    {
+      "symbol": "COPPER",
+      "signal": "BUY",
+      "score": 66,
+      "tech": 91,
+      "fund": 35,
+      "market": "hfm",
+      "price": 4.2,
+      "reason": "F&G:11",
+      "ghana": "F&G:11"
+    },
     {
       "symbol": "WLDUSDT",
       "signal": "BUY",
@@ -14,7 +33,7 @@
       "tech": 72,
       "fund": 35,
       "market": "crypto",
-      "price": 0.3234,
+      "price": 0.3233,
       "reason": "F&G:11",
       "ghana": "F&G:11"
     },
@@ -25,13 +44,24 @@
       "tech": 63,
       "fund": 35,
       "market": "crypto",
-      "price": 0.414,
+      "price": 0.415,
+      "reason": "F&G:11",
+      "ghana": "F&G:11"
+    },
+    {
+      "symbol": "USDCHF",
+      "signal": "HOLD",
+      "score": 42,
+      "tech": 47,
+      "fund": 35,
+      "market": "hfm",
+      "price": 0.79389,
       "reason": "F&G:11",
       "ghana": "F&G:11"
     },
     {
       "symbol": "PHAUSDT",
-      "signal": "BUY",
+      "signal": "HOLD",
       "score": 39,
       "tech": 42,
       "fund": 35,
@@ -41,19 +71,52 @@
       "ghana": "F&G:11"
     },
     {
+      "symbol": "APTUSDT",
+      "signal": "HOLD",
+      "score": 39,
+      "tech": 42,
+      "fund": 35,
+      "market": "crypto",
+      "price": 1.01,
+      "reason": "F&G:11",
+      "ghana": "F&G:11"
+    },
+    {
+      "symbol": "USDCAD",
+      "signal": "HOLD",
+      "score": 35,
+      "tech": 35,
+      "fund": 35,
+      "market": "hfm",
+      "price": 1.3726,
+      "reason": "F&G:11",
+      "ghana": "F&G:11"
+    },
+    {
+      "symbol": "XPTUSD",
+      "signal": "HOLD",
+      "score": 33,
+      "tech": 31,
+      "fund": 35,
+      "market": "hfm",
+      "price": 950,
+      "reason": "F&G:11",
+      "ghana": "F&G:11"
+    },
+    {
       "symbol": "KITEUSDT",
-      "signal": "BUY",
+      "signal": "HOLD",
       "score": 31,
       "tech": 27,
       "fund": 35,
       "market": "crypto",
-      "price": 0.217,
+      "price": 0.2171,
       "reason": "F&G:11",
       "ghana": "F&G:11"
     },
     {
       "symbol": "WLFIUSDT",
-      "signal": "BUY",
+      "signal": "HOLD",
       "score": 28,
       "tech": 22,
       "fund": 35,
@@ -61,64 +124,9 @@
       "price": 0.0901,
       "reason": "F&G:11",
       "ghana": "F&G:11"
-    },
-    {
-      "symbol": "LTCUSDT",
-      "signal": "SELL",
-      "score": -26,
-      "tech": -75,
-      "fund": 35,
-      "market": "crypto",
-      "price": 55.61,
-      "reason": "F&G:11",
-      "ghana": "F&G:11"
-    },
-    {
-      "symbol": "APTUSDT",
-      "signal": "HOLD",
-      "score": 10,
-      "tech": 18,
-      "fund": 0,
-      "market": "crypto",
-      "price": 1.012,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
-    },
-    {
-      "symbol": "EURUSDT",
-      "signal": "HOLD",
-      "score": -9,
-      "tech": -45,
-      "fund": 35,
-      "market": "crypto",
-      "price": 1.1572,
-      "reason": "F&G:11",
-      "ghana": "F&G:11"
-    },
-    {
-      "symbol": "SIGNUSDT",
-      "signal": "HOLD",
-      "score": -9,
-      "tech": -17,
-      "fund": 0,
-      "market": "crypto",
-      "price": 0.04844,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
-    },
-    {
-      "symbol": "ETHUSDT",
-      "signal": "HOLD",
-      "score": -6,
-      "tech": -10,
-      "fund": 0,
-      "market": "crypto",
-      "price": 2146.59,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
     }
   ],
-  "buy_signals": 5,
+  "buy_signals": 3,
   "sell_signals": 0,
   "fear_greed": {
     "value": 11,
