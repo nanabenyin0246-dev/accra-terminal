@@ -1,11 +1,26 @@
 {
-  "timestamp": "2026-03-21T23:20:46.556760",
-  "cycle": 34,
+  "timestamp": "2026-03-21T23:20:54.456340",
+  "cycle": 389,
   "strategy": "balanced",
   "market_condition": "neutral",
   "assets_scanned": 30,
-  "open_trades": 0,
-  "open_positions": [],
+  "open_trades": 2,
+  "open_positions": [
+    {
+      "symbol": "COPPER",
+      "entry": 4.2,
+      "market": "hfm",
+      "sl": 4.053,
+      "tp": 4.83
+    },
+    {
+      "symbol": "ETHFIUSDT",
+      "entry": 0.598,
+      "market": "crypto",
+      "sl": 0.58305,
+      "tp": 0.63986
+    }
+  ],
   "top_opportunities": [
     {
       "symbol": "TAOUSDT",
@@ -74,13 +89,24 @@
       "ghana": "F&G:12"
     },
     {
+      "symbol": "BTCUSDT",
+      "signal": "HOLD",
+      "score": -8,
+      "tech": -14,
+      "fund": 0,
+      "market": "crypto",
+      "price": 70164.49,
+      "reason": "Technical score too weak for AI analysis",
+      "ghana": "No action needed"
+    },
+    {
       "symbol": "ZECUSDT",
       "signal": "HOLD",
       "score": 8,
       "tech": 15,
       "fund": 0,
       "market": "crypto",
-      "price": 227.74,
+      "price": 227.79,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     },
@@ -102,18 +128,7 @@
       "tech": 13,
       "fund": 0,
       "market": "crypto",
-      "price": 0.0439,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
-    },
-    {
-      "symbol": "KITEUSDT",
-      "signal": "HOLD",
-      "score": -7,
-      "tech": -12,
-      "fund": 0,
-      "market": "crypto",
-      "price": 0.2162,
+      "price": 0.04388,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     }
@@ -124,11 +139,11 @@
     "value": 12,
     "label": "Extreme Fear",
     "trend": "improving",
-    "ts": 1774135044.3598099
+    "ts": 1774134886.128361
   },
   "markets": {
     "crypto": "active",
     "stocks": "closed",
-    "hfm": "disabled"
+    "hfm": "signal_mode"
   }
 }
