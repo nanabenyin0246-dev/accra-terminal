@@ -1,24 +1,24 @@
 {
-  "timestamp": "2026-03-21T23:31:44.471107",
-  "cycle": 39,
+  "timestamp": "2026-03-21T23:31:46.685509",
+  "cycle": 403,
   "strategy": "balanced",
   "market_condition": "neutral",
   "assets_scanned": 30,
   "open_trades": 2,
   "open_positions": [
     {
-      "symbol": "TAOUSDT",
-      "entry": 273.8,
-      "market": "crypto",
-      "sl": 266.955,
-      "tp": 292.966
+      "symbol": "COPPER",
+      "entry": 4.2,
+      "market": "hfm",
+      "sl": 4.053,
+      "tp": 4.83
     },
     {
-      "symbol": "FILUSDT",
-      "entry": 0.909,
+      "symbol": "ETHFIUSDT",
+      "entry": 0.598,
       "market": "crypto",
-      "sl": 0.886275,
-      "tp": 0.97263
+      "sl": 0.58305,
+      "tp": 0.63986
     }
   ],
   "top_opportunities": [
@@ -45,13 +45,24 @@
       "ghana": "F&G:12"
     },
     {
+      "symbol": "TAOUSDT",
+      "signal": "BUY",
+      "score": 31,
+      "tech": 28,
+      "fund": 35,
+      "market": "crypto",
+      "price": 273.8,
+      "reason": "F&G:12",
+      "ghana": "F&G:12"
+    },
+    {
       "symbol": "XRPUSDT",
       "signal": "SELL",
       "score": -27,
       "tech": -77,
       "fund": 35,
       "market": "crypto",
-      "price": 1.4359,
+      "price": 1.436,
       "reason": "F&G:12",
       "ghana": "F&G:12"
     },
@@ -62,20 +73,20 @@
       "tech": 21,
       "fund": 35,
       "market": "crypto",
-      "price": 226.86,
+      "price": 226.83,
       "reason": "F&G:12",
       "ghana": "F&G:12"
     },
     {
-      "symbol": "TAOUSDT",
+      "symbol": "TRXUSDT",
       "signal": "HOLD",
-      "score": 10,
-      "tech": 18,
-      "fund": 0,
+      "score": -17,
+      "tech": -60,
+      "fund": 35,
       "market": "crypto",
-      "price": 273.7,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
+      "price": 0.3126,
+      "reason": "F&G:12",
+      "ghana": "F&G:12"
     },
     {
       "symbol": "FETUSDT",
@@ -111,39 +122,28 @@
       "ghana": "No action needed"
     },
     {
-      "symbol": "NIGHTUSDT",
+      "symbol": "AVAXUSDT",
       "signal": "HOLD",
-      "score": 7,
-      "tech": 13,
+      "score": -8,
+      "tech": -15,
       "fund": 0,
       "market": "crypto",
-      "price": 0.04387,
+      "price": 9.47,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
-    },
-    {
-      "symbol": "LTCUSDT",
-      "signal": "HOLD",
-      "score": -7,
-      "tech": -42,
-      "fund": 35,
-      "market": "crypto",
-      "price": 55.63,
-      "reason": "F&G:12",
-      "ghana": "F&G:12"
     }
   ],
-  "buy_signals": 2,
+  "buy_signals": 4,
   "sell_signals": 0,
   "fear_greed": {
     "value": 12,
     "label": "Extreme Fear",
     "trend": "improving",
-    "ts": 1774135632.1787977
+    "ts": 1774134886.128361
   },
   "markets": {
     "crypto": "active",
     "stocks": "closed",
-    "hfm": "disabled"
+    "hfm": "signal_mode"
   }
 }
