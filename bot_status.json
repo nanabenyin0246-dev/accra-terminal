@@ -1,24 +1,24 @@
 {
-  "timestamp": "2026-03-21T23:37:51.587361",
-  "cycle": 92,
+  "timestamp": "2026-03-21T23:37:56.373969",
+  "cycle": 411,
   "strategy": "balanced",
   "market_condition": "neutral",
   "assets_scanned": 30,
   "open_trades": 2,
   "open_positions": [
     {
-      "symbol": "TAOUSDT",
-      "entry": 273.8,
-      "market": "crypto",
-      "sl": 266.955,
-      "tp": 292.966
+      "symbol": "COPPER",
+      "entry": 4.2,
+      "market": "hfm",
+      "sl": 4.053,
+      "tp": 4.83
     },
     {
-      "symbol": "FILUSDT",
-      "entry": 0.909,
+      "symbol": "ETHFIUSDT",
+      "entry": 0.598,
       "market": "crypto",
-      "sl": 0.886275,
-      "tp": 0.97263
+      "sl": 0.58305,
+      "tp": 0.63986
     }
   ],
   "top_opportunities": [
@@ -45,6 +45,17 @@
       "ghana": "F&G:12"
     },
     {
+      "symbol": "TRXUSDT",
+      "signal": "HOLD",
+      "score": -17,
+      "tech": -60,
+      "fund": 35,
+      "market": "crypto",
+      "price": 0.3126,
+      "reason": "F&G:12",
+      "ghana": "F&G:12"
+    },
+    {
       "symbol": "LTCUSDT",
       "signal": "HOLD",
       "score": -16,
@@ -56,24 +67,13 @@
       "ghana": "F&G:12"
     },
     {
-      "symbol": "TRXUSDT",
-      "signal": "HOLD",
-      "score": -15,
-      "tech": -55,
-      "fund": 35,
-      "market": "crypto",
-      "price": 0.3127,
-      "reason": "F&G:12",
-      "ghana": "F&G:12"
-    },
-    {
       "symbol": "TAOUSDT",
       "signal": "HOLD",
       "score": 10,
       "tech": 18,
       "fund": 0,
       "market": "crypto",
-      "price": 273.3,
+      "price": 273.5,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     },
@@ -95,7 +95,7 @@
       "tech": -14,
       "fund": 0,
       "market": "crypto",
-      "price": 70150.0,
+      "price": 70168.21,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     },
@@ -106,7 +106,7 @@
       "tech": 15,
       "fund": 0,
       "market": "crypto",
-      "price": 227.44,
+      "price": 227.5,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     },
@@ -133,17 +133,17 @@
       "ghana": "No action needed"
     }
   ],
-  "buy_signals": 1,
+  "buy_signals": 2,
   "sell_signals": 0,
   "fear_greed": {
     "value": 12,
     "label": "Extreme Fear",
     "trend": "improving",
-    "ts": 1774135632.1787977
+    "ts": 1774134886.128361
   },
   "markets": {
     "crypto": "active",
     "stocks": "closed",
-    "hfm": "disabled"
+    "hfm": "signal_mode"
   }
 }
