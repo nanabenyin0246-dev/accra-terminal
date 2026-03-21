@@ -1,11 +1,26 @@
 {
-  "timestamp": "2026-03-21T20:02:22.787651",
-  "cycle": 1,
+  "timestamp": "2026-03-21T20:02:31.186850",
+  "cycle": 181,
   "strategy": "balanced",
   "market_condition": "neutral",
   "assets_scanned": 30,
-  "open_trades": 0,
-  "open_positions": [],
+  "open_trades": 2,
+  "open_positions": [
+    {
+      "symbol": "COPPER",
+      "entry": 4.2,
+      "market": "hfm",
+      "sl": 4.053,
+      "tp": 4.83
+    },
+    {
+      "symbol": "ETHFIUSDT",
+      "entry": 0.598,
+      "market": "crypto",
+      "sl": 0.58305,
+      "tp": 0.63986
+    }
+  ],
   "top_opportunities": [
     {
       "symbol": "ANIMEUSDT",
@@ -47,7 +62,18 @@
       "tech": -53,
       "fund": 35,
       "market": "crypto",
-      "price": 2152.73,
+      "price": 2153.18,
+      "reason": "F&G:12",
+      "ghana": "F&G:12"
+    },
+    {
+      "symbol": "PEPEUSDT",
+      "signal": "HOLD",
+      "score": -13,
+      "tech": -52,
+      "fund": 35,
+      "market": "crypto",
+      "price": 3.41e-06,
       "reason": "F&G:12",
       "ghana": "F&G:12"
     },
@@ -69,7 +95,7 @@
       "tech": -50,
       "fund": 35,
       "market": "crypto",
-      "price": 1.4376,
+      "price": 1.4378,
       "reason": "F&G:12",
       "ghana": "F&G:12"
     },
@@ -105,17 +131,6 @@
       "price": 55.86,
       "reason": "F&G:12",
       "ghana": "F&G:12"
-    },
-    {
-      "symbol": "SUIUSDT",
-      "signal": "HOLD",
-      "score": -12,
-      "tech": -50,
-      "fund": 35,
-      "market": "crypto",
-      "price": 0.9617,
-      "reason": "F&G:12",
-      "ghana": "F&G:12"
     }
   ],
   "buy_signals": 2,
@@ -124,7 +139,7 @@
     "value": 12,
     "label": "Extreme Fear",
     "trend": "improving",
-    "ts": 1774123281.28749
+    "ts": 1774120074.0113199
   },
   "markets": {
     "crypto": "active",
