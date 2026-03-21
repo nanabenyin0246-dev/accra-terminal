@@ -1,24 +1,24 @@
 {
-  "timestamp": "2026-03-21T23:43:12.881100",
-  "cycle": 139,
+  "timestamp": "2026-03-21T23:43:16.828100",
+  "cycle": 419,
   "strategy": "balanced",
   "market_condition": "neutral",
   "assets_scanned": 30,
   "open_trades": 2,
   "open_positions": [
     {
-      "symbol": "TAOUSDT",
-      "entry": 273.8,
-      "market": "crypto",
-      "sl": 266.955,
-      "tp": 292.966
+      "symbol": "COPPER",
+      "entry": 4.2,
+      "market": "hfm",
+      "sl": 4.053,
+      "tp": 4.83
     },
     {
-      "symbol": "FILUSDT",
-      "entry": 0.909,
+      "symbol": "ETHFIUSDT",
+      "entry": 0.598,
       "market": "crypto",
-      "sl": 0.886275,
-      "tp": 0.97263
+      "sl": 0.58305,
+      "tp": 0.63986
     }
   ],
   "top_opportunities": [
@@ -51,7 +51,7 @@
       "tech": 24,
       "fund": 35,
       "market": "crypto",
-      "price": 272.4,
+      "price": 272.6,
       "reason": "F&G:12",
       "ghana": "F&G:12"
     },
@@ -106,7 +106,7 @@
       "tech": 15,
       "fund": 0,
       "market": "crypto",
-      "price": 227.46,
+      "price": 227.52,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     },
@@ -122,28 +122,28 @@
       "ghana": "No action needed"
     },
     {
-      "symbol": "NIGHTUSDT",
+      "symbol": "DOGEUSDT",
       "signal": "HOLD",
-      "score": 7,
-      "tech": 13,
-      "fund": 0,
+      "score": -7,
+      "tech": -42,
+      "fund": 35,
       "market": "crypto",
-      "price": 0.0439,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
+      "price": 0.0938,
+      "reason": "F&G:12",
+      "ghana": "F&G:12"
     }
   ],
-  "buy_signals": 1,
+  "buy_signals": 3,
   "sell_signals": 0,
   "fear_greed": {
     "value": 12,
     "label": "Extreme Fear",
     "trend": "improving",
-    "ts": 1774135632.1787977
+    "ts": 1774134886.128361
   },
   "markets": {
     "crypto": "active",
     "stocks": "closed",
-    "hfm": "disabled"
+    "hfm": "signal_mode"
   }
 }
