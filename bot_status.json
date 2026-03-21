@@ -1,24 +1,31 @@
 {
-  "timestamp": "2026-03-21T23:46:41.700160",
-  "cycle": 423,
+  "timestamp": "2026-03-21T23:46:48.828377",
+  "cycle": 167,
   "strategy": "balanced",
   "market_condition": "neutral",
   "assets_scanned": 30,
-  "open_trades": 2,
+  "open_trades": 3,
   "open_positions": [
     {
-      "symbol": "COPPER",
-      "entry": 4.2,
-      "market": "hfm",
-      "sl": 4.053,
-      "tp": 4.83
+      "symbol": "TAOUSDT",
+      "entry": 273.8,
+      "market": "crypto",
+      "sl": 266.955,
+      "tp": 292.966
     },
     {
-      "symbol": "ETHFIUSDT",
-      "entry": 0.598,
+      "symbol": "FILUSDT",
+      "entry": 0.909,
       "market": "crypto",
-      "sl": 0.58305,
-      "tp": 0.63986
+      "sl": 0.886275,
+      "tp": 0.97263
+    },
+    {
+      "symbol": "KITEUSDT",
+      "entry": 0.214,
+      "market": "crypto",
+      "sl": 0.20865,
+      "tp": 0.22898
     }
   ],
   "top_opportunities": [
@@ -57,12 +64,12 @@
     },
     {
       "symbol": "XRPUSDT",
-      "signal": "SELL",
-      "score": -23,
-      "tech": -71,
+      "signal": "HOLD",
+      "score": -15,
+      "tech": -56,
       "fund": 35,
       "market": "crypto",
-      "price": 1.4353,
+      "price": 1.435,
       "reason": "F&G:12",
       "ghana": "F&G:12"
     },
@@ -84,18 +91,7 @@
       "tech": 18,
       "fund": 0,
       "market": "crypto",
-      "price": 273.0,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
-    },
-    {
-      "symbol": "BCHUSDT",
-      "signal": "HOLD",
-      "score": -10,
-      "tech": -18,
-      "fund": 0,
-      "market": "crypto",
-      "price": 466.0,
+      "price": 272.7,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     },
@@ -128,22 +124,33 @@
       "tech": 15,
       "fund": 0,
       "market": "crypto",
-      "price": 227.21,
+      "price": 227.07,
+      "reason": "Technical score too weak for AI analysis",
+      "ghana": "No action needed"
+    },
+    {
+      "symbol": "AVAXUSDT",
+      "signal": "HOLD",
+      "score": -8,
+      "tech": -15,
+      "fund": 0,
+      "market": "crypto",
+      "price": 9.47,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     }
   ],
-  "buy_signals": 3,
+  "buy_signals": 1,
   "sell_signals": 0,
   "fear_greed": {
     "value": 12,
     "label": "Extreme Fear",
     "trend": "improving",
-    "ts": 1774134886.128361
+    "ts": 1774135632.1787977
   },
   "markets": {
     "crypto": "active",
     "stocks": "closed",
-    "hfm": "signal_mode"
+    "hfm": "disabled"
   }
 }
