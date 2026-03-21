@@ -1,10 +1,10 @@
 {
-  "timestamp": "2026-03-21T17:12:33.153508",
-  "cycle": 8,
-  "strategy": "balanced",
-  "market_condition": "neutral",
-  "assets_scanned": 30,
-  "open_trades": 2,
+  "timestamp": "2026-03-21T17:12:54.715352",
+  "cycle": 5,
+  "strategy": "aggressive",
+  "market_condition": "bull",
+  "assets_scanned": 51,
+  "open_trades": 1,
   "open_positions": [
     {
       "symbol": "COPPER",
@@ -12,19 +12,45 @@
       "market": "hfm",
       "sl": 4.053,
       "tp": 4.83
-    },
-    {
-      "symbol": "USDCHF",
-      "entry": 0.88,
-      "market": "hfm",
-      "sl": 0.8492,
-      "tp": 1.012
     }
   ],
   "top_opportunities": [
     {
-      "symbol": "ETHFIUSDT",
+      "symbol": "COPPER",
       "signal": "BUY",
+      "score": 66,
+      "tech": 91,
+      "fund": 35,
+      "market": "hfm",
+      "price": 4.2,
+      "reason": "F&G:12",
+      "ghana": "F&G:12"
+    },
+    {
+      "symbol": "USDCAD",
+      "signal": "HOLD",
+      "score": 35,
+      "tech": 35,
+      "fund": 35,
+      "market": "hfm",
+      "price": 1.3716,
+      "reason": "F&G:12",
+      "ghana": "F&G:12"
+    },
+    {
+      "symbol": "NIGHTUSDT",
+      "signal": "HOLD",
+      "score": 33,
+      "tech": 32,
+      "fund": 35,
+      "market": "crypto",
+      "price": 0.04302,
+      "reason": "F&G:12",
+      "ghana": "F&G:12"
+    },
+    {
+      "symbol": "ETHFIUSDT",
+      "signal": "HOLD",
       "score": 33,
       "tech": 32,
       "fund": 35,
@@ -34,19 +60,30 @@
       "ghana": "F&G:12"
     },
     {
-      "symbol": "NIGHTUSDT",
-      "signal": "BUY",
-      "score": 27,
-      "tech": 20,
+      "symbol": "XPTUSD",
+      "signal": "HOLD",
+      "score": 33,
+      "tech": 31,
       "fund": 35,
-      "market": "crypto",
-      "price": 0.04299,
+      "market": "hfm",
+      "price": 950,
+      "reason": "F&G:12",
+      "ghana": "F&G:12"
+    },
+    {
+      "symbol": "GBPJPY",
+      "signal": "HOLD",
+      "score": 27,
+      "tech": 21,
+      "fund": 35,
+      "market": "hfm",
+      "price": 212.24,
       "reason": "F&G:12",
       "ghana": "F&G:12"
     },
     {
       "symbol": "ADAUSDT",
-      "signal": "SELL",
+      "signal": "HOLD",
       "score": -24,
       "tech": -72,
       "fund": 35,
@@ -58,11 +95,11 @@
     {
       "symbol": "SUIUSDT",
       "signal": "HOLD",
-      "score": -21,
-      "tech": -67,
+      "score": -24,
+      "tech": -72,
       "fund": 35,
       "market": "crypto",
-      "price": 0.9593,
+      "price": 0.9594,
       "reason": "F&G:12",
       "ghana": "F&G:12"
     },
@@ -78,68 +115,24 @@
       "ghana": "F&G:12"
     },
     {
-      "symbol": "AVAXUSDT",
+      "symbol": "LTCUSDT",
       "signal": "HOLD",
-      "score": -10,
-      "tech": -47,
+      "score": -12,
+      "tech": -50,
       "fund": 35,
       "market": "crypto",
-      "price": 9.49,
+      "price": 55.72,
       "reason": "F&G:12",
       "ghana": "F&G:12"
-    },
-    {
-      "symbol": "DOGEUSDT",
-      "signal": "HOLD",
-      "score": -9,
-      "tech": -45,
-      "fund": 35,
-      "market": "crypto",
-      "price": 0.094,
-      "reason": "F&G:12",
-      "ghana": "F&G:12"
-    },
-    {
-      "symbol": "WLDUSDT",
-      "signal": "HOLD",
-      "score": 9,
-      "tech": 17,
-      "fund": 0,
-      "market": "crypto",
-      "price": 0.3148,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
-    },
-    {
-      "symbol": "FETUSDT",
-      "signal": "HOLD",
-      "score": -8,
-      "tech": -14,
-      "fund": 0,
-      "market": "crypto",
-      "price": 0.2244,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
-    },
-    {
-      "symbol": "PEPEUSDT",
-      "signal": "HOLD",
-      "score": -8,
-      "tech": -15,
-      "fund": 0,
-      "market": "crypto",
-      "price": 3.42e-06,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
     }
   ],
-  "buy_signals": 2,
+  "buy_signals": 1,
   "sell_signals": 0,
   "fear_greed": {
     "value": 12,
     "label": "Extreme Fear",
     "trend": "improving",
-    "ts": 1774112626.2799625
+    "ts": 1774112885.727245
   },
   "markets": {
     "crypto": "active",
