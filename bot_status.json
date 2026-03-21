@@ -1,20 +1,35 @@
 {
-  "timestamp": "2026-03-21T23:18:36.450809",
-  "cycle": 13,
+  "timestamp": "2026-03-21T23:18:38.733101",
+  "cycle": 386,
   "strategy": "balanced",
   "market_condition": "neutral",
   "assets_scanned": 30,
-  "open_trades": 0,
-  "open_positions": [],
+  "open_trades": 2,
+  "open_positions": [
+    {
+      "symbol": "COPPER",
+      "entry": 4.2,
+      "market": "hfm",
+      "sl": 4.053,
+      "tp": 4.83
+    },
+    {
+      "symbol": "ETHFIUSDT",
+      "entry": 0.598,
+      "market": "crypto",
+      "sl": 0.58305,
+      "tp": 0.63986
+    }
+  ],
   "top_opportunities": [
     {
       "symbol": "ANIMEUSDT",
       "signal": "BUY",
-      "score": 31,
-      "tech": 28,
+      "score": 27,
+      "tech": 21,
       "fund": 35,
       "market": "crypto",
-      "price": 0.00519,
+      "price": 0.0052,
       "reason": "F&G:12",
       "ghana": "F&G:12"
     },
@@ -26,17 +41,6 @@
       "fund": 35,
       "market": "crypto",
       "price": 0.09385,
-      "reason": "F&G:12",
-      "ghana": "F&G:12"
-    },
-    {
-      "symbol": "FETUSDT",
-      "signal": "HOLD",
-      "score": -9,
-      "tech": -45,
-      "fund": 35,
-      "market": "crypto",
-      "price": 0.2232,
       "reason": "F&G:12",
       "ghana": "F&G:12"
     },
@@ -58,7 +62,18 @@
       "tech": 15,
       "fund": 0,
       "market": "crypto",
-      "price": 227.73,
+      "price": 227.76,
+      "reason": "Technical score too weak for AI analysis",
+      "ghana": "No action needed"
+    },
+    {
+      "symbol": "RDNTUSDT",
+      "signal": "HOLD",
+      "score": -8,
+      "tech": -15,
+      "fund": 0,
+      "market": "crypto",
+      "price": 0.00578,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     },
@@ -80,7 +95,7 @@
       "tech": -42,
       "fund": 35,
       "market": "crypto",
-      "price": 55.64,
+      "price": 55.65,
       "reason": "F&G:12",
       "ghana": "F&G:12"
     },
@@ -96,24 +111,24 @@
       "ghana": "No action needed"
     },
     {
+      "symbol": "FETUSDT",
+      "signal": "HOLD",
+      "score": -6,
+      "tech": -40,
+      "fund": 35,
+      "market": "crypto",
+      "price": 0.2231,
+      "reason": "F&G:12",
+      "ghana": "F&G:12"
+    },
+    {
       "symbol": "DEGOUSDT",
       "signal": "HOLD",
       "score": 6,
       "tech": 11,
       "fund": 0,
       "market": "crypto",
-      "price": 0.407,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
-    },
-    {
-      "symbol": "ROBOUSDT",
-      "signal": "HOLD",
-      "score": -6,
-      "tech": -10,
-      "fund": 0,
-      "market": "crypto",
-      "price": 0.02516,
+      "price": 0.406,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     }
@@ -124,11 +139,11 @@
     "value": 12,
     "label": "Extreme Fear",
     "trend": "improving",
-    "ts": 1774135044.3598099
+    "ts": 1774134886.128361
   },
   "markets": {
     "crypto": "active",
     "stocks": "closed",
-    "hfm": "disabled"
+    "hfm": "signal_mode"
   }
 }
