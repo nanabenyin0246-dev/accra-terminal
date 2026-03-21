@@ -1,24 +1,24 @@
 {
-  "timestamp": "2026-03-21T23:35:35.241393",
-  "cycle": 408,
+  "timestamp": "2026-03-21T23:35:41.186716",
+  "cycle": 73,
   "strategy": "balanced",
   "market_condition": "neutral",
   "assets_scanned": 30,
   "open_trades": 2,
   "open_positions": [
     {
-      "symbol": "COPPER",
-      "entry": 4.2,
-      "market": "hfm",
-      "sl": 4.053,
-      "tp": 4.83
+      "symbol": "TAOUSDT",
+      "entry": 273.8,
+      "market": "crypto",
+      "sl": 266.955,
+      "tp": 292.966
     },
     {
-      "symbol": "ETHFIUSDT",
-      "entry": 0.598,
+      "symbol": "FILUSDT",
+      "entry": 0.909,
       "market": "crypto",
-      "sl": 0.58305,
-      "tp": 0.63986
+      "sl": 0.886275,
+      "tp": 0.97263
     }
   ],
   "top_opportunities": [
@@ -34,17 +34,6 @@
       "ghana": "F&G:12"
     },
     {
-      "symbol": "TAOUSDT",
-      "signal": "BUY",
-      "score": 31,
-      "tech": 28,
-      "fund": 35,
-      "market": "crypto",
-      "price": 273.8,
-      "reason": "F&G:12",
-      "ghana": "F&G:12"
-    },
-    {
       "symbol": "FILUSDT",
       "signal": "BUY",
       "score": 30,
@@ -52,17 +41,6 @@
       "fund": 35,
       "market": "crypto",
       "price": 0.91,
-      "reason": "F&G:12",
-      "ghana": "F&G:12"
-    },
-    {
-      "symbol": "ZECUSDT",
-      "signal": "BUY",
-      "score": 27,
-      "tech": 21,
-      "fund": 35,
-      "market": "crypto",
-      "price": 226.9,
       "reason": "F&G:12",
       "ghana": "F&G:12"
     },
@@ -84,9 +62,20 @@
       "tech": -55,
       "fund": 35,
       "market": "crypto",
-      "price": 0.3128,
+      "price": 0.3127,
       "reason": "F&G:12",
       "ghana": "F&G:12"
+    },
+    {
+      "symbol": "TAOUSDT",
+      "signal": "HOLD",
+      "score": 10,
+      "tech": 18,
+      "fund": 0,
+      "market": "crypto",
+      "price": 273.5,
+      "reason": "Technical score too weak for AI analysis",
+      "ghana": "No action needed"
     },
     {
       "symbol": "BTCUSDT",
@@ -95,7 +84,7 @@
       "tech": -14,
       "fund": 0,
       "market": "crypto",
-      "price": 70136.62,
+      "price": 70149.99,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     },
@@ -106,18 +95,18 @@
       "tech": -14,
       "fund": 0,
       "market": "crypto",
-      "price": 2145.06,
+      "price": 2145.41,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     },
     {
-      "symbol": "BNBUSDT",
+      "symbol": "ZECUSDT",
       "signal": "HOLD",
-      "score": -8,
-      "tech": -15,
+      "score": 8,
+      "tech": 15,
       "fund": 0,
       "market": "crypto",
-      "price": 641.51,
+      "price": 227.07,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     },
@@ -131,19 +120,30 @@
       "price": 9.07,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
+    },
+    {
+      "symbol": "NIGHTUSDT",
+      "signal": "HOLD",
+      "score": 7,
+      "tech": 13,
+      "fund": 0,
+      "market": "crypto",
+      "price": 0.04381,
+      "reason": "Technical score too weak for AI analysis",
+      "ghana": "No action needed"
     }
   ],
-  "buy_signals": 4,
+  "buy_signals": 1,
   "sell_signals": 0,
   "fear_greed": {
     "value": 12,
     "label": "Extreme Fear",
     "trend": "improving",
-    "ts": 1774134886.128361
+    "ts": 1774135632.1787977
   },
   "markets": {
     "crypto": "active",
     "stocks": "closed",
-    "hfm": "signal_mode"
+    "hfm": "disabled"
   }
 }
