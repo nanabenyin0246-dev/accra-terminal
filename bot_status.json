@@ -1,10 +1,10 @@
 {
-  "timestamp": "2026-03-21T21:04:24.554931",
-  "cycle": 67,
+  "timestamp": "2026-03-21T21:04:57.106303",
+  "cycle": 252,
   "strategy": "balanced",
   "market_condition": "neutral",
   "assets_scanned": 30,
-  "open_trades": 1,
+  "open_trades": 2,
   "open_positions": [
     {
       "symbol": "COPPER",
@@ -12,17 +12,24 @@
       "market": "hfm",
       "sl": 4.053,
       "tp": 4.83
+    },
+    {
+      "symbol": "ETHFIUSDT",
+      "entry": 0.598,
+      "market": "crypto",
+      "sl": 0.58305,
+      "tp": 0.63986
     }
   ],
   "top_opportunities": [
     {
       "symbol": "NIGHTUSDT",
       "signal": "BUY",
-      "score": 30,
-      "tech": 26,
+      "score": 33,
+      "tech": 31,
       "fund": 35,
       "market": "crypto",
-      "price": 0.04435,
+      "price": 0.04442,
       "reason": "F&G:12",
       "ghana": "F&G:12"
     },
@@ -33,7 +40,7 @@
       "tech": 23,
       "fund": 35,
       "market": "crypto",
-      "price": 273.7,
+      "price": 273.5,
       "reason": "F&G:12",
       "ghana": "F&G:12"
     },
@@ -44,7 +51,7 @@
       "tech": 23,
       "fund": 35,
       "market": "crypto",
-      "price": 0.6,
+      "price": 0.599,
       "reason": "F&G:12",
       "ghana": "F&G:12"
     },
@@ -60,13 +67,24 @@
       "ghana": "F&G:12"
     },
     {
+      "symbol": "BNBUSDT",
+      "signal": "HOLD",
+      "score": -12,
+      "tech": -50,
+      "fund": 35,
+      "market": "crypto",
+      "price": 642.24,
+      "reason": "F&G:12",
+      "ghana": "F&G:12"
+    },
+    {
       "symbol": "BCHUSDT",
       "signal": "HOLD",
       "score": -12,
       "tech": -50,
       "fund": 35,
       "market": "crypto",
-      "price": 468.1,
+      "price": 468.2,
       "reason": "F&G:12",
       "ghana": "F&G:12"
     },
@@ -93,28 +111,6 @@
       "ghana": "No action needed"
     },
     {
-      "symbol": "SOLUSDT",
-      "signal": "HOLD",
-      "score": -9,
-      "tech": -45,
-      "fund": 35,
-      "market": "crypto",
-      "price": 90.09,
-      "reason": "F&G:12",
-      "ghana": "F&G:12"
-    },
-    {
-      "symbol": "BNBUSDT",
-      "signal": "HOLD",
-      "score": -9,
-      "tech": -45,
-      "fund": 35,
-      "market": "crypto",
-      "price": 642.18,
-      "reason": "F&G:12",
-      "ghana": "F&G:12"
-    },
-    {
       "symbol": "ANIMEUSDT",
       "signal": "HOLD",
       "score": -9,
@@ -124,15 +120,26 @@
       "price": 0.00516,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
+    },
+    {
+      "symbol": "ZECUSDT",
+      "signal": "HOLD",
+      "score": 8,
+      "tech": 15,
+      "fund": 0,
+      "market": "crypto",
+      "price": 232.12,
+      "reason": "Technical score too weak for AI analysis",
+      "ghana": "No action needed"
     }
   ],
-  "buy_signals": 4,
+  "buy_signals": 3,
   "sell_signals": 0,
   "fear_greed": {
     "value": 12,
     "label": "Extreme Fear",
     "trend": "improving",
-    "ts": 1774123714.1439946
+    "ts": 1774123747.7951787
   },
   "markets": {
     "crypto": "active",
