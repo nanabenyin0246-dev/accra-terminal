@@ -1,11 +1,26 @@
 {
-  "timestamp": "2026-03-21T23:22:36.418452",
-  "cycle": 51,
+  "timestamp": "2026-03-21T23:22:39.274766",
+  "cycle": 391,
   "strategy": "balanced",
   "market_condition": "neutral",
   "assets_scanned": 30,
-  "open_trades": 0,
-  "open_positions": [],
+  "open_trades": 2,
+  "open_positions": [
+    {
+      "symbol": "COPPER",
+      "entry": 4.2,
+      "market": "hfm",
+      "sl": 4.053,
+      "tp": 4.83
+    },
+    {
+      "symbol": "ETHFIUSDT",
+      "entry": 0.598,
+      "market": "crypto",
+      "sl": 0.58305,
+      "tp": 0.63986
+    }
+  ],
   "top_opportunities": [
     {
       "symbol": "TAOUSDT",
@@ -14,7 +29,7 @@
       "tech": 28,
       "fund": 35,
       "market": "crypto",
-      "price": 274.2,
+      "price": 274.1,
       "reason": "F&G:12",
       "ghana": "F&G:12"
     },
@@ -80,7 +95,7 @@
       "tech": 15,
       "fund": 0,
       "market": "crypto",
-      "price": 227.59,
+      "price": 227.56,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     },
@@ -96,17 +111,6 @@
       "ghana": "No action needed"
     },
     {
-      "symbol": "APTUSDT",
-      "signal": "HOLD",
-      "score": -8,
-      "tech": -15,
-      "fund": 0,
-      "market": "crypto",
-      "price": 0.999,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
-    },
-    {
       "symbol": "AVAXUSDT",
       "signal": "HOLD",
       "score": -8,
@@ -114,6 +118,17 @@
       "fund": 0,
       "market": "crypto",
       "price": 9.48,
+      "reason": "Technical score too weak for AI analysis",
+      "ghana": "No action needed"
+    },
+    {
+      "symbol": "NIGHTUSDT",
+      "signal": "HOLD",
+      "score": 7,
+      "tech": 13,
+      "fund": 0,
+      "market": "crypto",
+      "price": 0.04387,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     }
@@ -124,11 +139,11 @@
     "value": 12,
     "label": "Extreme Fear",
     "trend": "improving",
-    "ts": 1774135044.3598099
+    "ts": 1774134886.128361
   },
   "markets": {
     "crypto": "active",
     "stocks": "closed",
-    "hfm": "disabled"
+    "hfm": "signal_mode"
   }
 }
