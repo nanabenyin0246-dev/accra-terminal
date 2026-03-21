@@ -1,35 +1,42 @@
 {
-  "timestamp": "2026-03-21T23:57:50.381227",
-  "cycle": 433,
-  "strategy": "balanced",
-  "market_condition": "neutral",
+  "timestamp": "2026-03-21T23:57:52.810155",
+  "cycle": 245,
+  "strategy": "aggressive",
+  "market_condition": "bull",
   "assets_scanned": 30,
-  "open_trades": 2,
+  "open_trades": 3,
   "open_positions": [
     {
-      "symbol": "COPPER",
-      "entry": 4.2,
-      "market": "hfm",
-      "sl": 4.053,
-      "tp": 4.83
+      "symbol": "KITEUSDT",
+      "entry": 0.214,
+      "market": "crypto",
+      "sl": 0.20865,
+      "tp": 0.22898
     },
     {
-      "symbol": "ETHFIUSDT",
-      "entry": 0.598,
+      "symbol": "TURBOUSDT",
+      "entry": 0.0011,
       "market": "crypto",
-      "sl": 0.58305,
-      "tp": 0.63986
+      "sl": 0.0010725,
+      "tp": 0.001177
+    },
+    {
+      "symbol": "FILUSDT",
+      "entry": 0.879,
+      "market": "crypto",
+      "sl": 0.857025,
+      "tp": 0.94053
     }
   ],
   "top_opportunities": [
     {
       "symbol": "FILUSDT",
       "signal": "BUY",
-      "score": 71,
-      "tech": 100,
+      "score": 67,
+      "tech": 93,
       "fund": 35,
       "market": "crypto",
-      "price": 0.879,
+      "price": 0.872,
       "reason": "F&G:12",
       "ghana": "F&G:12"
     },
@@ -40,7 +47,7 @@
       "tech": 62,
       "fund": 35,
       "market": "crypto",
-      "price": 0.0953,
+      "price": 0.095,
       "reason": "F&G:12",
       "ghana": "F&G:12"
     },
@@ -62,18 +69,7 @@
       "tech": 55,
       "fund": 35,
       "market": "crypto",
-      "price": 219.35,
-      "reason": "F&G:12",
-      "ghana": "F&G:12"
-    },
-    {
-      "symbol": "LINKUSDT",
-      "signal": "BUY",
-      "score": 45,
-      "tech": 54,
-      "fund": 35,
-      "market": "crypto",
-      "price": 8.82,
+      "price": 218.68,
       "reason": "F&G:12",
       "ghana": "F&G:12"
     },
@@ -84,66 +80,77 @@
       "tech": 45,
       "fund": 35,
       "market": "crypto",
-      "price": 0.2139,
+      "price": 0.2141,
       "reason": "F&G:12",
       "ghana": "F&G:12"
     },
     {
       "symbol": "BTCUSDT",
-      "signal": "BUY",
+      "signal": "HOLD",
       "score": 37,
       "tech": 39,
       "fund": 35,
       "market": "crypto",
-      "price": 68905.89,
+      "price": 68628.01,
+      "reason": "F&G:12",
+      "ghana": "F&G:12"
+    },
+    {
+      "symbol": "LINKUSDT",
+      "signal": "HOLD",
+      "score": 37,
+      "tech": 39,
+      "fund": 35,
+      "market": "crypto",
+      "price": 8.77,
       "reason": "F&G:12",
       "ghana": "F&G:12"
     },
     {
       "symbol": "AVAXUSDT",
-      "signal": "BUY",
+      "signal": "HOLD",
       "score": 37,
       "tech": 39,
       "fund": 35,
       "market": "crypto",
-      "price": 9.2,
+      "price": 9.17,
       "reason": "F&G:12",
       "ghana": "F&G:12"
     },
     {
       "symbol": "BNBUSDT",
-      "signal": "BUY",
+      "signal": "HOLD",
       "score": 33,
       "tech": 32,
       "fund": 35,
       "market": "crypto",
-      "price": 630.12,
+      "price": 628.01,
       "reason": "F&G:12",
       "ghana": "F&G:12"
     },
     {
       "symbol": "SOLUSDT",
-      "signal": "BUY",
+      "signal": "HOLD",
       "score": 32,
       "tech": 29,
       "fund": 35,
       "market": "crypto",
-      "price": 87.47,
+      "price": 87.21,
       "reason": "F&G:12",
       "ghana": "F&G:12"
     }
   ],
-  "buy_signals": 14,
+  "buy_signals": 2,
   "sell_signals": 0,
   "fear_greed": {
     "value": 12,
     "label": "Extreme Fear",
     "trend": "improving",
-    "ts": 1774134886.128361
+    "ts": 1774135632.1787977
   },
   "markets": {
     "crypto": "active",
     "stocks": "closed",
-    "hfm": "signal_mode"
+    "hfm": "disabled"
   }
 }
