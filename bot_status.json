@@ -1,31 +1,24 @@
 {
-  "timestamp": "2026-03-21T23:47:53.867627",
-  "cycle": 174,
+  "timestamp": "2026-03-21T23:47:55.375416",
+  "cycle": 424,
   "strategy": "balanced",
   "market_condition": "neutral",
   "assets_scanned": 30,
-  "open_trades": 3,
+  "open_trades": 2,
   "open_positions": [
     {
-      "symbol": "TAOUSDT",
-      "entry": 273.8,
-      "market": "crypto",
-      "sl": 266.955,
-      "tp": 292.966
+      "symbol": "COPPER",
+      "entry": 4.2,
+      "market": "hfm",
+      "sl": 4.053,
+      "tp": 4.83
     },
     {
-      "symbol": "FILUSDT",
-      "entry": 0.909,
+      "symbol": "ETHFIUSDT",
+      "entry": 0.598,
       "market": "crypto",
-      "sl": 0.886275,
-      "tp": 0.97263
-    },
-    {
-      "symbol": "KITEUSDT",
-      "entry": 0.214,
-      "market": "crypto",
-      "sl": 0.20865,
-      "tp": 0.22898
+      "sl": 0.58305,
+      "tp": 0.63986
     }
   ],
   "top_opportunities": [
@@ -80,7 +73,7 @@
       "tech": 27,
       "fund": 35,
       "market": "crypto",
-      "price": 69783.99,
+      "price": 69815.91,
       "reason": "F&G:12",
       "ghana": "F&G:12"
     },
@@ -91,18 +84,29 @@
       "tech": 27,
       "fund": 35,
       "market": "crypto",
-      "price": 225.58,
+      "price": 225.87,
       "reason": "F&G:12",
       "ghana": "F&G:12"
     },
     {
-      "symbol": "SUIUSDT",
+      "symbol": "ADAUSDT",
       "signal": "BUY",
       "score": 31,
       "tech": 27,
       "fund": 35,
       "market": "crypto",
-      "price": 0.9524,
+      "price": 0.2632,
+      "reason": "F&G:12",
+      "ghana": "F&G:12"
+    },
+    {
+      "symbol": "TAOUSDT",
+      "signal": "BUY",
+      "score": 29,
+      "tech": 24,
+      "fund": 35,
+      "market": "crypto",
+      "price": 272.4,
       "reason": "F&G:12",
       "ghana": "F&G:12"
     },
@@ -118,39 +122,28 @@
       "ghana": "F&G:12"
     },
     {
-      "symbol": "ETHUSDT",
+      "symbol": "TRXUSDT",
       "signal": "HOLD",
-      "score": -10,
-      "tech": -18,
-      "fund": 0,
+      "score": -17,
+      "tech": -60,
+      "fund": 35,
       "market": "crypto",
-      "price": 2130.69,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
-    },
-    {
-      "symbol": "SOLUSDT",
-      "signal": "HOLD",
-      "score": -10,
-      "tech": -18,
-      "fund": 0,
-      "market": "crypto",
-      "price": 89.17,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
+      "price": 0.3126,
+      "reason": "F&G:12",
+      "ghana": "F&G:12"
     }
   ],
-  "buy_signals": 6,
+  "buy_signals": 9,
   "sell_signals": 0,
   "fear_greed": {
     "value": 12,
     "label": "Extreme Fear",
     "trend": "improving",
-    "ts": 1774135632.1787977
+    "ts": 1774134886.128361
   },
   "markets": {
     "crypto": "active",
     "stocks": "closed",
-    "hfm": "disabled"
+    "hfm": "signal_mode"
   }
 }
