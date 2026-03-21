@@ -1,11 +1,19 @@
 {
-  "timestamp": "2026-03-21T23:27:12.290294",
-  "cycle": 92,
+  "timestamp": "2026-03-21T23:27:16.771927",
+  "cycle": 1,
   "strategy": "balanced",
   "market_condition": "neutral",
   "assets_scanned": 30,
-  "open_trades": 0,
-  "open_positions": [],
+  "open_trades": 1,
+  "open_positions": [
+    {
+      "symbol": "TAOUSDT",
+      "entry": 273.8,
+      "market": "crypto",
+      "sl": 266.955,
+      "tp": 292.966
+    }
+  ],
   "top_opportunities": [
     {
       "symbol": "TURBOUSDT",
@@ -15,6 +23,17 @@
       "fund": 35,
       "market": "crypto",
       "price": 0.001131,
+      "reason": "F&G:12",
+      "ghana": "F&G:12"
+    },
+    {
+      "symbol": "TAOUSDT",
+      "signal": "BUY",
+      "score": 31,
+      "tech": 28,
+      "fund": 35,
+      "market": "crypto",
+      "price": 273.8,
       "reason": "F&G:12",
       "ghana": "F&G:12"
     },
@@ -39,17 +58,6 @@
       "price": 0.0052,
       "reason": "F&G:12",
       "ghana": "F&G:12"
-    },
-    {
-      "symbol": "TAOUSDT",
-      "signal": "HOLD",
-      "score": 10,
-      "tech": 18,
-      "fund": 0,
-      "market": "crypto",
-      "price": 273.7,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
     },
     {
       "symbol": "FILUSDT",
@@ -80,7 +88,7 @@
       "tech": -14,
       "fund": 0,
       "market": "crypto",
-      "price": 2145.0,
+      "price": 2145.11,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     },
@@ -91,18 +99,7 @@
       "tech": -15,
       "fund": 0,
       "market": "crypto",
-      "price": 0.3121,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
-    },
-    {
-      "symbol": "BNBUSDT",
-      "signal": "HOLD",
-      "score": -8,
-      "tech": -15,
-      "fund": 0,
-      "market": "crypto",
-      "price": 641.48,
+      "price": 0.3122,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     },
@@ -116,15 +113,26 @@
       "price": 9.47,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
+    },
+    {
+      "symbol": "NIGHTUSDT",
+      "signal": "HOLD",
+      "score": 7,
+      "tech": 13,
+      "fund": 0,
+      "market": "crypto",
+      "price": 0.04386,
+      "reason": "Technical score too weak for AI analysis",
+      "ghana": "No action needed"
     }
   ],
-  "buy_signals": 3,
+  "buy_signals": 4,
   "sell_signals": 0,
   "fear_greed": {
     "value": 12,
     "label": "Extreme Fear",
     "trend": "improving",
-    "ts": 1774135044.3598099
+    "ts": 1774135632.1787977
   },
   "markets": {
     "crypto": "active",
