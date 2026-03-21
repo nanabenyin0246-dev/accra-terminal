@@ -1,24 +1,24 @@
 {
-  "timestamp": "2026-03-21T23:45:26.835853",
-  "cycle": 158,
+  "timestamp": "2026-03-21T23:45:28.508254",
+  "cycle": 422,
   "strategy": "balanced",
   "market_condition": "neutral",
   "assets_scanned": 30,
   "open_trades": 2,
   "open_positions": [
     {
-      "symbol": "TAOUSDT",
-      "entry": 273.8,
-      "market": "crypto",
-      "sl": 266.955,
-      "tp": 292.966
+      "symbol": "COPPER",
+      "entry": 4.2,
+      "market": "hfm",
+      "sl": 4.053,
+      "tp": 4.83
     },
     {
-      "symbol": "FILUSDT",
-      "entry": 0.909,
+      "symbol": "ETHFIUSDT",
+      "entry": 0.598,
       "market": "crypto",
-      "sl": 0.886275,
-      "tp": 0.97263
+      "sl": 0.58305,
+      "tp": 0.63986
     }
   ],
   "top_opportunities": [
@@ -47,22 +47,22 @@
     {
       "symbol": "FILUSDT",
       "signal": "BUY",
-      "score": 33,
-      "tech": 32,
+      "score": 30,
+      "tech": 26,
       "fund": 35,
       "market": "crypto",
-      "price": 0.909,
+      "price": 0.91,
       "reason": "F&G:12",
       "ghana": "F&G:12"
     },
     {
-      "symbol": "XRPUSDT",
-      "signal": "SELL",
-      "score": -27,
-      "tech": -77,
+      "symbol": "LTCUSDT",
+      "signal": "HOLD",
+      "score": -16,
+      "tech": -57,
       "fund": 35,
       "market": "crypto",
-      "price": 1.4363,
+      "price": 55.66,
       "reason": "F&G:12",
       "ghana": "F&G:12"
     },
@@ -73,7 +73,7 @@
       "tech": -55,
       "fund": 35,
       "market": "crypto",
-      "price": 0.313,
+      "price": 0.3132,
       "reason": "F&G:12",
       "ghana": "F&G:12"
     },
@@ -84,7 +84,7 @@
       "tech": 18,
       "fund": 0,
       "market": "crypto",
-      "price": 273.1,
+      "price": 272.9,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     },
@@ -95,7 +95,7 @@
       "tech": -45,
       "fund": 35,
       "market": "crypto",
-      "price": 0.2235,
+      "price": 0.2234,
       "reason": "F&G:12",
       "ghana": "F&G:12"
     },
@@ -111,39 +111,39 @@
       "ghana": "No action needed"
     },
     {
-      "symbol": "ETHUSDT",
-      "signal": "HOLD",
-      "score": -8,
-      "tech": -14,
-      "fund": 0,
-      "market": "crypto",
-      "price": 2145.25,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
-    },
-    {
       "symbol": "ZECUSDT",
       "signal": "HOLD",
       "score": 8,
       "tech": 15,
       "fund": 0,
       "market": "crypto",
-      "price": 227.48,
+      "price": 227.62,
+      "reason": "Technical score too weak for AI analysis",
+      "ghana": "No action needed"
+    },
+    {
+      "symbol": "LINKUSDT",
+      "signal": "HOLD",
+      "score": -8,
+      "tech": -15,
+      "fund": 0,
+      "market": "crypto",
+      "price": 9.07,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     }
   ],
-  "buy_signals": 2,
+  "buy_signals": 3,
   "sell_signals": 0,
   "fear_greed": {
     "value": 12,
     "label": "Extreme Fear",
     "trend": "improving",
-    "ts": 1774135632.1787977
+    "ts": 1774134886.128361
   },
   "markets": {
     "crypto": "active",
     "stocks": "closed",
-    "hfm": "disabled"
+    "hfm": "signal_mode"
   }
 }
