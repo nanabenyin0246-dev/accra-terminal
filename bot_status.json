@@ -1,8 +1,8 @@
 {
-  "timestamp": "2026-03-22T02:47:21.557422",
-  "cycle": 1340,
-  "strategy": "aggressive",
-  "market_condition": "bear",
+  "timestamp": "2026-03-22T02:47:25.954847",
+  "cycle": 1341,
+  "strategy": "balanced",
+  "market_condition": "neutral",
   "assets_scanned": 15,
   "open_trades": 3,
   "open_positions": [
@@ -42,7 +42,7 @@
     },
     {
       "symbol": "ZECUSDT",
-      "signal": "HOLD",
+      "signal": "BUY",
       "score": 35,
       "tech": 35,
       "fund": 35,
@@ -53,7 +53,7 @@
     },
     {
       "symbol": "ADAUSDT",
-      "signal": "HOLD",
+      "signal": "BUY",
       "score": 30,
       "tech": 25,
       "fund": 35,
@@ -61,6 +61,17 @@
       "price": 0.2575,
       "reason": "F&G:12",
       "ghana": "F&G:12"
+    },
+    {
+      "symbol": "TAOUSDT",
+      "signal": "HOLD",
+      "score": 10,
+      "tech": 18,
+      "fund": 0,
+      "market": "crypto",
+      "price": 275.3,
+      "reason": "Technical score too weak for AI analysis",
+      "ghana": "No action needed"
     },
     {
       "symbol": "PEPEUSDT",
@@ -81,6 +92,17 @@
       "fund": 0,
       "market": "crypto",
       "price": 0.3176,
+      "reason": "Technical score too weak for AI analysis",
+      "ghana": "No action needed"
+    },
+    {
+      "symbol": "ETHUSDT",
+      "signal": "HOLD",
+      "score": -8,
+      "tech": -14,
+      "fund": 0,
+      "market": "crypto",
+      "price": 2100.83,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     },
@@ -107,17 +129,6 @@
       "ghana": "F&G:12"
     },
     {
-      "symbol": "ETHUSDT",
-      "signal": "HOLD",
-      "score": 5,
-      "tech": -20,
-      "fund": 35,
-      "market": "crypto",
-      "price": 2100.27,
-      "reason": "F&G:12",
-      "ghana": "F&G:12"
-    },
-    {
       "symbol": "XRPUSDT",
       "signal": "HOLD",
       "score": 3,
@@ -127,20 +138,9 @@
       "price": 1.4143,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
-    },
-    {
-      "symbol": "BNBUSDT",
-      "signal": "HOLD",
-      "score": 3,
-      "tech": -23,
-      "fund": 35,
-      "market": "crypto",
-      "price": 633.56,
-      "reason": "F&G:12",
-      "ghana": "F&G:12"
     }
   ],
-  "buy_signals": 1,
+  "buy_signals": 3,
   "sell_signals": 0,
   "fear_greed": {
     "value": 10,
