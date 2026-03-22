@@ -1,27 +1,45 @@
 {
-  "timestamp": "2026-03-22T01:15:35.142229",
-  "cycle": 3326,
-  "strategy": "balanced",
-  "market_condition": "neutral",
+  "timestamp": "2026-03-22T01:15:40.610105",
+  "cycle": 705,
+  "strategy": "aggressive",
+  "market_condition": "bear",
   "assets_scanned": 30,
-  "open_trades": 2,
+  "open_trades": 3,
   "open_positions": [
     {
-      "symbol": "COPPER",
-      "entry": 4.2,
-      "market": "hfm",
-      "sl": 4.053,
-      "tp": 4.83
+      "symbol": "KITEUSDT",
+      "entry": 0.214,
+      "market": "crypto",
+      "sl": 0.20865,
+      "tp": 0.22898
     },
     {
-      "symbol": "ETHFIUSDT",
-      "entry": 0.598,
+      "symbol": "TURBOUSDT",
+      "entry": 0.0011,
       "market": "crypto",
-      "sl": 0.58305,
-      "tp": 0.63986
+      "sl": 0.0010725,
+      "tp": 0.001177
+    },
+    {
+      "symbol": "FILUSDT",
+      "entry": 0.879,
+      "market": "crypto",
+      "sl": 0.857025,
+      "tp": 0.94053
     }
   ],
   "top_opportunities": [
+    {
+      "symbol": "ZECUSDT",
+      "signal": "BUY",
+      "score": 43,
+      "tech": 50,
+      "fund": 35,
+      "market": "crypto",
+      "price": 221.46,
+      "reason": "F&G:12",
+      "ghana": "F&G:12"
+    },
     {
       "symbol": "TAOUSDT",
       "signal": "BUY",
@@ -29,35 +47,13 @@
       "tech": 48,
       "fund": 35,
       "market": "crypto",
-      "price": 275.6,
-      "reason": "F&G:12",
-      "ghana": "F&G:12"
-    },
-    {
-      "symbol": "ROBOUSDT",
-      "signal": "BUY",
-      "score": 41,
-      "tech": 46,
-      "fund": 35,
-      "market": "crypto",
-      "price": 0.02416,
-      "reason": "F&G:12",
-      "ghana": "F&G:12"
-    },
-    {
-      "symbol": "XRPUSDT",
-      "signal": "BUY",
-      "score": 36,
-      "tech": 37,
-      "fund": 35,
-      "market": "crypto",
-      "price": 1.4115,
+      "price": 275.4,
       "reason": "F&G:12",
       "ghana": "F&G:12"
     },
     {
       "symbol": "AVAXUSDT",
-      "signal": "BUY",
+      "signal": "HOLD",
       "score": 36,
       "tech": 37,
       "fund": 35,
@@ -68,18 +64,18 @@
     },
     {
       "symbol": "BTCUSDT",
-      "signal": "BUY",
+      "signal": "HOLD",
       "score": 35,
       "tech": 35,
       "fund": 35,
       "market": "crypto",
-      "price": 68946.48,
+      "price": 68939.05,
       "reason": "F&G:12",
       "ghana": "F&G:12"
     },
     {
       "symbol": "ASTERUSDT",
-      "signal": "BUY",
+      "signal": "HOLD",
       "score": 35,
       "tech": 35,
       "fund": 35,
@@ -90,7 +86,7 @@
     },
     {
       "symbol": "WLFIUSDT",
-      "signal": "BUY",
+      "signal": "HOLD",
       "score": 34,
       "tech": 33,
       "fund": 35,
@@ -100,50 +96,61 @@
       "ghana": "F&G:12"
     },
     {
-      "symbol": "SOLUSDT",
-      "signal": "BUY",
+      "symbol": "XRPUSDT",
+      "signal": "HOLD",
       "score": 30,
       "tech": 25,
       "fund": 35,
       "market": "crypto",
-      "price": 87.31,
+      "price": 1.4111,
       "reason": "F&G:12",
       "ghana": "F&G:12"
     },
     {
-      "symbol": "DOGEUSDT",
-      "signal": "BUY",
+      "symbol": "LTCUSDT",
+      "signal": "HOLD",
       "score": 30,
       "tech": 25,
       "fund": 35,
       "market": "crypto",
-      "price": 0.09135,
+      "price": 54.66,
       "reason": "F&G:12",
       "ghana": "F&G:12"
     },
     {
-      "symbol": "ZECUSDT",
-      "signal": "BUY",
-      "score": 30,
-      "tech": 25,
+      "symbol": "ADAUSDT",
+      "signal": "HOLD",
+      "score": 27,
+      "tech": 20,
       "fund": 35,
       "market": "crypto",
-      "price": 221.77,
+      "price": 0.2569,
+      "reason": "F&G:12",
+      "ghana": "F&G:12"
+    },
+    {
+      "symbol": "SUIUSDT",
+      "signal": "HOLD",
+      "score": 27,
+      "tech": 20,
+      "fund": 35,
+      "market": "crypto",
+      "price": 0.9327,
       "reason": "F&G:12",
       "ghana": "F&G:12"
     }
   ],
-  "buy_signals": 13,
+  "buy_signals": 2,
   "sell_signals": 0,
   "fear_greed": {
     "value": 10,
     "label": "Extreme Fear",
     "trend": "declining",
-    "ts": 1774142096.1740904
+    "ts": 1774139232.9318378
   },
   "markets": {
     "crypto": "active",
     "stocks": "closed",
-    "hfm": "signal_mode"
+    "hfm": "disabled"
   }
 }
