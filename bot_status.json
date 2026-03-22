@@ -1,59 +1,125 @@
 {
-  "timestamp": "2026-03-22T00:15:40.658105",
-  "cycle": 3263,
-  "strategy": "conservative",
-  "market_condition": "bear",
-  "assets_scanned": 5,
+  "timestamp": "2026-03-22T00:15:42.685496",
+  "cycle": 359,
+  "strategy": "balanced",
+  "market_condition": "neutral",
+  "assets_scanned": 30,
   "open_trades": 3,
   "open_positions": [
     {
-      "symbol": "COPPER",
-      "entry": 4.2,
-      "market": "hfm",
-      "sl": 4.053,
-      "tp": 4.83
-    },
-    {
-      "symbol": "ETHFIUSDT",
-      "entry": 0.598,
+      "symbol": "KITEUSDT",
+      "entry": 0.214,
       "market": "crypto",
-      "sl": 0.58305,
-      "tp": 0.63986
+      "sl": 0.20865,
+      "tp": 0.22898
     },
     {
-      "symbol": "USDCHF",
-      "entry": 0.88,
-      "market": "hfm",
-      "sl": 0.8492,
-      "tp": 1.012
+      "symbol": "TURBOUSDT",
+      "entry": 0.0011,
+      "market": "crypto",
+      "sl": 0.0010725,
+      "tp": 0.001177
+    },
+    {
+      "symbol": "FILUSDT",
+      "entry": 0.879,
+      "market": "crypto",
+      "sl": 0.857025,
+      "tp": 0.94053
     }
   ],
   "top_opportunities": [
     {
+      "symbol": "ZECUSDT",
+      "signal": "BUY",
+      "score": 40,
+      "tech": 45,
+      "fund": 35,
+      "market": "crypto",
+      "price": 220.85,
+      "reason": "F&G:12",
+      "ghana": "F&G:12"
+    },
+    {
+      "symbol": "WLFIUSDT",
+      "signal": "BUY",
+      "score": 39,
+      "tech": 43,
+      "fund": 35,
+      "market": "crypto",
+      "price": 0.0966,
+      "reason": "F&G:12",
+      "ghana": "F&G:12"
+    },
+    {
+      "symbol": "BNBUSDT",
+      "signal": "BUY",
+      "score": 37,
+      "tech": 39,
+      "fund": 35,
+      "market": "crypto",
+      "price": 628.38,
+      "reason": "F&G:12",
+      "ghana": "F&G:12"
+    },
+    {
+      "symbol": "BCHUSDT",
+      "signal": "BUY",
+      "score": 37,
+      "tech": 39,
+      "fund": 35,
+      "market": "crypto",
+      "price": 459.3,
+      "reason": "F&G:12",
+      "ghana": "F&G:12"
+    },
+    {
       "symbol": "BTCUSDT",
-      "signal": "HOLD",
+      "signal": "BUY",
       "score": 32,
       "tech": 30,
       "fund": 35,
       "market": "crypto",
-      "price": 68834.25,
+      "price": 68820.0,
+      "reason": "F&G:12",
+      "ghana": "F&G:12"
+    },
+    {
+      "symbol": "LTCUSDT",
+      "signal": "BUY",
+      "score": 32,
+      "tech": 30,
+      "fund": 35,
+      "market": "crypto",
+      "price": 54.62,
+      "reason": "F&G:12",
+      "ghana": "F&G:12"
+    },
+    {
+      "symbol": "ROBOUSDT",
+      "signal": "BUY",
+      "score": 32,
+      "tech": 30,
+      "fund": 35,
+      "market": "crypto",
+      "price": 0.02437,
       "reason": "F&G:12",
       "ghana": "F&G:12"
     },
     {
       "symbol": "SOLUSDT",
-      "signal": "HOLD",
+      "signal": "BUY",
       "score": 31,
       "tech": 27,
       "fund": 35,
       "market": "crypto",
-      "price": 86.98,
+      "price": 86.97,
       "reason": "F&G:12",
       "ghana": "F&G:12"
     },
     {
       "symbol": "XRPUSDT",
-      "signal": "HOLD",
+      "signal": "BUY",
       "score": 30,
       "tech": 25,
       "fund": 35,
@@ -63,39 +129,28 @@
       "ghana": "F&G:12"
     },
     {
-      "symbol": "ETHUSDT",
-      "signal": "HOLD",
-      "score": 27,
-      "tech": 21,
+      "symbol": "TURBOUSDT",
+      "signal": "BUY",
+      "score": 30,
+      "tech": 25,
       "fund": 35,
       "market": "crypto",
-      "price": 2075.4,
-      "reason": "F&G:12",
-      "ghana": "F&G:12"
-    },
-    {
-      "symbol": "NIGHTUSDT",
-      "signal": "HOLD",
-      "score": -7,
-      "tech": -42,
-      "fund": 35,
-      "market": "crypto",
-      "price": 0.04304,
+      "price": 0.001097,
       "reason": "F&G:12",
       "ghana": "F&G:12"
     }
   ],
-  "buy_signals": 0,
+  "buy_signals": 12,
   "sell_signals": 0,
   "fear_greed": {
-    "value": 10,
+    "value": 12,
     "label": "Extreme Fear",
-    "trend": "declining",
-    "ts": 1774138489.0321722
+    "trend": "improving",
+    "ts": 1774135632.1787977
   },
   "markets": {
     "crypto": "active",
     "stocks": "closed",
-    "hfm": "signal_mode"
+    "hfm": "disabled"
   }
 }
