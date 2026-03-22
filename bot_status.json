@@ -1,56 +1,27 @@
 {
-  "timestamp": "2026-03-22T00:23:23.389334",
-  "cycle": 408,
+  "timestamp": "2026-03-22T00:23:30.443567",
+  "cycle": 3271,
   "strategy": "balanced",
   "market_condition": "neutral",
-  "assets_scanned": 30,
-  "open_trades": 3,
+  "assets_scanned": 5,
+  "open_trades": 2,
   "open_positions": [
     {
-      "symbol": "KITEUSDT",
-      "entry": 0.214,
-      "market": "crypto",
-      "sl": 0.20865,
-      "tp": 0.22898
+      "symbol": "COPPER",
+      "entry": 4.2,
+      "market": "hfm",
+      "sl": 4.053,
+      "tp": 4.83
     },
     {
-      "symbol": "TURBOUSDT",
-      "entry": 0.0011,
+      "symbol": "ETHFIUSDT",
+      "entry": 0.598,
       "market": "crypto",
-      "sl": 0.0010725,
-      "tp": 0.001177
-    },
-    {
-      "symbol": "FILUSDT",
-      "entry": 0.879,
-      "market": "crypto",
-      "sl": 0.857025,
-      "tp": 0.94053
+      "sl": 0.58305,
+      "tp": 0.63986
     }
   ],
   "top_opportunities": [
-    {
-      "symbol": "ZECUSDT",
-      "signal": "BUY",
-      "score": 40,
-      "tech": 45,
-      "fund": 35,
-      "market": "crypto",
-      "price": 220.91,
-      "reason": "F&G:12",
-      "ghana": "F&G:12"
-    },
-    {
-      "symbol": "WLFIUSDT",
-      "signal": "BUY",
-      "score": 40,
-      "tech": 45,
-      "fund": 35,
-      "market": "crypto",
-      "price": 0.0961,
-      "reason": "F&G:12",
-      "ghana": "F&G:12"
-    },
     {
       "symbol": "XRPUSDT",
       "signal": "BUY",
@@ -58,18 +29,7 @@
       "tech": 42,
       "fund": 35,
       "market": "crypto",
-      "price": 1.4111,
-      "reason": "F&G:12",
-      "ghana": "F&G:12"
-    },
-    {
-      "symbol": "BCHUSDT",
-      "signal": "BUY",
-      "score": 37,
-      "tech": 39,
-      "fund": 35,
-      "market": "crypto",
-      "price": 459.8,
+      "price": 1.4109,
       "reason": "F&G:12",
       "ghana": "F&G:12"
     },
@@ -85,72 +45,50 @@
       "ghana": "F&G:12"
     },
     {
-      "symbol": "LTCUSDT",
-      "signal": "BUY",
-      "score": 32,
-      "tech": 30,
-      "fund": 35,
-      "market": "crypto",
-      "price": 54.72,
-      "reason": "F&G:12",
-      "ghana": "F&G:12"
-    },
-    {
-      "symbol": "TURBOUSDT",
-      "signal": "BUY",
-      "score": 30,
-      "tech": 25,
-      "fund": 35,
-      "market": "crypto",
-      "price": 0.001094,
-      "reason": "F&G:12",
-      "ghana": "F&G:12"
-    },
-    {
-      "symbol": "DOGEUSDT",
-      "signal": "BUY",
-      "score": 28,
-      "tech": 22,
-      "fund": 35,
-      "market": "crypto",
-      "price": 0.09149,
-      "reason": "F&G:12",
-      "ghana": "F&G:12"
-    },
-    {
-      "symbol": "BNBUSDT",
-      "signal": "BUY",
-      "score": 27,
-      "tech": 20,
-      "fund": 35,
-      "market": "crypto",
-      "price": 629.49,
-      "reason": "F&G:12",
-      "ghana": "F&G:12"
-    },
-    {
-      "symbol": "RDNTUSDT",
+      "symbol": "ETHUSDT",
       "signal": "HOLD",
-      "score": 10,
-      "tech": 18,
+      "score": 8,
+      "tech": 15,
       "fund": 0,
       "market": "crypto",
-      "price": 0.00554,
+      "price": 2078.6,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
+    },
+    {
+      "symbol": "SOLUSDT",
+      "signal": "HOLD",
+      "score": 8,
+      "tech": 15,
+      "fund": 0,
+      "market": "crypto",
+      "price": 87.2,
+      "reason": "Technical score too weak for AI analysis",
+      "ghana": "No action needed"
+    },
+    {
+      "symbol": "NIGHTUSDT",
+      "signal": "HOLD",
+      "score": -7,
+      "tech": -42,
+      "fund": 35,
+      "market": "crypto",
+      "price": 0.04318,
+      "reason": "F&G:12",
+      "ghana": "F&G:12"
     }
   ],
-  "buy_signals": 8,
+  "buy_signals": 2,
   "sell_signals": 0,
   "fear_greed": {
-    "value": 12,
+    "value": 10,
     "label": "Extreme Fear",
-    "trend": "improving",
-    "ts": 1774135632.1787977
+    "trend": "declining",
+    "ts": 1774138489.0321722
   },
   "markets": {
     "crypto": "active",
     "stocks": "closed",
-    "hfm": "disabled"
+    "hfm": "signal_mode"
   }
 }
