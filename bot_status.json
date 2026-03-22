@@ -1,100 +1,27 @@
 {
-  "timestamp": "2026-03-22T00:50:05.962913",
-  "cycle": 568,
+  "timestamp": "2026-03-22T00:50:12.325617",
+  "cycle": 3297,
   "strategy": "balanced",
   "market_condition": "neutral",
-  "assets_scanned": 30,
-  "open_trades": 3,
+  "assets_scanned": 5,
+  "open_trades": 2,
   "open_positions": [
     {
-      "symbol": "KITEUSDT",
-      "entry": 0.214,
-      "market": "crypto",
-      "sl": 0.20865,
-      "tp": 0.22898
+      "symbol": "COPPER",
+      "entry": 4.2,
+      "market": "hfm",
+      "sl": 4.053,
+      "tp": 4.83
     },
     {
-      "symbol": "TURBOUSDT",
-      "entry": 0.0011,
+      "symbol": "ETHFIUSDT",
+      "entry": 0.598,
       "market": "crypto",
-      "sl": 0.0010725,
-      "tp": 0.001177
-    },
-    {
-      "symbol": "FILUSDT",
-      "entry": 0.879,
-      "market": "crypto",
-      "sl": 0.857025,
-      "tp": 0.94053
+      "sl": 0.58305,
+      "tp": 0.63986
     }
   ],
   "top_opportunities": [
-    {
-      "symbol": "WLFIUSDT",
-      "signal": "BUY",
-      "score": 43,
-      "tech": 50,
-      "fund": 35,
-      "market": "crypto",
-      "price": 0.0964,
-      "reason": "F&G:12",
-      "ghana": "F&G:12"
-    },
-    {
-      "symbol": "ASTERUSDT",
-      "signal": "BUY",
-      "score": 42,
-      "tech": 47,
-      "fund": 35,
-      "market": "crypto",
-      "price": 0.657,
-      "reason": "F&G:10",
-      "ghana": "F&G:10"
-    },
-    {
-      "symbol": "ETHUSDT",
-      "signal": "BUY",
-      "score": 39,
-      "tech": 42,
-      "fund": 35,
-      "market": "crypto",
-      "price": 2091.14,
-      "reason": "F&G:12",
-      "ghana": "F&G:12"
-    },
-    {
-      "symbol": "SUIUSDT",
-      "signal": "BUY",
-      "score": 39,
-      "tech": 42,
-      "fund": 35,
-      "market": "crypto",
-      "price": 0.935,
-      "reason": "F&G:12",
-      "ghana": "F&G:12"
-    },
-    {
-      "symbol": "SOLUSDT",
-      "signal": "BUY",
-      "score": 36,
-      "tech": 37,
-      "fund": 35,
-      "market": "crypto",
-      "price": 87.59,
-      "reason": "F&G:12",
-      "ghana": "F&G:12"
-    },
-    {
-      "symbol": "ZECUSDT",
-      "signal": "BUY",
-      "score": 36,
-      "tech": 36,
-      "fund": 35,
-      "market": "crypto",
-      "price": 222.14,
-      "reason": "F&G:12",
-      "ghana": "F&G:12"
-    },
     {
       "symbol": "BTCUSDT",
       "signal": "BUY",
@@ -102,55 +29,66 @@
       "tech": 35,
       "fund": 35,
       "market": "crypto",
-      "price": 69045.85,
+      "price": 69001.01,
       "reason": "F&G:12",
       "ghana": "F&G:12"
     },
     {
-      "symbol": "LTCUSDT",
-      "signal": "BUY",
-      "score": 32,
-      "tech": 30,
-      "fund": 35,
-      "market": "crypto",
-      "price": 54.73,
-      "reason": "F&G:12",
-      "ghana": "F&G:12"
-    },
-    {
-      "symbol": "DOGEUSDT",
+      "symbol": "ETHUSDT",
       "signal": "BUY",
       "score": 31,
       "tech": 27,
       "fund": 35,
       "market": "crypto",
-      "price": 0.09169,
+      "price": 2089.72,
       "reason": "F&G:12",
       "ghana": "F&G:12"
     },
     {
-      "symbol": "AVAXUSDT",
+      "symbol": "XRPUSDT",
       "signal": "BUY",
-      "score": 31,
-      "tech": 27,
+      "score": 27,
+      "tech": 20,
       "fund": 35,
       "market": "crypto",
-      "price": 9.25,
+      "price": 1.4128,
       "reason": "F&G:12",
       "ghana": "F&G:12"
+    },
+    {
+      "symbol": "SOLUSDT",
+      "signal": "HOLD",
+      "score": 8,
+      "tech": 15,
+      "fund": 0,
+      "market": "crypto",
+      "price": 87.4,
+      "reason": "Technical score too weak for AI analysis",
+      "ghana": "No action needed"
+    },
+    {
+      "symbol": "NIGHTUSDT",
+      "signal": "HOLD",
+      "score": -4,
+      "tech": -7,
+      "fund": 0,
+      "market": "crypto",
+      "price": 0.04344,
+      "reason": "Technical score too weak for AI analysis",
+      "ghana": "No action needed"
     }
   ],
-  "buy_signals": 14,
+  "buy_signals": 3,
   "sell_signals": 0,
   "fear_greed": {
     "value": 10,
     "label": "Extreme Fear",
     "trend": "declining",
-    "ts": 1774139232.9318378
+    "ts": 1774138489.0321722
   },
   "markets": {
     "crypto": "active",
     "stocks": "closed",
-    "hfm": "disabled"
+    "hfm": "signal_mode"
   }
 }
