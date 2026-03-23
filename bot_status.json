@@ -1,8 +1,8 @@
 {
-  "timestamp": "2026-03-23T13:29:59.170085",
-  "cycle": 14224,
-  "strategy": "balanced",
-  "market_condition": "neutral",
+  "timestamp": "2026-03-23T13:30:26.885647",
+  "cycle": 14225,
+  "strategy": "aggressive",
+  "market_condition": "bear",
   "assets_scanned": 30,
   "open_trades": 6,
   "open_positions": [
@@ -52,34 +52,23 @@
   "top_opportunities": [
     {
       "symbol": "NEARUSDT",
-      "signal": "BUY",
-      "score": 29,
-      "tech": 24,
+      "signal": "HOLD",
+      "score": 32,
+      "tech": 30,
       "fund": 35,
       "market": "crypto",
-      "price": 1.299,
+      "price": 1.296,
       "reason": "F&G:8",
       "ghana": "F&G:8"
     },
     {
       "symbol": "GUNUSDT",
-      "signal": "BUY",
+      "signal": "HOLD",
       "score": 28,
       "tech": 23,
       "fund": 35,
       "market": "crypto",
-      "price": 0.02358,
-      "reason": "F&G:8",
-      "ghana": "F&G:8"
-    },
-    {
-      "symbol": "BANANAS31USDT",
-      "signal": "HOLD",
-      "score": -20,
-      "tech": -65,
-      "fund": 35,
-      "market": "crypto",
-      "price": 0.014798,
+      "price": 0.02353,
       "reason": "F&G:8",
       "ghana": "F&G:8"
     },
@@ -90,7 +79,7 @@
       "tech": -47,
       "fund": 35,
       "market": "crypto",
-      "price": 284.5,
+      "price": 284.3,
       "reason": "F&G:8",
       "ghana": "F&G:8"
     },
@@ -117,13 +106,24 @@
       "ghana": "No action needed"
     },
     {
+      "symbol": "FETUSDT",
+      "signal": "HOLD",
+      "score": -10,
+      "tech": -47,
+      "fund": 35,
+      "market": "crypto",
+      "price": 0.2192,
+      "reason": "F&G:8",
+      "ghana": "F&G:8"
+    },
+    {
       "symbol": "BTCUSDT",
       "signal": "HOLD",
       "score": -9,
       "tech": -17,
       "fund": 0,
       "market": "crypto",
-      "price": 70815.73,
+      "price": 70788.21,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     },
@@ -134,18 +134,18 @@
       "tech": -15,
       "fund": 0,
       "market": "crypto",
-      "price": 2150.21,
+      "price": 2148.5,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     },
     {
-      "symbol": "WLDUSDT",
+      "symbol": "KATUSDT",
       "signal": "HOLD",
       "score": -8,
       "tech": -14,
       "fund": 0,
       "market": "crypto",
-      "price": 0.3131,
+      "price": 0.01197,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     },
@@ -156,12 +156,12 @@
       "tech": -14,
       "fund": 0,
       "market": "crypto",
-      "price": 0.0979,
+      "price": 0.0978,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     }
   ],
-  "buy_signals": 2,
+  "buy_signals": 0,
   "sell_signals": 0,
   "fear_greed": {
     "value": 8,
@@ -171,7 +171,7 @@
   },
   "markets": {
     "crypto": "active",
-    "stocks": "closed",
+    "stocks": "open",
     "hfm": "disabled"
   }
 }
