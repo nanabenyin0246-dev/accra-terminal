@@ -1,10 +1,10 @@
 {
-  "timestamp": "2026-03-23T12:02:45.164233",
-  "cycle": 13541,
+  "timestamp": "2026-03-23T12:02:50.492819",
+  "cycle": 13542,
   "strategy": "balanced",
   "market_condition": "neutral",
   "assets_scanned": 15,
-  "open_trades": 3,
+  "open_trades": 4,
   "open_positions": [
     {
       "symbol": "KITEUSDT",
@@ -26,9 +26,27 @@
       "market": "crypto",
       "sl": 0.09438,
       "tp": 0.103576
+    },
+    {
+      "symbol": "ETHUSDT",
+      "entry": 2113.89,
+      "market": "crypto",
+      "sl": 2061.04275,
+      "tp": 2261.8623
     }
   ],
   "top_opportunities": [
+    {
+      "symbol": "ETHUSDT",
+      "signal": "BUY",
+      "score": 31,
+      "tech": 27,
+      "fund": 35,
+      "market": "crypto",
+      "price": 2113.89,
+      "reason": "F&G:8",
+      "ghana": "F&G:8"
+    },
     {
       "symbol": "NIGHTUSDT",
       "signal": "HOLD",
@@ -36,7 +54,7 @@
       "tech": -50,
       "fund": 35,
       "market": "crypto",
-      "price": 0.04876,
+      "price": 0.04878,
       "reason": "F&G:8",
       "ghana": "F&G:8"
     },
@@ -47,7 +65,18 @@
       "tech": -15,
       "fund": 0,
       "market": "crypto",
-      "price": 1.1557,
+      "price": 1.1556,
+      "reason": "Technical score too weak for AI analysis",
+      "ghana": "No action needed"
+    },
+    {
+      "symbol": "DOGEUSDT",
+      "signal": "HOLD",
+      "score": 7,
+      "tech": 13,
+      "fund": 0,
+      "market": "crypto",
+      "price": 0.09196,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     },
@@ -65,11 +94,11 @@
     {
       "symbol": "XRPUSDT",
       "signal": "HOLD",
-      "score": -4,
-      "tech": -7,
+      "score": 4,
+      "tech": 8,
       "fund": 0,
       "market": "crypto",
-      "price": 1.4036,
+      "price": 1.4027,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     },
@@ -80,18 +109,7 @@
       "tech": -7,
       "fund": 0,
       "market": "crypto",
-      "price": 636.76,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
-    },
-    {
-      "symbol": "ETHUSDT",
-      "signal": "HOLD",
-      "score": 3,
-      "tech": 6,
-      "fund": 0,
-      "market": "crypto",
-      "price": 2116.11,
+      "price": 636.44,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     },
@@ -102,7 +120,7 @@
       "tech": 6,
       "fund": 0,
       "market": "crypto",
-      "price": 0.2576,
+      "price": 0.2575,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     },
@@ -113,7 +131,7 @@
       "tech": 6,
       "fund": 0,
       "market": "crypto",
-      "price": 221.16,
+      "price": 221.03,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     },
@@ -127,20 +145,9 @@
       "price": 8.92,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
-    },
-    {
-      "symbol": "SUIUSDT",
-      "signal": "HOLD",
-      "score": 3,
-      "tech": 6,
-      "fund": 0,
-      "market": "crypto",
-      "price": 0.9351,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
     }
   ],
-  "buy_signals": 0,
+  "buy_signals": 1,
   "sell_signals": 0,
   "fear_greed": {
     "value": 8,
