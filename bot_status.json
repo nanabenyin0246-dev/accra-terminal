@@ -1,8 +1,8 @@
 {
-  "timestamp": "2026-03-24T22:05:43.049020",
-  "cycle": 24000,
-  "strategy": "aggressive",
-  "market_condition": "bear",
+  "timestamp": "2026-03-24T22:05:52.080145",
+  "cycle": 24001,
+  "strategy": "balanced",
+  "market_condition": "neutral",
   "assets_scanned": 15,
   "open_trades": 7,
   "open_positions": [
@@ -59,7 +59,7 @@
   "top_opportunities": [
     {
       "symbol": "ADAUSDT",
-      "signal": "HOLD",
+      "signal": "BUY",
       "score": 38,
       "tech": 40,
       "fund": 35,
@@ -70,12 +70,12 @@
     },
     {
       "symbol": "DOGEUSDT",
-      "signal": "HOLD",
+      "signal": "BUY",
       "score": 34,
       "tech": 33,
       "fund": 35,
       "market": "crypto",
-      "price": 0.09452,
+      "price": 0.09451,
       "reason": "F&G:11",
       "ghana": "F&G:11"
     },
@@ -86,7 +86,7 @@
       "tech": -48,
       "fund": 35,
       "market": "crypto",
-      "price": 333.4,
+      "price": 333.2,
       "reason": "F&G:11",
       "ghana": "F&G:11"
     },
@@ -97,7 +97,18 @@
       "tech": 18,
       "fund": 0,
       "market": "crypto",
-      "price": 3.48e-06,
+      "price": 3.49e-06,
+      "reason": "Technical score too weak for AI analysis",
+      "ghana": "No action needed"
+    },
+    {
+      "symbol": "LINKUSDT",
+      "signal": "HOLD",
+      "score": -9,
+      "tech": -17,
+      "fund": 0,
+      "market": "crypto",
+      "price": 9.23,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     },
@@ -108,7 +119,7 @@
       "tech": -37,
       "fund": 35,
       "market": "crypto",
-      "price": 70296.65,
+      "price": 70300.71,
       "reason": "F&G:11",
       "ghana": "F&G:11"
     },
@@ -122,17 +133,6 @@
       "price": 637.52,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
-    },
-    {
-      "symbol": "LINKUSDT",
-      "signal": "HOLD",
-      "score": 4,
-      "tech": -22,
-      "fund": 35,
-      "market": "crypto",
-      "price": 9.22,
-      "reason": "F&G:11",
-      "ghana": "F&G:11"
     },
     {
       "symbol": "SAHARAUSDT",
@@ -152,7 +152,7 @@
       "tech": 3,
       "fund": 0,
       "market": "crypto",
-      "price": 2148.28,
+      "price": 2148.3,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     },
@@ -163,12 +163,12 @@
       "tech": 3,
       "fund": 0,
       "market": "crypto",
-      "price": 1.4116,
+      "price": 1.4114,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     }
   ],
-  "buy_signals": 0,
+  "buy_signals": 1,
   "sell_signals": 0,
   "fear_greed": {
     "value": 11,
