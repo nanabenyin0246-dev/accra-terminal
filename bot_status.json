@@ -1,10 +1,10 @@
 {
-  "timestamp": "2026-03-24T01:40:00.967194",
-  "cycle": 18015,
-  "strategy": "aggressive",
-  "market_condition": "bull",
+  "timestamp": "2026-03-24T01:40:08.510261",
+  "cycle": 18016,
+  "strategy": "balanced",
+  "market_condition": "neutral",
   "assets_scanned": 30,
-  "open_trades": 6,
+  "open_trades": 7,
   "open_positions": [
     {
       "symbol": "KITEUSDT",
@@ -47,12 +47,19 @@
       "market": "crypto",
       "sl": 88.14975,
       "tp": 96.7387
+    },
+    {
+      "symbol": "AVAXUSDT",
+      "entry": 9.48,
+      "market": "crypto",
+      "sl": 9.243,
+      "tp": 10.1436
     }
   ],
   "top_opportunities": [
     {
       "symbol": "SOLUSDT",
-      "signal": "HOLD",
+      "signal": "BUY",
       "score": 37,
       "tech": 38,
       "fund": 35,
@@ -63,7 +70,7 @@
     },
     {
       "symbol": "AVAXUSDT",
-      "signal": "HOLD",
+      "signal": "BUY",
       "score": 37,
       "tech": 38,
       "fund": 35,
@@ -74,7 +81,7 @@
     },
     {
       "symbol": "FILUSDT",
-      "signal": "HOLD",
+      "signal": "BUY",
       "score": 37,
       "tech": 38,
       "fund": 35,
@@ -85,7 +92,7 @@
     },
     {
       "symbol": "APTUSDT",
-      "signal": "HOLD",
+      "signal": "BUY",
       "score": 34,
       "tech": 33,
       "fund": 35,
@@ -96,14 +103,25 @@
     },
     {
       "symbol": "WLDUSDT",
-      "signal": "HOLD",
+      "signal": "BUY",
       "score": 30,
       "tech": 26,
       "fund": 35,
       "market": "crypto",
-      "price": 0.3194,
+      "price": 0.3196,
       "reason": "F&G:8",
       "ghana": "F&G:8"
+    },
+    {
+      "symbol": "NIGHTUSDT",
+      "signal": "HOLD",
+      "score": 9,
+      "tech": 17,
+      "fund": 0,
+      "market": "crypto",
+      "price": 0.04671,
+      "reason": "Technical score too weak for AI analysis",
+      "ghana": "No action needed"
     },
     {
       "symbol": "ETHUSDT",
@@ -112,7 +130,7 @@
       "tech": -14,
       "fund": 0,
       "market": "crypto",
-      "price": 2131.95,
+      "price": 2131.41,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     },
@@ -123,7 +141,7 @@
       "tech": -14,
       "fund": 0,
       "market": "crypto",
-      "price": 0.09281,
+      "price": 0.0928,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     },
@@ -145,23 +163,12 @@
       "tech": -14,
       "fund": 0,
       "market": "crypto",
-      "price": 0.09186,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
-    },
-    {
-      "symbol": "NIGHTUSDT",
-      "signal": "HOLD",
-      "score": 7,
-      "tech": 12,
-      "fund": 0,
-      "market": "crypto",
-      "price": 0.04675,
+      "price": 0.09188,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     }
   ],
-  "buy_signals": 0,
+  "buy_signals": 3,
   "sell_signals": 0,
   "fear_greed": {
     "value": 11,
