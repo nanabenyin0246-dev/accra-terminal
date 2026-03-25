@@ -1,8 +1,8 @@
 {
-  "timestamp": "2026-03-25T11:54:05.559668",
-  "cycle": 28329,
-  "strategy": "balanced",
-  "market_condition": "neutral",
+  "timestamp": "2026-03-25T11:54:22.050967",
+  "cycle": 28330,
+  "strategy": "aggressive",
+  "market_condition": "bull",
   "assets_scanned": 30,
   "open_trades": 7,
   "open_positions": [
@@ -58,30 +58,30 @@
   ],
   "top_opportunities": [
     {
-      "symbol": "CUSDT",
-      "signal": "BUY",
-      "score": 52,
-      "tech": 65,
-      "fund": 35,
-      "market": "crypto",
-      "price": 0.0664,
-      "reason": "F&G:14",
-      "ghana": "F&G:14"
-    },
-    {
       "symbol": "NIGHTUSDT",
-      "signal": "BUY",
+      "signal": "HOLD",
       "score": 48,
       "tech": 58,
       "fund": 35,
       "market": "crypto",
-      "price": 0.04368,
+      "price": 0.0437,
+      "reason": "F&G:14",
+      "ghana": "F&G:14"
+    },
+    {
+      "symbol": "CUSDT",
+      "signal": "HOLD",
+      "score": 48,
+      "tech": 58,
+      "fund": 35,
+      "market": "crypto",
+      "price": 0.0665,
       "reason": "F&G:14",
       "ghana": "F&G:14"
     },
     {
       "symbol": "XLMUSDT",
-      "signal": "BUY",
+      "signal": "HOLD",
       "score": 31,
       "tech": 28,
       "fund": 35,
@@ -97,7 +97,18 @@
       "tech": 17,
       "fund": 0,
       "market": "crypto",
-      "price": 0.2609,
+      "price": 0.2605,
+      "reason": "Technical score too weak for AI analysis",
+      "ghana": "No action needed"
+    },
+    {
+      "symbol": "TRXUSDT",
+      "signal": "HOLD",
+      "score": 9,
+      "tech": 17,
+      "fund": 0,
+      "market": "crypto",
+      "price": 0.3099,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     },
@@ -119,7 +130,7 @@
       "tech": -15,
       "fund": 0,
       "market": "crypto",
-      "price": 71627.25,
+      "price": 71613.83,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     },
@@ -130,7 +141,7 @@
       "tech": -15,
       "fund": 0,
       "market": "crypto",
-      "price": 0.9663,
+      "price": 0.9661,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     },
@@ -141,7 +152,7 @@
       "tech": -12,
       "fund": 0,
       "market": "crypto",
-      "price": 0.02642,
+      "price": 0.02639,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     },
@@ -152,23 +163,12 @@
       "tech": 13,
       "fund": 0,
       "market": "crypto",
-      "price": 0.06603,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
-    },
-    {
-      "symbol": "ROBOUSDT",
-      "signal": "HOLD",
-      "score": -7,
-      "tech": -13,
-      "fund": 0,
-      "market": "crypto",
-      "price": 0.0244,
+      "price": 0.06607,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     }
   ],
-  "buy_signals": 2,
+  "buy_signals": 0,
   "sell_signals": 0,
   "fear_greed": {
     "value": 14,
