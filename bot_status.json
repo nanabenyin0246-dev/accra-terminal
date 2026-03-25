@@ -1,8 +1,8 @@
 {
-  "timestamp": "2026-03-25T05:01:39.175772",
-  "cycle": 26040,
-  "strategy": "aggressive",
-  "market_condition": "bear",
+  "timestamp": "2026-03-25T05:01:50.288372",
+  "cycle": 26041,
+  "strategy": "balanced",
+  "market_condition": "neutral",
   "assets_scanned": 30,
   "open_trades": 7,
   "open_positions": [
@@ -69,35 +69,24 @@
       "ghana": "F&G:14"
     },
     {
-      "symbol": "CUSDT",
-      "signal": "HOLD",
-      "score": 31,
-      "tech": 28,
-      "fund": 35,
-      "market": "crypto",
-      "price": 0.0639,
-      "reason": "F&G:14",
-      "ghana": "F&G:14"
-    },
-    {
       "symbol": "ZECUSDT",
-      "signal": "HOLD",
+      "signal": "BUY",
       "score": 30,
       "tech": 26,
       "fund": 35,
       "market": "crypto",
-      "price": 237.72,
+      "price": 237.96,
       "reason": "F&G:14",
       "ghana": "F&G:14"
     },
     {
       "symbol": "ONTUSDT",
-      "signal": "HOLD",
+      "signal": "BUY",
       "score": 30,
       "tech": 25,
       "fund": 35,
       "market": "crypto",
-      "price": 0.06503,
+      "price": 0.06506,
       "reason": "F&G:14",
       "ghana": "F&G:14"
     },
@@ -124,13 +113,24 @@
       "ghana": "No action needed"
     },
     {
+      "symbol": "CUSDT",
+      "signal": "HOLD",
+      "score": 10,
+      "tech": 18,
+      "fund": 0,
+      "market": "crypto",
+      "price": 0.0642,
+      "reason": "Technical score too weak for AI analysis",
+      "ghana": "No action needed"
+    },
+    {
       "symbol": "BTCUSDT",
       "signal": "HOLD",
       "score": -9,
       "tech": -17,
       "fund": 0,
       "market": "crypto",
-      "price": 70962.95,
+      "price": 70977.9,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     },
@@ -146,6 +146,17 @@
       "ghana": "F&G:14"
     },
     {
+      "symbol": "SOLUSDT",
+      "signal": "HOLD",
+      "score": -9,
+      "tech": -17,
+      "fund": 0,
+      "market": "crypto",
+      "price": 92.06,
+      "reason": "Technical score too weak for AI analysis",
+      "ghana": "No action needed"
+    },
+    {
       "symbol": "PEPEUSDT",
       "signal": "HOLD",
       "score": -9,
@@ -155,20 +166,9 @@
       "price": 3.55e-06,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
-    },
-    {
-      "symbol": "AVAXUSDT",
-      "signal": "HOLD",
-      "score": -9,
-      "tech": -17,
-      "fund": 0,
-      "market": "crypto",
-      "price": 9.64,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
     }
   ],
-  "buy_signals": 1,
+  "buy_signals": 3,
   "sell_signals": 0,
   "fear_greed": {
     "value": 14,
