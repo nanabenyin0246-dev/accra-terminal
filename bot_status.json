@@ -1,8 +1,8 @@
 {
-  "timestamp": "2026-03-26T11:01:21.497641",
-  "cycle": 35024,
-  "strategy": "balanced",
-  "market_condition": "neutral",
+  "timestamp": "2026-03-26T11:01:40.378182",
+  "cycle": 35025,
+  "strategy": "conservative",
+  "market_condition": "bear",
   "assets_scanned": 5,
   "open_trades": 7,
   "open_positions": [
@@ -59,12 +59,23 @@
   "top_opportunities": [
     {
       "symbol": "ETHUSDT",
-      "signal": "BUY",
-      "score": 35,
-      "tech": 35,
+      "signal": "HOLD",
+      "score": 42,
+      "tech": 47,
       "fund": 35,
       "market": "crypto",
-      "price": 2078.59,
+      "price": 2079.17,
+      "reason": "F&G:10",
+      "ghana": "F&G:10"
+    },
+    {
+      "symbol": "SOLUSDT",
+      "signal": "HOLD",
+      "score": 28,
+      "tech": 22,
+      "fund": 35,
+      "market": "crypto",
+      "price": 87.95,
       "reason": "F&G:10",
       "ghana": "F&G:10"
     },
@@ -75,20 +86,20 @@
       "tech": 13,
       "fund": 0,
       "market": "crypto",
-      "price": 332.5,
+      "price": 332.8,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     },
     {
-      "symbol": "SOLUSDT",
+      "symbol": "NIGHTUSDT",
       "signal": "HOLD",
-      "score": 6,
-      "tech": 10,
-      "fund": 0,
+      "score": 5,
+      "tech": -20,
+      "fund": 35,
       "market": "crypto",
-      "price": 87.92,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
+      "price": 0.0447,
+      "reason": "F&G:10",
+      "ghana": "F&G:10"
     },
     {
       "symbol": "BTCUSDT",
@@ -97,23 +108,12 @@
       "tech": -5,
       "fund": 0,
       "market": "crypto",
-      "price": 69532.96,
+      "price": 69575.78,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
-    },
-    {
-      "symbol": "NIGHTUSDT",
-      "signal": "HOLD",
-      "score": 2,
-      "tech": -25,
-      "fund": 35,
-      "market": "crypto",
-      "price": 0.04465,
-      "reason": "F&G:10",
-      "ghana": "F&G:10"
     }
   ],
-  "buy_signals": 1,
+  "buy_signals": 0,
   "sell_signals": 0,
   "fear_greed": {
     "value": 10,
