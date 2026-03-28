@@ -1,8 +1,8 @@
 {
-  "timestamp": "2026-03-28T02:25:09.167668",
-  "cycle": 45195,
-  "strategy": "aggressive",
-  "market_condition": "bear",
+  "timestamp": "2026-03-28T02:25:20.466170",
+  "cycle": 45196,
+  "strategy": "balanced",
+  "market_condition": "neutral",
   "assets_scanned": 5,
   "open_trades": 7,
   "open_positions": [
@@ -70,36 +70,25 @@
     },
     {
       "symbol": "BTCUSDT",
-      "signal": "HOLD",
+      "signal": "BUY",
       "score": 37,
       "tech": 39,
       "fund": 35,
       "market": "crypto",
-      "price": 66089.22,
+      "price": 66089.21,
       "reason": "F&G:13",
       "ghana": "F&G:13"
     },
     {
       "symbol": "ETHUSDT",
-      "signal": "HOLD",
+      "signal": "BUY",
       "score": 27,
       "tech": 20,
       "fund": 35,
       "market": "crypto",
-      "price": 1986.65,
+      "price": 1986.64,
       "reason": "F&G:13",
       "ghana": "F&G:13"
-    },
-    {
-      "symbol": "ROBOUSDT",
-      "signal": "HOLD",
-      "score": 9,
-      "tech": 17,
-      "fund": 0,
-      "market": "crypto",
-      "price": 0.02341,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
     },
     {
       "symbol": "NIGHTUSDT",
@@ -108,12 +97,23 @@
       "tech": -14,
       "fund": 0,
       "market": "crypto",
-      "price": 0.04664,
+      "price": 0.0466,
+      "reason": "Technical score too weak for AI analysis",
+      "ghana": "No action needed"
+    },
+    {
+      "symbol": "ROBOUSDT",
+      "signal": "HOLD",
+      "score": 3,
+      "tech": 5,
+      "fund": 0,
+      "market": "crypto",
+      "price": 0.02338,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     }
   ],
-  "buy_signals": 1,
+  "buy_signals": 3,
   "sell_signals": 0,
   "fear_greed": {
     "value": 12,
