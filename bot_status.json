@@ -1,8 +1,8 @@
 {
-  "timestamp": "2026-03-28T21:38:13.205551",
-  "cycle": 50550,
-  "strategy": "aggressive",
-  "market_condition": "bull",
+  "timestamp": "2026-03-28T21:38:30.465347",
+  "cycle": 50551,
+  "strategy": "balanced",
+  "market_condition": "neutral",
   "assets_scanned": 30,
   "open_trades": 7,
   "open_positions": [
@@ -70,12 +70,23 @@
     },
     {
       "symbol": "FETUSDT",
-      "signal": "HOLD",
+      "signal": "BUY",
       "score": 37,
       "tech": 38,
       "fund": 35,
       "market": "crypto",
       "price": 0.2425,
+      "reason": "F&G:12",
+      "ghana": "F&G:12"
+    },
+    {
+      "symbol": "BCHUSDT",
+      "signal": "SELL",
+      "score": -28,
+      "tech": -80,
+      "fund": 35,
+      "market": "crypto",
+      "price": 483.3,
       "reason": "F&G:12",
       "ghana": "F&G:12"
     },
@@ -86,64 +97,9 @@
       "tech": -54,
       "fund": 35,
       "market": "crypto",
-      "price": 0.0931,
+      "price": 0.093,
       "reason": "F&G:12",
       "ghana": "F&G:12"
-    },
-    {
-      "symbol": "DOGEUSDT",
-      "signal": "HOLD",
-      "score": 10,
-      "tech": 18,
-      "fund": 0,
-      "market": "crypto",
-      "price": 0.09205,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
-    },
-    {
-      "symbol": "BCHUSDT",
-      "signal": "HOLD",
-      "score": -9,
-      "tech": -45,
-      "fund": 35,
-      "market": "crypto",
-      "price": 483.2,
-      "reason": "F&G:12",
-      "ghana": "F&G:12"
-    },
-    {
-      "symbol": "NOMUSDT",
-      "signal": "HOLD",
-      "score": -9,
-      "tech": -45,
-      "fund": 35,
-      "market": "crypto",
-      "price": 0.00276,
-      "reason": "F&G:12",
-      "ghana": "F&G:12"
-    },
-    {
-      "symbol": "NIGHTUSDT",
-      "signal": "HOLD",
-      "score": -8,
-      "tech": -14,
-      "fund": 0,
-      "market": "crypto",
-      "price": 0.05119,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
-    },
-    {
-      "symbol": "ONDOUSDT",
-      "signal": "HOLD",
-      "score": 8,
-      "tech": 14,
-      "fund": 0,
-      "market": "crypto",
-      "price": 0.2772,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
     },
     {
       "symbol": "CFGUSDT",
@@ -152,7 +108,7 @@
       "tech": 15,
       "fund": 0,
       "market": "crypto",
-      "price": 0.1561,
+      "price": 0.1562,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     },
@@ -163,12 +119,56 @@
       "tech": 15,
       "fund": 0,
       "market": "crypto",
-      "price": 0.032,
+      "price": 0.03201,
+      "reason": "Technical score too weak for AI analysis",
+      "ghana": "No action needed"
+    },
+    {
+      "symbol": "DOGEUSDT",
+      "signal": "HOLD",
+      "score": 7,
+      "tech": 13,
+      "fund": 0,
+      "market": "crypto",
+      "price": 0.09209,
+      "reason": "Technical score too weak for AI analysis",
+      "ghana": "No action needed"
+    },
+    {
+      "symbol": "ZECUSDT",
+      "signal": "HOLD",
+      "score": -7,
+      "tech": -12,
+      "fund": 0,
+      "market": "crypto",
+      "price": 217.33,
+      "reason": "Technical score too weak for AI analysis",
+      "ghana": "No action needed"
+    },
+    {
+      "symbol": "LTCUSDT",
+      "signal": "HOLD",
+      "score": -7,
+      "tech": -13,
+      "fund": 0,
+      "market": "crypto",
+      "price": 54.2,
+      "reason": "Technical score too weak for AI analysis",
+      "ghana": "No action needed"
+    },
+    {
+      "symbol": "LINKUSDT",
+      "signal": "HOLD",
+      "score": -7,
+      "tech": -12,
+      "fund": 0,
+      "market": "crypto",
+      "price": 8.59,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     }
   ],
-  "buy_signals": 0,
+  "buy_signals": 1,
   "sell_signals": 0,
   "fear_greed": {
     "value": 12,
