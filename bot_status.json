@@ -1,8 +1,8 @@
 {
-  "timestamp": "2026-03-28T18:42:31.558595",
-  "cycle": 49899,
-  "strategy": "balanced",
-  "market_condition": "neutral",
+  "timestamp": "2026-03-28T18:42:49.672654",
+  "cycle": 49900,
+  "strategy": "conservative",
+  "market_condition": "bear",
   "assets_scanned": 30,
   "open_trades": 7,
   "open_positions": [
@@ -59,7 +59,7 @@
   "top_opportunities": [
     {
       "symbol": "KITEUSDT",
-      "signal": "BUY",
+      "signal": "HOLD",
       "score": 35,
       "tech": 35,
       "fund": 35,
@@ -70,7 +70,7 @@
     },
     {
       "symbol": "DOGEUSDT",
-      "signal": "BUY",
+      "signal": "HOLD",
       "score": 30,
       "tech": 25,
       "fund": 35,
@@ -81,14 +81,25 @@
     },
     {
       "symbol": "TRXUSDT",
-      "signal": "SELL",
+      "signal": "HOLD",
       "score": -29,
       "tech": -81,
       "fund": 35,
       "market": "crypto",
-      "price": 0.318,
+      "price": 0.3181,
       "reason": "F&G:12",
       "ghana": "F&G:12"
+    },
+    {
+      "symbol": "AVAXUSDT",
+      "signal": "HOLD",
+      "score": -10,
+      "tech": -19,
+      "fund": 0,
+      "market": "crypto",
+      "price": 8.92,
+      "reason": "Technical score too weak for AI analysis",
+      "ghana": "No action needed"
     },
     {
       "symbol": "CHZUSDT",
@@ -97,7 +108,18 @@
       "tech": -19,
       "fund": 0,
       "market": "crypto",
-      "price": 0.04043,
+      "price": 0.04045,
+      "reason": "Technical score too weak for AI analysis",
+      "ghana": "No action needed"
+    },
+    {
+      "symbol": "PEPEUSDT",
+      "signal": "HOLD",
+      "score": -9,
+      "tech": -17,
+      "fund": 0,
+      "market": "crypto",
+      "price": 3.36e-06,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     },
@@ -141,34 +163,12 @@
       "tech": -12,
       "fund": 0,
       "market": "crypto",
-      "price": 4490.87,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
-    },
-    {
-      "symbol": "BTCUSDT",
-      "signal": "HOLD",
-      "score": -6,
-      "tech": -40,
-      "fund": 35,
-      "market": "crypto",
-      "price": 66935.83,
-      "reason": "F&G:12",
-      "ghana": "F&G:12"
-    },
-    {
-      "symbol": "NIGHTUSDT",
-      "signal": "HOLD",
-      "score": -6,
-      "tech": -10,
-      "fund": 0,
-      "market": "crypto",
-      "price": 0.05182,
+      "price": 4490.88,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     }
   ],
-  "buy_signals": 1,
+  "buy_signals": 0,
   "sell_signals": 0,
   "fear_greed": {
     "value": 12,
