@@ -1,8 +1,8 @@
 {
-  "timestamp": "2026-03-29T21:38:43.548023",
-  "cycle": 55664,
-  "strategy": "balanced",
-  "market_condition": "neutral",
+  "timestamp": "2026-03-29T21:39:02.503061",
+  "cycle": 55665,
+  "strategy": "conservative",
+  "market_condition": "bear",
   "assets_scanned": 30,
   "open_trades": 7,
   "open_positions": [
@@ -59,7 +59,7 @@
   "top_opportunities": [
     {
       "symbol": "BCHUSDT",
-      "signal": "BUY",
+      "signal": "HOLD",
       "score": 58,
       "tech": 77,
       "fund": 35,
@@ -70,12 +70,23 @@
     },
     {
       "symbol": "WLDUSDT",
-      "signal": "BUY",
+      "signal": "HOLD",
       "score": 45,
       "tech": 53,
       "fund": 35,
       "market": "crypto",
       "price": 0.276,
+      "reason": "F&G:9",
+      "ghana": "F&G:9"
+    },
+    {
+      "symbol": "SUIUSDT",
+      "signal": "HOLD",
+      "score": 36,
+      "tech": 37,
+      "fund": 35,
+      "market": "crypto",
+      "price": 0.8459,
       "reason": "F&G:9",
       "ghana": "F&G:9"
     },
@@ -91,15 +102,26 @@
       "ghana": "F&G:9"
     },
     {
-      "symbol": "SUIUSDT",
+      "symbol": "XRPUSDT",
       "signal": "HOLD",
-      "score": 9,
-      "tech": 17,
-      "fund": 0,
+      "score": -9,
+      "tech": -45,
+      "fund": 35,
       "market": "crypto",
-      "price": 0.8465,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
+      "price": 1.3276,
+      "reason": "F&G:9",
+      "ghana": "F&G:9"
+    },
+    {
+      "symbol": "TAOUSDT",
+      "signal": "HOLD",
+      "score": -9,
+      "tech": -45,
+      "fund": 35,
+      "market": "crypto",
+      "price": 316.9,
+      "reason": "F&G:9",
+      "ghana": "F&G:9"
     },
     {
       "symbol": "XAUTUSDT",
@@ -124,28 +146,6 @@
       "ghana": "No action needed"
     },
     {
-      "symbol": "XRPUSDT",
-      "signal": "HOLD",
-      "score": -6,
-      "tech": -39,
-      "fund": 35,
-      "market": "crypto",
-      "price": 1.3278,
-      "reason": "F&G:9",
-      "ghana": "F&G:9"
-    },
-    {
-      "symbol": "TAOUSDT",
-      "signal": "HOLD",
-      "score": -6,
-      "tech": -40,
-      "fund": 35,
-      "market": "crypto",
-      "price": 317.1,
-      "reason": "F&G:9",
-      "ghana": "F&G:9"
-    },
-    {
       "symbol": "NEARUSDT",
       "signal": "HOLD",
       "score": 6,
@@ -168,7 +168,7 @@
       "ghana": "F&G:9"
     }
   ],
-  "buy_signals": 2,
+  "buy_signals": 0,
   "sell_signals": 0,
   "fear_greed": {
     "value": 9,
