@@ -1,8 +1,8 @@
 {
-  "timestamp": "2026-03-30T23:24:56.968193",
-  "cycle": 63915,
-  "strategy": "aggressive",
-  "market_condition": "bull",
+  "timestamp": "2026-03-30T23:25:16.811328",
+  "cycle": 63916,
+  "strategy": "balanced",
+  "market_condition": "neutral",
   "assets_scanned": 30,
   "open_trades": 7,
   "open_positions": [
@@ -64,20 +64,31 @@
       "tech": 80,
       "fund": 35,
       "market": "crypto",
-      "price": 0.04364,
+      "price": 0.04363,
       "reason": "F&G:8",
       "ghana": "F&G:8"
     },
     {
       "symbol": "CHZUSDT",
-      "signal": "HOLD",
+      "signal": "BUY",
       "score": 30,
       "tech": 25,
       "fund": 35,
       "market": "crypto",
-      "price": 0.04231,
+      "price": 0.04233,
       "reason": "F&G:8",
       "ghana": "F&G:8"
+    },
+    {
+      "symbol": "BNBUSDT",
+      "signal": "HOLD",
+      "score": -10,
+      "tech": -19,
+      "fund": 0,
+      "market": "crypto",
+      "price": 608.79,
+      "reason": "Technical score too weak for AI analysis",
+      "ghana": "No action needed"
     },
     {
       "symbol": "ETHUSDT",
@@ -97,7 +108,7 @@
       "tech": -15,
       "fund": 0,
       "market": "crypto",
-      "price": 309.3,
+      "price": 309.2,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     },
@@ -108,7 +119,7 @@
       "tech": -42,
       "fund": 35,
       "market": "crypto",
-      "price": 0.3197,
+      "price": 0.3196,
       "reason": "F&G:8",
       "ghana": "F&G:8"
     },
@@ -119,7 +130,18 @@
       "tech": -42,
       "fund": 35,
       "market": "crypto",
-      "price": 53.3,
+      "price": 53.26,
+      "reason": "F&G:8",
+      "ghana": "F&G:8"
+    },
+    {
+      "symbol": "ONTUSDT",
+      "signal": "HOLD",
+      "score": -7,
+      "tech": -41,
+      "fund": 35,
+      "market": "crypto",
+      "price": 0.08478,
       "reason": "F&G:8",
       "ghana": "F&G:8"
     },
@@ -144,31 +166,9 @@
       "price": 0.00345,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
-    },
-    {
-      "symbol": "EURUSDT",
-      "signal": "HOLD",
-      "score": -6,
-      "tech": -10,
-      "fund": 0,
-      "market": "crypto",
-      "price": 1.1463,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
-    },
-    {
-      "symbol": "KATUSDT",
-      "signal": "HOLD",
-      "score": -6,
-      "tech": -10,
-      "fund": 0,
-      "market": "crypto",
-      "price": 0.01119,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
     }
   ],
-  "buy_signals": 0,
+  "buy_signals": 1,
   "sell_signals": 0,
   "fear_greed": {
     "value": 8,
