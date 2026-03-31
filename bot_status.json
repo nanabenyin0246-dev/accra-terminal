@@ -1,78 +1,62 @@
 {
-  "timestamp": "2026-03-31T20:14:44.035891",
-  "cycle": 8,
+  "timestamp": "2026-03-31T20:14:49.062969",
+  "cycle": 68252,
   "strategy": "balanced",
   "market_condition": "neutral",
-  "assets_scanned": 30,
-  "open_trades": 0,
-  "open_positions": [],
+  "assets_scanned": 5,
+  "open_trades": 7,
+  "open_positions": [
+    {
+      "symbol": "KITEUSDT",
+      "entry": 0.214,
+      "market": "crypto",
+      "sl": 0.20865,
+      "tp": 0.22898
+    },
+    {
+      "symbol": "DEGOUSDT",
+      "entry": 0.389,
+      "market": "crypto",
+      "sl": 0.379275,
+      "tp": 0.41623
+    },
+    {
+      "symbol": "NIGHTUSDT",
+      "entry": 0.044,
+      "market": "crypto",
+      "sl": 0.0429,
+      "tp": 0.04708
+    },
+    {
+      "symbol": "SIGNUSDT",
+      "entry": 0.03442,
+      "market": "crypto",
+      "sl": 0.03398631,
+      "tp": 0.0357968
+    },
+    {
+      "symbol": "XRPUSDT",
+      "entry": 1.3563,
+      "market": "crypto",
+      "sl": 1.3223925,
+      "tp": 1.451241
+    },
+    {
+      "symbol": "AAVEUSDT",
+      "entry": 105.43,
+      "market": "crypto",
+      "sl": 102.79425,
+      "tp": 112.8101
+    },
+    {
+      "symbol": "SOLUSDT",
+      "entry": 84.66,
+      "market": "crypto",
+      "sl": 82.5435,
+      "tp": 90.5862
+    }
+  ],
   "top_opportunities": [
-    {
-      "symbol": "HBARUSDT",
-      "signal": "BUY",
-      "score": 45,
-      "tech": 53,
-      "fund": 35,
-      "market": "crypto",
-      "price": 0.08793,
-      "reason": "F&G:11",
-      "ghana": "F&G:11"
-    },
-    {
-      "symbol": "TRUMPUSDT",
-      "signal": "BUY",
-      "score": 40,
-      "tech": 45,
-      "fund": 35,
-      "market": "crypto",
-      "price": 3.017,
-      "reason": "F&G:11",
-      "ghana": "F&G:11"
-    },
-    {
-      "symbol": "SKYUSDT",
-      "signal": "BUY",
-      "score": 34,
-      "tech": 33,
-      "fund": 35,
-      "market": "crypto",
-      "price": 0.07567,
-      "reason": "F&G:11",
-      "ghana": "F&G:11"
-    },
-    {
-      "symbol": "AVAXUSDT",
-      "signal": "BUY",
-      "score": 33,
-      "tech": 31,
-      "fund": 35,
-      "market": "crypto",
-      "price": 8.95,
-      "reason": "F&G:11",
-      "ghana": "F&G:11"
-    },
-    {
-      "symbol": "BCHUSDT",
-      "signal": "BUY",
-      "score": 30,
-      "tech": 25,
-      "fund": 35,
-      "market": "crypto",
-      "price": 471.0,
-      "reason": "F&G:11",
-      "ghana": "F&G:11"
-    },
-    {
-      "symbol": "STOUSDT",
-      "signal": "BUY",
-      "score": 30,
-      "tech": 25,
-      "fund": 35,
-      "market": "crypto",
-      "price": 0.1518,
-      "reason": "F&G:11",
-      "ghana": "F&G:11"
-    },
     {
       "symbol": "NIGHTUSDT",
       "signal": "BUY",
@@ -85,50 +69,61 @@
       "ghana": "F&G:11"
     },
     {
-      "symbol": "PEPEUSDT",
-      "signal": "BUY",
-      "score": 27,
-      "tech": 21,
-      "fund": 35,
+      "symbol": "ETHUSDT",
+      "signal": "HOLD",
+      "score": 10,
+      "tech": 18,
+      "fund": 0,
       "market": "crypto",
-      "price": 3.42e-06,
-      "reason": "F&G:11",
-      "ghana": "F&G:11"
+      "price": 2105.14,
+      "reason": "Technical score too weak for AI analysis",
+      "ghana": "No action needed"
     },
     {
-      "symbol": "XAUTUSDT",
+      "symbol": "BTCUSDT",
       "signal": "HOLD",
-      "score": -12,
-      "tech": -50,
-      "fund": 35,
+      "score": -7,
+      "tech": -12,
+      "fund": 0,
       "market": "crypto",
-      "price": 4657.3,
-      "reason": "F&G:11",
-      "ghana": "F&G:11"
+      "price": 68132.57,
+      "reason": "Technical score too weak for AI analysis",
+      "ghana": "No action needed"
     },
     {
-      "symbol": "NOMUSDT",
+      "symbol": "SOLUSDT",
       "signal": "HOLD",
-      "score": -12,
-      "tech": -50,
-      "fund": 35,
+      "score": -6,
+      "tech": -11,
+      "fund": 0,
       "market": "crypto",
-      "price": 0.00441,
-      "reason": "F&G:11",
-      "ghana": "F&G:11"
+      "price": 83.23,
+      "reason": "Technical score too weak for AI analysis",
+      "ghana": "No action needed"
+    },
+    {
+      "symbol": "XRPUSDT",
+      "signal": "HOLD",
+      "score": -4,
+      "tech": -7,
+      "fund": 0,
+      "market": "crypto",
+      "price": 1.3498,
+      "reason": "Technical score too weak for AI analysis",
+      "ghana": "No action needed"
     }
   ],
-  "buy_signals": 8,
+  "buy_signals": 0,
   "sell_signals": 0,
   "fear_greed": {
     "value": 11,
     "label": "Extreme Fear",
     "trend": "improving",
-    "ts": 1774987413.7943275
+    "ts": 1774986053.7739203
   },
   "markets": {
     "crypto": "active",
     "stocks": "closed",
-    "hfm": "signal_mode"
+    "hfm": "disabled"
   }
 }
