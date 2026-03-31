@@ -1,8 +1,8 @@
 {
-  "timestamp": "2026-03-31T03:03:43.601287",
-  "cycle": 64634,
-  "strategy": "balanced",
-  "market_condition": "neutral",
+  "timestamp": "2026-03-31T03:03:59.250061",
+  "cycle": 64635,
+  "strategy": "conservative",
+  "market_condition": "bear",
   "assets_scanned": 5,
   "open_trades": 7,
   "open_positions": [
@@ -59,25 +59,36 @@
   "top_opportunities": [
     {
       "symbol": "NIGHTUSDT",
-      "signal": "BUY",
+      "signal": "HOLD",
       "score": 36,
       "tech": 37,
       "fund": 35,
       "market": "crypto",
-      "price": 0.04563,
+      "price": 0.04564,
       "reason": "F&G:8",
       "ghana": "F&G:8"
     },
     {
       "symbol": "BTCUSDT",
-      "signal": "BUY",
+      "signal": "HOLD",
       "score": 30,
       "tech": 25,
       "fund": 35,
       "market": "crypto",
-      "price": 67820.01,
+      "price": 67817.26,
       "reason": "F&G:11",
       "ghana": "F&G:11"
+    },
+    {
+      "symbol": "ETHUSDT",
+      "signal": "HOLD",
+      "score": 7,
+      "tech": 13,
+      "fund": 0,
+      "market": "crypto",
+      "price": 2068.31,
+      "reason": "Technical score too weak for AI analysis",
+      "ghana": "No action needed"
     },
     {
       "symbol": "XRPUSDT",
@@ -86,20 +97,9 @@
       "tech": -20,
       "fund": 35,
       "market": "crypto",
-      "price": 1.3341,
+      "price": 1.3337,
       "reason": "F&G:11",
       "ghana": "F&G:11"
-    },
-    {
-      "symbol": "ETHUSDT",
-      "signal": "HOLD",
-      "score": 4,
-      "tech": 8,
-      "fund": 0,
-      "market": "crypto",
-      "price": 2068.9,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
     },
     {
       "symbol": "SOLUSDT",
@@ -108,12 +108,12 @@
       "tech": 3,
       "fund": 0,
       "market": "crypto",
-      "price": 83.68,
+      "price": 83.65,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     }
   ],
-  "buy_signals": 1,
+  "buy_signals": 0,
   "sell_signals": 0,
   "fear_greed": {
     "value": 11,
