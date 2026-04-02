@@ -3,11 +3,12 @@ import { useEffect, useState, useRef, useCallback } from "react";
 const LW_CDN='https://unpkg.com/lightweight-charts@4.2.0/dist/lightweight-charts.standalone.production.js';
 function loadScript(src){return new Promise((res,rej)=>{if(document.querySelector(`script[src="${src}"]`)){res();return;}const s=document.createElement('script');s.src=src;s.onload=res;s.onerror=rej;document.head.appendChild(s);});}
 
+const _lk=(k,d)=>{try{return localStorage.getItem(k)||d;}catch{return d;}};
 const AI_CONFIG={
-  anthropic:{url:'https://api.anthropic.com/v1/messages',model:'claude-sonnet-4-20250514',key:null,label:'Claude Sonnet 4',color:'#f5a623'},
-  groq:{url:'https://api.groq.com/openai/v1/chat/completions',model:'llama-3.3-70b-versatile',key:'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',label:'Groq Llama 3.3',color:'#f55036'},
+  anthropic:{url:'https://api.anthropic.com/v1/messages',model:'claude-sonnet-4-5-20251001',key:_lk('at_ant_key',null),label:'Claude Sonnet 4.5',color:'#f5a623'},
+  groq:{url:'https://api.groq.com/openai/v1/chat/completions',model:'llama-3.3-70b-versatile',key:_lk('at_groq_key',null),label:'Groq Llama 3.3',color:'#f55036'},
 };
-const VALLEY_KEY='live_264966be983d94d76527a76199bf85182a69e3b19a918159';
+const VALLEY_KEY=_lk('at_valley_key','');
 
 const VALLEY_BASE='https://api.valleyafrica.com/v1';
 const COINGECKO='https://api.coingecko.com/api/v3';
@@ -252,7 +253,7 @@ export default function App(){
       },null,2)}}};
       await fetch('https://api.github.com/gists/4f5f6918288ddaec0a1fc998af3e6f99',{
         method:'PATCH',
-        headers:{'Authorization':'Bearer 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','Content-Type':'application/json'},
+        headers:{'Authorization':`Bearer ${localStorage.getItem('at_gh_token')||''}`,'Content-Type':'application/json'},
         body:JSON.stringify(payload)});
       setBotStrategy(prev=>({...prev,...strategy}));
       setPendingStrategy(null);
@@ -357,7 +358,7 @@ export default function App(){
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     const _G='4f5f6918288ddaec0a1fc998af3e6f99';
-    const _T='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';
+    const _T=localStorage.getItem('at_gh_token')||'';if(!_T)return;
     const _push=async()=>{
       try{
         const _b=crypto?.bitcoin?.usd_24h_change||0;
@@ -1240,7 +1241,8 @@ export default function App(){
                   <div style={cardStyle}>
                     <div style={{fontSize:14,fontWeight:600,marginBottom:12,color:C.text}}>Live Statistics</div>
                     {[
-                      ['Mode',botStatus.strategy?.toUpperCase()],
+                      ['Version',botStatus.version||'v10'],
+                      ['Mode',botStatus.strategy_mode?.toUpperCase()],
                       ['Market',botStatus.market_condition],
                       ['Assets Scanned',botStatus.assets_scanned],
                       ['Open Trades',botStatus.open_trades],
@@ -1332,7 +1334,8 @@ export default function App(){
                         const top=botStatus?.top_opportunities?.[0];
                         const prompt=`Trading strategy AI. Fear&Greed=${fg}/100, BTC=$${btc.toLocaleString()}, USD/GHS=${forex.GHS?.toFixed(2)||'N/A'}, Assets scanned=${botStatus?.assets_scanned||0}, Open trades=${botStatus?.open_trades||0}, Top signal=${top?.symbol||'none'} score=${top?.score||0}. Recommend strategy. Reply ONLY valid JSON no markdown: {"mode":"conservative|balanced|aggressive","market_condition":"bear|neutral|bull","min_confidence":35,"reason":"2 sentences","action":"what to do now"}`;
                         try{
-                          const res=await fetch('https://api.groq.com/openai/v1/chat/completions',{method:'POST',headers:{'Authorization':'Bearer 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','Content-Type':'application/json'},body:JSON.stringify({model:'llama-3.3-70b-versatile',max_tokens:200,temperature:0.1,messages:[{role:'system',content:'Return valid JSON only.'},{role:'user',content:prompt}]})});
+                          const _gk=localStorage.getItem('at_groq_key')||'';if(!_gk){setAiRec('Groq key not set in Settings.');setAiLoading(false);return;}
+                          const res=await fetch('https://api.groq.com/openai/v1/chat/completions',{method:'POST',headers:{'Authorization':`Bearer ${_gk}`,'Content-Type':'application/json'},body:JSON.stringify({model:'llama-3.3-70b-versatile',max_tokens:200,temperature:0.1,messages:[{role:'system',content:'Return valid JSON only.'},{role:'user',content:prompt}]})});
                           const d=await res.json();
                           const p=JSON.parse(d.choices[0].message.content.trim());
                           setBotStrategy(prev=>({...prev,mode:p.mode||prev.mode,market_condition:p.market_condition||prev.market_condition,min_confidence:p.min_confidence||35}));
@@ -1407,21 +1410,28 @@ export default function App(){
               <div style={cardStyle}>
                 <div style={headerStyle}>API Configuration</div>
                 {[
-                  {label:'Anthropic API Key',placeholder:'sk-ant-...'},
-                  {label:'Groq API Key',placeholder:'gsk_...'},
-                  {label:'Valley Africa Key',placeholder:'live_...'},
-                ].map(({label,placeholder})=>(
-                  <div key={label} style={{marginBottom:16}}>
+                  {label:'Anthropic API Key',placeholder:'sk-ant-...',k:'at_ant_key'},
+                  {label:'Groq API Key',placeholder:'gsk_...',k:'at_groq_key'},
+                  {label:'Valley Africa Key',placeholder:'live_...',k:'at_valley_key'},
+                  {label:'GitHub Token (Bot)',placeholder:'ghp_...',k:'at_gh_token'},
+                ].map(({label,placeholder,k})=>(
+                  <div key={k} style={{marginBottom:16}}>
                     <div style={{fontSize:13,color:C.text2,marginBottom:6}}>{label}</div>
-                    <input type="password" placeholder={placeholder}
-                      style={{width:'100%',background:C.bg3,border:`1px solid ${C.border}`,color:C.text,padding:'10px 12px',borderRadius:5,fontSize:13,outline:'none',boxSizing:'border-box'}}/>
+                    <div style={{display:'flex',gap:6}}>
+                      <input type="password" placeholder={placeholder} id={`key-${k}`}
+                        defaultValue={localStorage.getItem(k)||''}
+                        style={{flex:1,background:C.bg3,border:`1px solid ${C.border}`,color:C.text,padding:'10px 12px',borderRadius:5,fontSize:13,outline:'none',boxSizing:'border-box'}}/>
+                      <button onClick={()=>{const v=document.getElementById(`key-${k}`)?.value;if(v){localStorage.setItem(k,v);alert(`${label} saved!`);}}}
+                        style={{padding:'0 14px',background:`${C.gold}20`,border:`1px solid ${C.gold}`,borderRadius:5,color:C.gold,fontWeight:600,fontSize:12,cursor:'pointer'}}>Save</button>
+                    </div>
+                    {localStorage.getItem(k)&&<div style={{fontSize:11,color:C.green,marginTop:3}}>✓ Saved</div>}
                   </div>
                 ))}
               </div>
               <div style={cardStyle}>
                 <div style={headerStyle}>About</div>
                 <div style={{fontSize:14,color:C.text2,lineHeight:1.8}}>
-                  <div style={{marginBottom:8}}><strong style={{color:C.gold}}>Accra Terminal V16</strong></div>
+                  <div style={{marginBottom:8}}><strong style={{color:C.gold}}>Accra Terminal V17</strong></div>
                   <div>Africa's #1 Financial Intelligence Platform</div>
                   <div style={{marginTop:8,color:C.text3}}>Built by HydroLife Studios</div>
                   <div style={{color:C.text3}}>Ashanti Region, Ghana</div>
