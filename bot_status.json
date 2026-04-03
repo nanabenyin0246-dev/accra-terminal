@@ -1,30 +1,75 @@
 {
-  "timestamp": "2026-04-03T18:42:29.361711",
-  "cycle": 1,
+  "timestamp": "2026-04-03T18:45:11.195081",
+  "cycle": 2,
   "strategy": "balanced",
   "market_condition": "neutral",
-  "assets_scanned": 1,
+  "assets_scanned": 5,
   "open_trades": 0,
   "open_positions": [],
   "top_opportunities": [
     {
-      "symbol": "BTCUSDT",
+      "symbol": "ADAUSDT",
+      "signal": "BUY",
+      "score": 27,
+      "tech": 21,
+      "fund": 35,
+      "market": "crypto",
+      "price": 0.2477,
+      "reason": "F&G:9",
+      "ghana": "F&G:9"
+    },
+    {
+      "symbol": "XRPUSDT",
       "signal": "HOLD",
-      "score": -6,
-      "tech": -10,
+      "score": 5,
+      "tech": -20,
+      "fund": 35,
+      "market": "crypto",
+      "price": 1.3192,
+      "reason": "F&G:9",
+      "ghana": "F&G:9"
+    },
+    {
+      "symbol": "DOGEUSDT",
+      "signal": "HOLD",
+      "score": -4,
+      "tech": -8,
       "fund": 0,
       "market": "crypto",
-      "price": 66842.89,
+      "price": 0.09192,
+      "reason": "Technical score too weak for AI analysis",
+      "ghana": "No action needed"
+    },
+    {
+      "symbol": "BNBUSDT",
+      "signal": "HOLD",
+      "score": 2,
+      "tech": -25,
+      "fund": 35,
+      "market": "crypto",
+      "price": 588.19,
+      "reason": "F&G:9",
+      "ghana": "F&G:9"
+    },
+    {
+      "symbol": "SOLUSDT",
+      "signal": "HOLD",
+      "score": 1,
+      "tech": 2,
+      "fund": 0,
+      "market": "crypto",
+      "price": 80.22,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     }
   ],
-  "buy_signals": 0,
+  "buy_signals": 1,
   "sell_signals": 0,
   "fear_greed": {
-    "value": 50,
-    "label": "Neutral",
-    "ts": 0
+    "value": 9,
+    "label": "Extreme Fear",
+    "trend": "declining",
+    "ts": 1775241784.7541351
   },
   "markets": {
     "crypto": "active",
