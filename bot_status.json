@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-04-07T07:07:54.722957",
-  "cycle": 104,
-  "strategy": "balanced",
-  "market_condition": "neutral",
-  "assets_scanned": 28,
+  "timestamp": "2026-04-07T07:08:33.789194",
+  "cycle": 105,
+  "strategy": "aggressive",
+  "market_condition": "bear",
+  "assets_scanned": 51,
   "open_trades": 2,
   "open_positions": [
     {
@@ -25,17 +25,39 @@
     {
       "symbol": "AVAXUSDT",
       "signal": "BUY",
-      "score": 49,
-      "tech": 60,
+      "score": 66,
+      "tech": 92,
       "fund": 35,
       "market": "crypto",
-      "price": 8.58,
+      "price": 8.59,
+      "reason": "F&G:11",
+      "ghana": "F&G:11"
+    },
+    {
+      "symbol": "COPPER",
+      "signal": "BUY",
+      "score": 66,
+      "tech": 91,
+      "fund": 35,
+      "market": "hfm",
+      "price": 4.2,
+      "reason": "F&G:11",
+      "ghana": "F&G:11"
+    },
+    {
+      "symbol": "USDCHF",
+      "signal": "BUY",
+      "score": 42,
+      "tech": 47,
+      "fund": 35,
+      "market": "hfm",
+      "price": 0.79939,
       "reason": "F&G:11",
       "ghana": "F&G:11"
     },
     {
       "symbol": "TREEUSDT",
-      "signal": "BUY",
+      "signal": "HOLD",
       "score": 34,
       "tech": 33,
       "fund": 35,
@@ -45,13 +67,35 @@
       "ghana": "F&G:11"
     },
     {
+      "symbol": "XPTUSD",
+      "signal": "HOLD",
+      "score": 33,
+      "tech": 31,
+      "fund": 35,
+      "market": "hfm",
+      "price": 950,
+      "reason": "F&G:11",
+      "ghana": "F&G:11"
+    },
+    {
+      "symbol": "USDCAD",
+      "signal": "HOLD",
+      "score": 33,
+      "tech": 31,
+      "fund": 35,
+      "market": "hfm",
+      "price": 1.3909,
+      "reason": "F&G:11",
+      "ghana": "F&G:11"
+    },
+    {
       "symbol": "FETUSDT",
-      "signal": "BUY",
+      "signal": "HOLD",
       "score": 30,
       "tech": 25,
       "fund": 35,
       "market": "crypto",
-      "price": 0.2315,
+      "price": 0.2318,
       "reason": "F&G:11",
       "ghana": "F&G:11"
     },
@@ -62,7 +106,7 @@
       "tech": -50,
       "fund": 35,
       "market": "crypto",
-      "price": 4622.06,
+      "price": 4623.12,
       "reason": "F&G:11",
       "ghana": "F&G:11"
     },
@@ -73,73 +117,29 @@
       "tech": -18,
       "fund": 0,
       "market": "crypto",
-      "price": 2099.48,
+      "price": 2099.86,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     },
     {
-      "symbol": "SUPERUSDT",
+      "symbol": "EURUSDT",
       "signal": "HOLD",
-      "score": 10,
-      "tech": 18,
+      "score": -10,
+      "tech": -19,
       "fund": 0,
       "market": "crypto",
-      "price": 0.1099,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
-    },
-    {
-      "symbol": "ENAUSDT",
-      "signal": "HOLD",
-      "score": -9,
-      "tech": -17,
-      "fund": 0,
-      "market": "crypto",
-      "price": 0.0806,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
-    },
-    {
-      "symbol": "XRPUSDT",
-      "signal": "HOLD",
-      "score": -7,
-      "tech": -13,
-      "fund": 0,
-      "market": "crypto",
-      "price": 1.312,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
-    },
-    {
-      "symbol": "TAOUSDT",
-      "signal": "HOLD",
-      "score": -7,
-      "tech": -13,
-      "fund": 0,
-      "market": "crypto",
-      "price": 310.1,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
-    },
-    {
-      "symbol": "SUIUSDT",
-      "signal": "HOLD",
-      "score": -7,
-      "tech": -13,
-      "fund": 0,
-      "market": "crypto",
-      "price": 0.8704,
+      "price": 1.154,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     }
   ],
-  "buy_signals": 3,
+  "buy_signals": 1,
   "sell_signals": 0,
   "fear_greed": {
     "value": 11,
     "label": "Extreme Fear",
     "trend": "declining",
-    "ts": 1775542114.7938857
+    "ts": 1775545714.7975714
   },
   "markets": {
     "crypto": "active",
