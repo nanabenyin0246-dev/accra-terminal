@@ -1,6 +1,6 @@
 {
-  "timestamp": "2026-04-07T20:53:34.057120",
-  "cycle": 1306,
+  "timestamp": "2026-04-07T20:54:01.925412",
+  "cycle": 1304,
   "strategy": "balanced",
   "market_condition": "neutral",
   "assets_scanned": 28,
@@ -17,11 +17,22 @@
       "symbol": "USDCHF",
       "entry": 0.79969,
       "market": "hfm",
-      "sl": 0.77729868,
-      "tp": 0.9436342
+      "sl": 0.77170085,
+      "tp": 0.9196435
     }
   ],
   "top_opportunities": [
+    {
+      "symbol": "BARDUSDT",
+      "signal": "BUY",
+      "score": 39,
+      "tech": 43,
+      "fund": 35,
+      "market": "crypto",
+      "price": 0.3193,
+      "reason": "F&G:11",
+      "ghana": "F&G:11"
+    },
     {
       "symbol": "NOMUSDT",
       "signal": "BUY",
@@ -29,7 +40,7 @@
       "tech": 33,
       "fund": 35,
       "market": "crypto",
-      "price": 0.00606,
+      "price": 0.00605,
       "reason": "F&G:11",
       "ghana": "F&G:11"
     },
@@ -51,7 +62,7 @@
       "tech": 25,
       "fund": 35,
       "market": "crypto",
-      "price": 89.55,
+      "price": 89.5,
       "reason": "F&G:11",
       "ghana": "F&G:11"
     },
@@ -67,13 +78,24 @@
       "ghana": "F&G:11"
     },
     {
-      "symbol": "DOGEUSDT",
+      "symbol": "PEPEUSDT",
       "signal": "HOLD",
       "score": -10,
       "tech": -19,
       "fund": 0,
       "market": "crypto",
-      "price": 0.09213,
+      "price": 3.47e-06,
+      "reason": "Technical score too weak for AI analysis",
+      "ghana": "No action needed"
+    },
+    {
+      "symbol": "LINKUSDT",
+      "signal": "HOLD",
+      "score": 10,
+      "tech": 18,
+      "fund": 0,
+      "market": "crypto",
+      "price": 8.72,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     },
@@ -89,57 +111,35 @@
       "ghana": "No action needed"
     },
     {
-      "symbol": "LINKUSDT",
+      "symbol": "ETHUSDT",
       "signal": "HOLD",
-      "score": 7,
-      "tech": 13,
+      "score": -9,
+      "tech": -17,
       "fund": 0,
       "market": "crypto",
-      "price": 8.73,
+      "price": 2112.36,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     },
     {
-      "symbol": "ESPUSDT",
+      "symbol": "XAUTUSDT",
       "signal": "HOLD",
       "score": -7,
-      "tech": -12,
+      "tech": -13,
       "fund": 0,
       "market": "crypto",
-      "price": 0.08509,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
-    },
-    {
-      "symbol": "BARDUSDT",
-      "signal": "HOLD",
-      "score": 7,
-      "tech": 13,
-      "fund": 0,
-      "market": "crypto",
-      "price": 0.3196,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
-    },
-    {
-      "symbol": "SOLUSDT",
-      "signal": "HOLD",
-      "score": -6,
-      "tech": -10,
-      "fund": 0,
-      "market": "crypto",
-      "price": 82.13,
+      "price": 4678.59,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     }
   ],
-  "buy_signals": 3,
+  "buy_signals": 4,
   "sell_signals": 0,
   "fear_greed": {
     "value": 11,
     "label": "Extreme Fear",
     "trend": "declining",
-    "ts": 1775592795.0440826
+    "ts": 1775592831.82774
   },
   "markets": {
     "crypto": "active",
