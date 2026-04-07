@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-04-07T18:44:34.629333",
-  "cycle": 1204,
+  "timestamp": "2026-04-07T18:44:39.772562",
+  "cycle": 1214,
   "strategy": "balanced",
   "market_condition": "neutral",
-  "assets_scanned": 15,
+  "assets_scanned": 28,
   "open_trades": 2,
   "open_positions": [
     {
@@ -22,6 +22,17 @@
     }
   ],
   "top_opportunities": [
+    {
+      "symbol": "BARDUSDT",
+      "signal": "BUY",
+      "score": 48,
+      "tech": 59,
+      "fund": 35,
+      "market": "crypto",
+      "price": 0.3142,
+      "reason": "F&G:11",
+      "ghana": "F&G:11"
+    },
     {
       "symbol": "AVAXUSDT",
       "signal": "BUY",
@@ -56,6 +67,17 @@
       "ghana": "No action needed"
     },
     {
+      "symbol": "NEARUSDT",
+      "signal": "HOLD",
+      "score": -9,
+      "tech": -17,
+      "fund": 0,
+      "market": "crypto",
+      "price": 1.246,
+      "reason": "Technical score too weak for AI analysis",
+      "ghana": "No action needed"
+    },
+    {
       "symbol": "XRPUSDT",
       "signal": "HOLD",
       "score": -8,
@@ -73,7 +95,18 @@
       "tech": -15,
       "fund": 0,
       "market": "crypto",
-      "price": 8.63,
+      "price": 8.64,
+      "reason": "Technical score too weak for AI analysis",
+      "ghana": "No action needed"
+    },
+    {
+      "symbol": "ESPUSDT",
+      "signal": "HOLD",
+      "score": 7,
+      "tech": 13,
+      "fund": 0,
+      "market": "crypto",
+      "price": 0.0856,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     },
@@ -98,48 +131,15 @@
       "price": 311.2,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
-    },
-    {
-      "symbol": "DOGEUSDT",
-      "signal": "HOLD",
-      "score": -5,
-      "tech": -37,
-      "fund": 35,
-      "market": "crypto",
-      "price": 0.0915,
-      "reason": "F&G:11",
-      "ghana": "F&G:11"
-    },
-    {
-      "symbol": "PEPEUSDT",
-      "signal": "HOLD",
-      "score": -5,
-      "tech": -37,
-      "fund": 35,
-      "market": "crypto",
-      "price": 3.4e-06,
-      "reason": "F&G:11",
-      "ghana": "F&G:11"
-    },
-    {
-      "symbol": "REDUSDT",
-      "signal": "HOLD",
-      "score": 3,
-      "tech": 6,
-      "fund": 0,
-      "market": "crypto",
-      "price": 0.2028,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
     }
   ],
-  "buy_signals": 2,
+  "buy_signals": 3,
   "sell_signals": 0,
   "fear_greed": {
     "value": 11,
     "label": "Extreme Fear",
     "trend": "declining",
-    "ts": 1775585553.0051863
+    "ts": 1775585553.0051866
   },
   "markets": {
     "crypto": "active",
