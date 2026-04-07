@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-04-07T09:15:41.689470",
-  "cycle": 334,
-  "strategy": "balanced",
-  "market_condition": "neutral",
-  "assets_scanned": 28,
+  "timestamp": "2026-04-07T09:16:17.280283",
+  "cycle": 335,
+  "strategy": "aggressive",
+  "market_condition": "bear",
+  "assets_scanned": 51,
   "open_trades": 2,
   "open_positions": [
     {
@@ -23,13 +23,24 @@
   ],
   "top_opportunities": [
     {
+      "symbol": "COPPER",
+      "signal": "BUY",
+      "score": 66,
+      "tech": 91,
+      "fund": 35,
+      "market": "hfm",
+      "price": 4.2,
+      "reason": "F&G:11",
+      "ghana": "F&G:11"
+    },
+    {
       "symbol": "FETUSDT",
       "signal": "BUY",
       "score": 43,
       "tech": 49,
       "fund": 35,
       "market": "crypto",
-      "price": 0.2387,
+      "price": 0.2388,
       "reason": "F&G:11",
       "ghana": "F&G:11"
     },
@@ -45,24 +56,68 @@
       "ghana": "F&G:11"
     },
     {
-      "symbol": "BANKUSDT",
+      "symbol": "USDCHF",
       "signal": "BUY",
+      "score": 42,
+      "tech": 47,
+      "fund": 35,
+      "market": "hfm",
+      "price": 0.79939,
+      "reason": "F&G:11",
+      "ghana": "F&G:11"
+    },
+    {
+      "symbol": "BANKUSDT",
+      "signal": "HOLD",
       "score": 34,
       "tech": 33,
       "fund": 35,
       "market": "crypto",
-      "price": 0.037,
+      "price": 0.0369,
+      "reason": "F&G:11",
+      "ghana": "F&G:11"
+    },
+    {
+      "symbol": "TRUUSDT",
+      "signal": "HOLD",
+      "score": 33,
+      "tech": 31,
+      "fund": 35,
+      "market": "crypto",
+      "price": 0.0082,
       "reason": "F&G:11",
       "ghana": "F&G:11"
     },
     {
       "symbol": "TREEUSDT",
-      "signal": "BUY",
+      "signal": "HOLD",
       "score": 33,
       "tech": 31,
       "fund": 35,
       "market": "crypto",
       "price": 0.0614,
+      "reason": "F&G:11",
+      "ghana": "F&G:11"
+    },
+    {
+      "symbol": "XPTUSD",
+      "signal": "HOLD",
+      "score": 33,
+      "tech": 31,
+      "fund": 35,
+      "market": "hfm",
+      "price": 950,
+      "reason": "F&G:11",
+      "ghana": "F&G:11"
+    },
+    {
+      "symbol": "USDCAD",
+      "signal": "HOLD",
+      "score": 33,
+      "tech": 31,
+      "fund": 35,
+      "market": "hfm",
+      "price": 1.3909,
       "reason": "F&G:11",
       "ghana": "F&G:11"
     },
@@ -76,70 +131,15 @@
       "price": 4653.91,
       "reason": "F&G:11",
       "ghana": "F&G:11"
-    },
-    {
-      "symbol": "TRUUSDT",
-      "signal": "HOLD",
-      "score": 10,
-      "tech": 18,
-      "fund": 0,
-      "market": "crypto",
-      "price": 0.0081,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
-    },
-    {
-      "symbol": "XLMUSDT",
-      "signal": "HOLD",
-      "score": 9,
-      "tech": 17,
-      "fund": 0,
-      "market": "crypto",
-      "price": 0.1568,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
-    },
-    {
-      "symbol": "BNBUSDT",
-      "signal": "HOLD",
-      "score": -8,
-      "tech": -15,
-      "fund": 0,
-      "market": "crypto",
-      "price": 604.36,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
-    },
-    {
-      "symbol": "DEGOUSDT",
-      "signal": "HOLD",
-      "score": -8,
-      "tech": -14,
-      "fund": 0,
-      "market": "crypto",
-      "price": 0.303,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
-    },
-    {
-      "symbol": "REDUSDT",
-      "signal": "HOLD",
-      "score": -7,
-      "tech": -12,
-      "fund": 0,
-      "market": "crypto",
-      "price": 0.2121,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
     }
   ],
-  "buy_signals": 4,
+  "buy_signals": 2,
   "sell_signals": 0,
   "fear_greed": {
     "value": 11,
     "label": "Extreme Fear",
     "trend": "declining",
-    "ts": 1775552973.656898
+    "ts": 1775552937.4079905
   },
   "markets": {
     "crypto": "active",
