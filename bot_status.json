@@ -1,10 +1,10 @@
 {
-  "timestamp": "2026-04-07T10:39:22.998954",
-  "cycle": 491,
-  "strategy": "balanced",
-  "market_condition": "neutral",
-  "assets_scanned": 28,
-  "open_trades": 2,
+  "timestamp": "2026-04-07T10:39:53.682467",
+  "cycle": 490,
+  "strategy": "aggressive",
+  "market_condition": "bear",
+  "assets_scanned": 51,
+  "open_trades": 1,
   "open_positions": [
     {
       "symbol": "COPPER",
@@ -12,16 +12,20 @@
       "market": "hfm",
       "sl": 4.053,
       "tp": 4.83
-    },
-    {
-      "symbol": "USDCHF",
-      "entry": 0.79939,
-      "market": "hfm",
-      "sl": 0.77141135,
-      "tp": 0.9192985
     }
   ],
   "top_opportunities": [
+    {
+      "symbol": "COPPER",
+      "signal": "BUY",
+      "score": 66,
+      "tech": 91,
+      "fund": 35,
+      "market": "hfm",
+      "price": 4.2,
+      "reason": "F&G:11",
+      "ghana": "F&G:11"
+    },
     {
       "symbol": "ADAUSDT",
       "signal": "BUY",
@@ -29,7 +33,7 @@
       "tech": 56,
       "fund": 35,
       "market": "crypto",
-      "price": 0.2421,
+      "price": 0.2422,
       "reason": "F&G:11",
       "ghana": "F&G:11"
     },
@@ -40,18 +44,29 @@
       "tech": 56,
       "fund": 35,
       "market": "crypto",
-      "price": 0.1555,
+      "price": 0.1554,
+      "reason": "F&G:11",
+      "ghana": "F&G:11"
+    },
+    {
+      "symbol": "USDCHF",
+      "signal": "BUY",
+      "score": 42,
+      "tech": 47,
+      "fund": 35,
+      "market": "hfm",
+      "price": 0.79939,
       "reason": "F&G:11",
       "ghana": "F&G:11"
     },
     {
       "symbol": "SUPERUSDT",
       "signal": "BUY",
-      "score": 45,
-      "tech": 53,
+      "score": 41,
+      "tech": 46,
       "fund": 35,
       "market": "crypto",
-      "price": 0.1228,
+      "price": 0.1231,
       "reason": "F&G:11",
       "ghana": "F&G:11"
     },
@@ -62,7 +77,18 @@
       "tech": 44,
       "fund": 35,
       "market": "crypto",
-      "price": 8.66,
+      "price": 8.65,
+      "reason": "F&G:11",
+      "ghana": "F&G:11"
+    },
+    {
+      "symbol": "PEPEUSDT",
+      "signal": "BUY",
+      "score": 40,
+      "tech": 45,
+      "fund": 35,
+      "market": "crypto",
+      "price": 3.36e-06,
       "reason": "F&G:11",
       "ghana": "F&G:11"
     },
@@ -84,7 +110,7 @@
       "tech": 33,
       "fund": 35,
       "market": "crypto",
-      "price": 0.2345,
+      "price": 0.2344,
       "reason": "F&G:11",
       "ghana": "F&G:11"
     },
@@ -98,48 +124,15 @@
       "price": 53.2,
       "reason": "F&G:11",
       "ghana": "F&G:11"
-    },
-    {
-      "symbol": "XRPUSDT",
-      "signal": "BUY",
-      "score": 29,
-      "tech": 24,
-      "fund": 35,
-      "market": "crypto",
-      "price": 1.311,
-      "reason": "F&G:11",
-      "ghana": "F&G:11"
-    },
-    {
-      "symbol": "REDUSDT",
-      "signal": "BUY",
-      "score": 27,
-      "tech": 21,
-      "fund": 35,
-      "market": "crypto",
-      "price": 0.2016,
-      "reason": "F&G:11",
-      "ghana": "F&G:11"
-    },
-    {
-      "symbol": "BNBUSDT",
-      "signal": "HOLD",
-      "score": 10,
-      "tech": 19,
-      "fund": 0,
-      "market": "crypto",
-      "price": 598.69,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
     }
   ],
-  "buy_signals": 9,
+  "buy_signals": 11,
   "sell_signals": 0,
   "fear_greed": {
     "value": 11,
     "label": "Extreme Fear",
     "trend": "declining",
-    "ts": 1775556600.392842
+    "ts": 1775556547.0005817
   },
   "markets": {
     "crypto": "active",
