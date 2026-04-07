@@ -1,10 +1,10 @@
 {
-  "timestamp": "2026-04-07T10:48:28.007473",
-  "cycle": 507,
+  "timestamp": "2026-04-07T10:48:53.270741",
+  "cycle": 506,
   "strategy": "balanced",
   "market_condition": "neutral",
-  "assets_scanned": 10,
-  "open_trades": 2,
+  "assets_scanned": 28,
+  "open_trades": 3,
   "open_positions": [
     {
       "symbol": "COPPER",
@@ -15,10 +15,17 @@
     },
     {
       "symbol": "USDCHF",
-      "entry": 0.79939,
+      "entry": 0.88,
       "market": "hfm",
-      "sl": 0.77141135,
-      "tp": 0.9192985
+      "sl": 0.85844,
+      "tp": 1.0384
+    },
+    {
+      "symbol": "USDCAD",
+      "entry": 0.72,
+      "market": "hfm",
+      "sl": 0.70236,
+      "tp": 0.8496
     }
   ],
   "top_opportunities": [
@@ -29,7 +36,51 @@
       "tech": 76,
       "fund": 35,
       "market": "crypto",
-      "price": 0.1552,
+      "price": 0.1551,
+      "reason": "F&G:11",
+      "ghana": "F&G:11"
+    },
+    {
+      "symbol": "ADAUSDT",
+      "signal": "BUY",
+      "score": 47,
+      "tech": 56,
+      "fund": 35,
+      "market": "crypto",
+      "price": 0.2426,
+      "reason": "F&G:11",
+      "ghana": "F&G:11"
+    },
+    {
+      "symbol": "SUPERUSDT",
+      "signal": "BUY",
+      "score": 45,
+      "tech": 53,
+      "fund": 35,
+      "market": "crypto",
+      "price": 0.1222,
+      "reason": "F&G:11",
+      "ghana": "F&G:11"
+    },
+    {
+      "symbol": "AVAXUSDT",
+      "signal": "BUY",
+      "score": 40,
+      "tech": 44,
+      "fund": 35,
+      "market": "crypto",
+      "price": 8.64,
+      "reason": "F&G:11",
+      "ghana": "F&G:11"
+    },
+    {
+      "symbol": "PEPEUSDT",
+      "signal": "BUY",
+      "score": 40,
+      "tech": 45,
+      "fund": 35,
+      "market": "crypto",
+      "price": 3.36e-06,
       "reason": "F&G:11",
       "ghana": "F&G:11"
     },
@@ -51,7 +102,7 @@
       "tech": 34,
       "fund": 35,
       "market": "crypto",
-      "price": 53.14,
+      "price": 53.12,
       "reason": "F&G:11",
       "ghana": "F&G:11"
     },
@@ -62,84 +113,40 @@
       "tech": 31,
       "fund": 35,
       "market": "crypto",
-      "price": 0.2363,
+      "price": 0.2364,
       "reason": "F&G:11",
       "ghana": "F&G:11"
     },
     {
-      "symbol": "TREEUSDT",
-      "signal": "HOLD",
-      "score": 7,
-      "tech": 13,
-      "fund": 0,
-      "market": "crypto",
-      "price": 0.0604,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
-    },
-    {
-      "symbol": "NEARUSDT",
-      "signal": "HOLD",
-      "score": 5,
-      "tech": 9,
-      "fund": 0,
-      "market": "crypto",
-      "price": 1.238,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
-    },
-    {
-      "symbol": "ESPUSDT",
-      "signal": "HOLD",
-      "score": 4,
-      "tech": 8,
-      "fund": 0,
-      "market": "crypto",
-      "price": 0.0917,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
-    },
-    {
-      "symbol": "KITEUSDT",
-      "signal": "HOLD",
-      "score": 3,
-      "tech": 6,
-      "fund": 0,
-      "market": "crypto",
-      "price": 0.1488,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
-    },
-    {
-      "symbol": "ENAUSDT",
-      "signal": "HOLD",
-      "score": -1,
-      "tech": -2,
-      "fund": 0,
-      "market": "crypto",
-      "price": 0.0809,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
-    },
-    {
-      "symbol": "XPLUSDT",
-      "signal": "HOLD",
-      "score": 1,
-      "tech": -27,
+      "symbol": "XRPUSDT",
+      "signal": "BUY",
+      "score": 29,
+      "tech": 24,
       "fund": 35,
       "market": "crypto",
-      "price": 0.1203,
+      "price": 1.309,
+      "reason": "F&G:11",
+      "ghana": "F&G:11"
+    },
+    {
+      "symbol": "TRXUSDT",
+      "signal": "BUY",
+      "score": 29,
+      "tech": 24,
+      "fund": 35,
+      "market": "crypto",
+      "price": 0.3148,
       "reason": "F&G:11",
       "ghana": "F&G:11"
     }
   ],
-  "buy_signals": 4,
+  "buy_signals": 11,
   "sell_signals": 0,
   "fear_greed": {
     "value": 11,
     "label": "Extreme Fear",
     "trend": "declining",
-    "ts": 1775556600.392842
+    "ts": 1775556547.0005817
   },
   "markets": {
     "crypto": "active",
