@@ -1,10 +1,10 @@
 {
-  "timestamp": "2026-04-07T10:51:50.874739",
-  "cycle": 513,
+  "timestamp": "2026-04-07T10:51:59.540141",
+  "cycle": 512,
   "strategy": "balanced",
   "market_condition": "neutral",
   "assets_scanned": 28,
-  "open_trades": 2,
+  "open_trades": 3,
   "open_positions": [
     {
       "symbol": "COPPER",
@@ -15,10 +15,17 @@
     },
     {
       "symbol": "USDCHF",
-      "entry": 0.79939,
+      "entry": 0.88,
       "market": "hfm",
-      "sl": 0.77141135,
-      "tp": 0.9192985
+      "sl": 0.85844,
+      "tp": 1.0384
+    },
+    {
+      "symbol": "USDCAD",
+      "entry": 0.72,
+      "market": "hfm",
+      "sl": 0.70236,
+      "tp": 0.8496
     }
   ],
   "top_opportunities": [
@@ -40,7 +47,7 @@
       "tech": 56,
       "fund": 35,
       "market": "crypto",
-      "price": 0.2424,
+      "price": 0.2423,
       "reason": "F&G:11",
       "ghana": "F&G:11"
     },
@@ -51,7 +58,7 @@
       "tech": 53,
       "fund": 35,
       "market": "crypto",
-      "price": 0.1221,
+      "price": 0.1223,
       "reason": "F&G:11",
       "ghana": "F&G:11"
     },
@@ -63,6 +70,17 @@
       "fund": 35,
       "market": "crypto",
       "price": 8.64,
+      "reason": "F&G:11",
+      "ghana": "F&G:11"
+    },
+    {
+      "symbol": "PEPEUSDT",
+      "signal": "BUY",
+      "score": 40,
+      "tech": 45,
+      "fund": 35,
+      "market": "crypto",
+      "price": 3.36e-06,
       "reason": "F&G:11",
       "ghana": "F&G:11"
     },
@@ -84,7 +102,7 @@
       "tech": 31,
       "fund": 35,
       "market": "crypto",
-      "price": 0.2363,
+      "price": 0.2364,
       "reason": "F&G:11",
       "ghana": "F&G:11"
     },
@@ -120,26 +138,15 @@
       "price": 79.51,
       "reason": "F&G:11",
       "ghana": "F&G:11"
-    },
-    {
-      "symbol": "XRPUSDT",
-      "signal": "BUY",
-      "score": 29,
-      "tech": 24,
-      "fund": 35,
-      "market": "crypto",
-      "price": 1.309,
-      "reason": "F&G:11",
-      "ghana": "F&G:11"
     }
   ],
-  "buy_signals": 11,
+  "buy_signals": 12,
   "sell_signals": 0,
   "fear_greed": {
     "value": 11,
     "label": "Extreme Fear",
     "trend": "declining",
-    "ts": 1775556600.392842
+    "ts": 1775556547.0005817
   },
   "markets": {
     "crypto": "active",
