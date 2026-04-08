@@ -50,6 +50,15 @@ def _get_xyz_meta():
     data = r.json()
     return {"universe": data[0].get("universe", []), "ctxs": data[1]}
 
+
+def xyz_leverage_for(ticker):
+    """Smart leverage by asset class."""
+    if ticker in FOREX:       return 20   # EUR, JPY, DXY - most liquid
+    if ticker in COMMODITIES: return 15   # GOLD, OIL etc - high liquidity
+    if ticker in INDICES:     return 10   # SP500, XYZ100 etc
+    if ticker in STOCKS:      return 5    # Individual stocks - more volatile
+    return 5                              # Unknown - conservative
+
 def xyz_get_price(ticker: str) -> float:
     try:
         info, _ = _get_clients()
