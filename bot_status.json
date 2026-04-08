@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-04-08T08:58:32.085837",
-  "cycle": 5758,
-  "strategy": "balanced",
-  "market_condition": "neutral",
-  "assets_scanned": 28,
+  "timestamp": "2026-04-08T08:58:44.300226",
+  "cycle": 5817,
+  "strategy": "conservative",
+  "market_condition": "bear",
+  "assets_scanned": 30,
   "open_trades": 3,
   "open_positions": [
     {
@@ -31,7 +31,7 @@
   "top_opportunities": [
     {
       "symbol": "WLDUSDT",
-      "signal": "BUY",
+      "signal": "HOLD",
       "score": 40,
       "tech": 45,
       "fund": 35,
@@ -42,36 +42,47 @@
     },
     {
       "symbol": "HBARUSDT",
-      "signal": "BUY",
+      "signal": "HOLD",
       "score": 34,
       "tech": 33,
       "fund": 35,
       "market": "crypto",
-      "price": 0.09135,
+      "price": 0.09133,
       "reason": "F&G:17",
       "ghana": "F&G:17"
     },
     {
       "symbol": "XAUTUSDT",
-      "signal": "BUY",
+      "signal": "HOLD",
       "score": 31,
       "tech": 27,
       "fund": 35,
       "market": "crypto",
-      "price": 4760.29,
+      "price": 4759.23,
       "reason": "F&G:17",
       "ghana": "F&G:17"
     },
     {
       "symbol": "NOMUSDT",
-      "signal": "BUY",
+      "signal": "HOLD",
       "score": 30,
       "tech": 25,
       "fund": 35,
       "market": "crypto",
-      "price": 0.00684,
+      "price": 0.00682,
       "reason": "F&G:17",
       "ghana": "F&G:17"
+    },
+    {
+      "symbol": "STOUSDT",
+      "signal": "HOLD",
+      "score": -10,
+      "tech": -18,
+      "fund": 0,
+      "market": "crypto",
+      "price": 0.1341,
+      "reason": "Technical score too weak for AI analysis",
+      "ghana": "No action needed"
     },
     {
       "symbol": "AVAXUSDT",
@@ -91,7 +102,7 @@
       "tech": -15,
       "fund": 0,
       "market": "crypto",
-      "price": 612.27,
+      "price": 612.26,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     },
@@ -102,7 +113,7 @@
       "tech": 15,
       "fund": 0,
       "market": "crypto",
-      "price": 0.954,
+      "price": 0.9535,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     },
@@ -113,7 +124,7 @@
       "tech": 15,
       "fund": 0,
       "market": "crypto",
-      "price": 3.255,
+      "price": 3.254,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     },
@@ -127,26 +138,15 @@
       "price": 0.3221,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
-    },
-    {
-      "symbol": "FETUSDT",
-      "signal": "HOLD",
-      "score": 6,
-      "tech": 10,
-      "fund": 0,
-      "market": "crypto",
-      "price": 0.256,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
     }
   ],
-  "buy_signals": 4,
+  "buy_signals": 0,
   "sell_signals": 0,
   "fear_greed": {
     "value": 17,
     "label": "Extreme Fear",
     "trend": "improving",
-    "ts": 1775636280.0800254
+    "ts": 1775636294.348543
   },
   "markets": {
     "crypto": "active",
