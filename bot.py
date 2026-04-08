@@ -4,9 +4,219 @@ from urllib.parse import urlencode
 
 logging.basicConfig(filename="bot.log", level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(message)s")
+
 def log(msg, level="info"):
     print(msg)
     getattr(logging, level)(msg)
+
+# ── HYPERLIQUID ───────────────────────────────────────────
+try:
+    from hyperliquid_trader import hl_place_order, hl_get_balance, hl_get_positions, hl_close_position
+    HL_ENABLED = True
+except Exception as _hl_err:
+    HL_ENABLED = False
+
+def hl_trade(signal, coin="SOL", pct=0.2):
+    if not HL_ENABLED:
+        return
+    try:
+        bal = hl_get_balance()
+        if bal < 5:
+            log("[HL] Balance too low: $%.2f" % bal)
+            return
+        amount = round(bal * pct, 2)
+        is_buy = signal.upper() == "BUY"
+        result = hl_place_order(coin, is_buy, amount, leverage=2)
+        log("[HL] %s %s $%.2f status=%s" % (signal, coin, amount, result.get("status")))
+    except Exception as e:
+        log("[HL] Trade error: %s" % e)
+
+# ── TRADE.XYZ ────────────────────────────────────────────
+try:
+    from tradexyz_trader import xyz_place_order, xyz_get_balance, xyz_get_positions, xyz_close_position
+    XYZ_ENABLED = True
+except Exception as _xyz_err:
+    XYZ_ENABLED = False
+
+def xyz_score_asset(ticker, prices, closes_cache):
+    """Score a trade.xyz asset using technicals. Returns (score, signal)."""
+    import statistics
+    try:
+        price = prices.get(ticker, 0)
+        if price <= 0:
+            return 0, "HOLD"
+        # Get closes from cache or skip
+        closes = closes_cache.get(ticker, [])
+        if len(closes) < 20:
+            return 0, "HOLD"
+        score = 0
+        signal = "HOLD"
+        # RSI
+        try:
+            rsi = calc_rsi(closes)
+            if rsi < 30:
+                score += 30
+            elif rsi < 40:
+                score += 15
+            elif rsi > 70:
+                score -= 30
+            elif rsi > 60:
+                score -= 15
+        except:
+            pass
+        # EMA trend
+        try:
+            ema20 = calc_ema(closes, 20)
+            ema50 = calc_ema(closes, 50)
+            if ema20[-1] > ema50[-1]:
+                score += 10
+            else:
+                score -= 10
+        except:
+            pass
+        # MACD
+        try:
+            macd, signal_line, _ = calc_macd(closes)
+            if macd[-1] > signal_line[-1]:
+                score += 15
+            else:
+                score -= 10
+        except:
+            pass
+        # BB position
+        try:
+            upper, mid, lower = calc_bb(closes)
+            if price < lower[-1]:
+                score += 20
+            elif price > upper[-1]:
+                score -= 20
+        except:
+            pass
+        if score >= 25:
+            signal = "BUY"
+        elif score <= -25:
+            signal = "SELL"
+        return score, signal
+    except Exception as e:
+        return 0, "HOLD"
+
+def xyz_get_closes(ticker, limit=60):
+    """Fetch OHLCV closes for a trade.xyz asset via Hyperliquid candles."""
+    try:
+        import time
+        now_ms  = int(time.time() * 1000)
+        start   = now_ms - limit * 60 * 60 * 1000  # hourly candles
+        r = requests.post("https://api.hyperliquid.xyz/info", json={
+            "type":       "candleSnapshot",
+            "req": {
+                "coin":       "xyz:" + ticker,
+                "interval":   "1h",
+                "startTime":  start,
+                "endTime":    now_ms
+            }
+        }, timeout=10)
+        candles = r.json()
+        if isinstance(candles, list) and len(candles) > 0:
+            return [float(c["c"]) for c in candles]
+    except:
+        pass
+    return []
+
+def xyz_scan_and_trade():
+    """Independent intelligence scan of all trade.xyz assets."""
+    if not XYZ_ENABLED:
+        return
+    try:
+        bal = xyz_get_balance()
+        if bal < 10:
+            log("[XYZ] Balance too low: $%.2f - skipping scan" % bal)
+            return
+
+        # Get all prices
+        from tradexyz_trader import _get_xyz_meta, xyz_place_order as _xyz_order
+        meta      = _get_xyz_meta()
+        all_tickers = [u["name"].replace("xyz:", "") for u in meta["universe"]]
+
+        log("[XYZ] Scanning %d assets..." % len(all_tickers))
+
+        best_score  = 0
+        best_ticker = None
+        best_signal = "HOLD"
+        prices      = {}
+        closes_cache = {}
+
+        for t in all_tickers:
+            try:
+                price = xyz_get_price(t)
+                if price <= 0:
+                    continue
+                prices[t] = price
+                closes = xyz_get_closes(t)
+                if closes:
+                    closes_cache[t] = closes
+            except:
+                continue
+
+        for t, price in prices.items():
+            score, sig = xyz_score_asset(t, prices, closes_cache)
+            if sig != "HOLD" and abs(score) > abs(best_score):
+                best_score  = score
+                best_ticker = t
+                best_signal = sig
+
+        if best_ticker and best_signal != "HOLD":
+            amount = round(bal * 0.4, 2)
+            is_buy = best_signal == "BUY"
+            log("[XYZ] BEST OPPORTUNITY: %s %s score=%d" % (best_signal, best_ticker, best_score))
+            result = xyz_place_order(best_ticker, is_buy, amount, leverage=3)
+            log("[XYZ] %s %s $%.2f status=%s" % (best_signal, best_ticker, amount, result.get("status")))
+            telegram("<b>XYZ %s</b>\n%s @ $%.2f\nScore:%d Margin:$%.2f" % (
+                best_signal, best_ticker, prices.get(best_ticker, 0), best_score, amount))
+        else:
+            log("[XYZ] No strong opportunity found this cycle")
+
+    except Exception as e:
+        log("[XYZ] Scan error: %s" % e)
+
+def xyz_trade(signal, ticker=None, pct=0.4, _cycle=[0]):
+    """Called after crypto signal - mirrors on best xyz asset."""
+    if not XYZ_ENABLED:
+        return
+    try:
+        bal = xyz_get_balance()
+        if bal < 10:
+            log("[XYZ] Balance too low: $%.2f" % bal)
+            return
+        amount = round(bal * pct, 2)
+        is_buy = signal.upper() == "BUY"
+        # If no ticker specified, find best opportunity
+        if ticker is None:
+            from tradexyz_trader import _get_xyz_meta
+            meta    = _get_xyz_meta()
+            tickers = [u["name"].replace("xyz:", "") for u in meta["universe"]]
+            closes_cache = {}
+            prices_map   = {}
+            for t in tickers[:20]:  # quick scan top 20
+                try:
+                    p = xyz_get_price(t)
+                    if p > 0:
+                        prices_map[t] = p
+                        c = xyz_get_closes(t, limit=30)
+                        if c:
+                            closes_cache[t] = c
+                except:
+                    pass
+            best_t, best_s = None, 0
+            for t in prices_map:
+                sc, sig = xyz_score_asset(t, prices_map, closes_cache)
+                if sig == signal and sc > best_s:
+                    best_s = sc
+                    best_t = t
+            ticker = best_t or "GOLD"
+        result = xyz_place_order(ticker, is_buy, amount, leverage=3)
+        log("[XYZ] %s %s $%.2f status=%s" % (signal, ticker, amount, result.get("status")))
+    except Exception as e:
+        log("[XYZ] Trade error: %s" % e)
 
 BINANCE_KEY    = os.getenv("BINANCE_KEY", "")
 BINANCE_SECRET = os.getenv("BINANCE_SECRET", "")
@@ -27,6 +237,9 @@ GITHUB_TOKEN   = os.getenv("GITHUB_TOKEN", "")
 GITHUB_REPO    = os.getenv("GITHUB_REPO", "nanabenyin0246-dev/accra-terminal")
 SLEEP_SECS     = int(os.getenv("SLEEP_SECS", "60"))
 LOG_FILE       = "trade_log.json"
+INSIGHTS_FILE  = os.path.expanduser("~/accra-bot/dream_insights.json")
+DREAM_EVERY    = 20
+dream_counter  = 0
 STATUS_FILE    = "bot_status.json"
 STRATEGY_FILE  = "bot_strategy.json"
 
@@ -35,13 +248,13 @@ DEFAULT_STRATEGY = {
     "min_confidence": 22,
     "max_open_trades": 3,
     "crypto_enabled": True,
-    "stocks_enabled": False,
+    "stocks_enabled": True,
     "hfm_enabled": False,
     "top_n_crypto": 30,
     "top_n_stocks": 30,
     "sl_multiplier": 1.0,
     "tp_multiplier": 1.0,
-    "avoid_assets": [],
+    "avoid_assets": ["STOUSDT","SOLVUSDT","BIFIUSDT","NIGHTUSDT","DUSDT","UUSDT","币安人生USDT"],
     "prefer_assets": [],
     "market_condition": "neutral",
     "updated_by": "default",
@@ -159,7 +372,7 @@ FAILSAFE_STRATEGY = {
     "min_confidence": 60,    # Very high threshold
     "max_open_trades": 2,    # Limit exposure
     "crypto_enabled": True,
-    "stocks_enabled": False, # Disable stocks in failsafe
+    "stocks_enabled": True, # Disable stocks in failsafe
     "hfm_enabled": False,
     "top_n_crypto": 5,       # Only top 5 safest coins
     "top_n_stocks": 0,
@@ -247,7 +460,7 @@ def get_top_crypto(n=20):
     try:
         r = requests.get("https://api.binance.com/api/v3/ticker/24hr", timeout=10)
         r.raise_for_status()
-        skip = {"USDTUSDT", "BUSDUSDT", "TUSDUSDT", "USDCUSDT", "FDUSDUSDT", "USD1USDT", "RLUSDUSDT", "UUSDT", "USDPUSDT", "DAIUSDT", "FRAXUSDT", "PAXGUSDT"}
+        skip = {"USDTUSDT", "BUSDUSDT", "TUSDUSDT", "USDCUSDT", "FDUSDUSDT", "USD1USDT", "RLUSDUSDT", "UUSDT", "USDPUSDT", "DAIUSDT", "FRAXUSDT", "PAXGUSDT", "DUSDT", "ZECUSDT", "NIGHTUSDT"}
         pairs = [t for t in r.json()
                  if t["symbol"].endswith("USDT")
                  and t["symbol"] not in skip
@@ -330,7 +543,7 @@ def place_crypto_order(symbol, side, quantity):
 
 
 def crypto_precision(symbol):
-    known = {"BTCUSDT": 5, "ETHUSDT": 4, "SOLUSDT": 2, "BNBUSDT": 3, "LINKUSDT": 1, "AVAXUSDT": 1, "LTCUSDT": 2, "BARDUSDT": 0, "UNIUSDT": 2, "FETUSDT": 1, "WLDUSDT": 1, "ROBOUSDT": 0, "NIGHTUSDT": 0, "ADAUSDT": 0, "DOGEUSDT": 0, "PEPEUSDT": 0, "XRPUSDT": 0, "NEARUSDT": 0,
+    known = {"BTCUSDT": 5, "ETHUSDT": 4, "SOLUSDT": 2, "BNBUSDT": 3, "LINKUSDT": 1, "AVAXUSDT": 1, "LTCUSDT": 2, "UNIUSDT": 2, "FETUSDT": 1, "WLDUSDT": 1, "ADAUSDT": 0, "DOGEUSDT": 0, "XRPUSDT": 0, "NEARUSDT": 0,
              "XRPUSDT": 0, "ADAUSDT": 0, "DOGEUSDT": 0, "AVAXUSDT": 2}
     return known.get(symbol, 2)
 
@@ -987,6 +1200,19 @@ def technical_score(closes):
     if mr_score != 0:
         score += mr_score; reasons.append(f"MeanRev: {mr_reason}")
 
+
+    # Universal Geopolitical Intelligence (Kobeissi principles)
+    geo_score, geo_reason = get_geopolitical_score()
+    if geo_score != 0:
+        score += geo_score
+        reasons.append(f"GEO: {geo_reason}")
+
+    # Weekend blackout check
+    blackout, blackout_reason = is_weekend_blackout()
+    if blackout:
+        score -= 50
+        reasons.append(f"BLACKOUT: {blackout_reason}")
+
     # Cross-domain correlation boost (Crucix-inspired)
     # When 3+ independent indicators agree = confidence multiplier
     bullish_signals = sum([
@@ -1173,6 +1399,59 @@ def calc_vwap_real(closes, volumes, period=20):
         return closes[-1], 0
 
 
+
+def get_geopolitical_score():
+    """
+    Universal Geopolitical Market Intelligence
+    Based on Kobeissi Letter research - timeless principles
+    Works regardless of president, conflict or country
+    Core truth: Extreme fear + oversold market = best buy opportunity
+    """
+    try:
+        fg = get_fear_greed()
+        fg_val = fg.get("value", 50)
+
+        r = requests.get("https://api.binance.com/api/v3/klines",
+            params={"symbol":"BTCUSDT","interval":"1d","limit":7}, timeout=10)
+        closes = [float(k[4]) for k in r.json()]
+        weekly_change = (closes[-1] - closes[0]) / closes[0] * 100
+
+        # BEST BUY ZONE: Extreme fear + market crashed
+        if fg_val < 15 and weekly_change < -10:
+            return +25, "EXTREME FEAR + CRASH: Historical best buy zone"
+        if fg_val < 25 and weekly_change < -5:
+            return +20, "High fear + pullback: Smart money accumulation"
+        if fg_val < 30 and weekly_change < -3:
+            return +12, "Fear market: Good entry conditions"
+
+        # DANGER ZONE: Greed + overbought
+        if fg_val > 75 and weekly_change > 10:
+            return -20, "EXTREME GREED + RALLY: Take profits soon"
+        if fg_val > 60 and weekly_change > 5:
+            return -10, "Greed building: Reduce exposure"
+
+        return 0, "Neutral market conditions"
+
+    except Exception as e:
+        return 0, f"Geo check error: {e}"
+
+def is_weekend_blackout():
+    """
+    Avoid Friday night trades - major announcements always happen then
+    Verified: Every major market event since 2025 happened Friday PM
+    """
+    from datetime import datetime, timezone
+    now = datetime.now(timezone.utc)
+    wd, hr = now.weekday(), now.hour
+    if wd == 4 and hr >= 20:
+        return True, "FRIDAY BLACKOUT 8PM UTC - no new trades"
+    if wd == 5:
+        return True, "SATURDAY BLACKOUT - weekend digestion"
+    if wd == 6 and hr < 21:
+        return True, "SUNDAY PRE-MARKET BLACKOUT"
+    return False, "Normal trading hours"
+
+
 def get_fear_greed():
     global _fg_cache
     if time.time() - _fg_cache["ts"] < 3600:
@@ -1274,6 +1553,88 @@ def unified_signal(symbol, closes, asset_type, strategy):
     }
 
 
+
+def load_history():
+    try:
+        with open(LOG_FILE) as f:
+            return json.load(f)
+    except:
+        return []
+
+def load_insights():
+    try:
+        with open(INSIGHTS_FILE) as f:
+            return json.load(f)
+    except:
+        return None
+
+def run_dream_cycle():
+    """Analyze trade history and return actionable directives."""
+    from datetime import timezone, timedelta
+    h = load_history()
+    if len(h) < 5:
+        log("  [DREAM] Need 5+ trades to analyze (have %d)" % len(h))
+        return None
+
+    cutoff = (datetime.now(timezone.utc) - timedelta(days=7)).isoformat()
+    recent   = [t for t in h if t.get("timestamp","") > cutoff] or h[-20:]
+    settled  = [t for t in recent if t.get("outcome") in ("WIN","LOSS")]
+    if not settled:
+        log("  [DREAM] No settled trades yet")
+        return None
+
+    wins     = [t for t in settled if t["outcome"] == "WIN"]
+    win_rate = len(wins) / len(settled)
+
+    asset_pnl = {}
+    for t in recent:
+        a = t.get("asset", t.get("symbol", "?"))
+        asset_pnl.setdefault(a, []).append(t.get("profit_pct", 0))
+    asset_avg = {a: sum(v)/len(v) for a, v in asset_pnl.items() if v}
+
+    worst = min(asset_avg, key=asset_avg.get) if asset_avg else None
+    best  = max(asset_avg, key=asset_avg.get) if asset_avg else None
+
+    streak = 0
+    for t in reversed(settled):
+        if t["outcome"] == "LOSS": streak += 1
+        else: break
+
+    directives = {
+        "avoid_asset":           worst if asset_avg.get(worst, 0) < -2 else None,
+        "prefer_asset":          best  if asset_avg.get(best,  0) >  1 else None,
+        "go_defensive":          streak >= 3,
+        "recommended_min_score": 25 if win_rate < 0.4 else 20 if win_rate < 0.5 else 15,
+    }
+
+    insights = {
+        "generated_at":        datetime.now(timezone.utc).isoformat(),
+        "win_rate_pct":        round(win_rate * 100, 1),
+        "win_rate":            round(win_rate, 3),
+        "wins":                len(wins),
+        "losses":              len(settled) - len(wins),
+        "current_losing_streak": streak,
+        "best_asset":          best,
+        "worst_asset":         worst,
+        "asset_avg_pnl":       {k: round(v, 2) for k, v in asset_avg.items()},
+        "directives":          directives,
+    }
+
+    try:
+        with open(INSIGHTS_FILE, "w") as f:
+            json.dump(insights, f, indent=2)
+    except:
+        pass
+
+    log("  [DREAM] win_rate=%.0f%% streak=%d avoid=%s best=%s" % (
+        win_rate*100, streak, directives["avoid_asset"], best))
+
+    if streak >= 3:
+        telegram("<b>DREAM ALERT</b>\n%d consecutive losses\nGoing defensive\nAvoiding: %s" % (
+            streak, directives["avoid_asset"]))
+
+    return insights
+
 def register_trade(symbol, price, cfg, market):
     open_trades[symbol] = {
         "entry":      price,
@@ -1332,6 +1693,16 @@ def log_trade(entry):
 
 
 def execute(symbol, signal, price, cfg, conf, market):
+    # Check dream directives
+    _ins = load_insights()
+    if _ins:
+        _dir = _ins.get("directives", {})
+        if _dir.get("avoid_asset") and _dir["avoid_asset"] in symbol:
+            log("  [DREAM] Blocking %s - poor performer" % symbol)
+            return False
+        if _dir.get("go_defensive") and conf < 50:
+            log("  [DREAM] Defensive mode - skipping low conf signal (%d%%)" % conf)
+            return False
     try:
         if market == "crypto":
             coin = symbol.replace("USDT", "")
@@ -1342,8 +1713,8 @@ def execute(symbol, signal, price, cfg, conf, market):
                 amount = round(bal * 0.40, 2)
                 amount = min(amount, 15)  # Never more than $15
                 amount = min(amount, 12)  # Cap max trade at $12
-                if amount < 3:
-                    log(f"  SKIP {symbol}: ${amount:.2f} < $3")
+                if amount < 2:
+                    log(f"  SKIP {symbol}: ${amount:.2f} < $2")
                     return False
                 qty   = round(amount / price, prec)
                 # Ensure minimum $5 notional value
@@ -1352,6 +1723,13 @@ def execute(symbol, signal, price, cfg, conf, market):
                 # Round to correct precision
                 if prec == 0:
                     qty = int(qty)
+                hl_trade("BUY", "SOL")
+                # Only XYZ trade if less than 2 open XYZ positions
+                from tradexyz_trader import xyz_get_positions
+                if len(xyz_get_positions()) < 2:
+                    xyz_trade("BUY", ticker=None)
+                else:
+                    log("[XYZ] Max positions reached - skipping")
                 order = place_crypto_order(symbol, "BUY", qty)
                 log(f"  BOUGHT {qty} {coin} @ ${price:,.4f} | ID:{order.get('orderId')}")
                 register_trade(symbol, price, cfg, "crypto")
@@ -1368,6 +1746,12 @@ def execute(symbol, signal, price, cfg, conf, market):
                 if qty < 0.00001:
                     log(f"  SKIP {symbol}: no balance")
                     return False
+                hl_trade("SELL", "SOL")
+                from tradexyz_trader import xyz_get_positions
+                if len(xyz_get_positions()) < 2:
+                    xyz_trade("SELL", ticker=None)
+                else:
+                    log("[XYZ] Max positions reached - skipping")
                 order = place_crypto_order(symbol, "SELL", qty)
                 log(f"  SOLD {qty} {coin} @ ${price:,.4f} | ID:{order.get('orderId')}")
                 open_trades.pop(symbol, None)
@@ -1878,6 +2262,7 @@ def run_poly_cycle(all_results, current_prices):
     print(f"  [POLY PAPER] ${state['balance']:.0f} ROI:{roi:+.1f}% WR:{wr:.0f}% ({state['wins']}W/{state['losses']}L)")
 
 def apply_multidim_intelligence(sym,signal,score,confidence,market):
+    global _wx_events_cache
     import requests as _rq, time as _t
     adj=0; ac=0; reasons=[]
     is_oil=sym in("USOIL","UKOIL","NATGAS","GOIL","SEPLAT")
@@ -1922,19 +2307,71 @@ def apply_multidim_intelligence(sym,signal,score,confidence,market):
         if is_gold and signal=="BUY": adj+=20;ac+=10;reasons.append("DPRK seismic - gold safe haven")
         elif is_btc and signal=="BUY": adj+=8;reasons.append("DPRK threat - BTC hedge")
     if now-_wx_ts>1800:
-        try:
-            _r3=_rq.get("https://api.open-meteo.com/v1/forecast",
-                params={"latitude":"7.9","longitude":"-1.0","daily":"precipitation_sum",
-                        "forecast_days":"3","timezone":"auto"},timeout=6)
-            if _r3.ok:
-                _p=_r3.json().get("daily",{}).get("precipitation_sum",[0,0,0])
-                _wx_val=max(_p[:3]) if _p else 0
-            _wx_ts=now
-        except: pass
-    if _wx_val>50:
-        if sym in("MTNGH","GCB","GGBL","FML","UNIL","BOPP") and signal=="BUY":
-            adj-=12;reasons.append(f"Ghana flood {_wx_val:.0f}mm")
-        elif is_gold and signal=="BUY": adj+=8;reasons.append(f"Flood safe-haven")
+        # Global weather scan - all regions affecting markets
+        _ZONES=[
+            {"n":"West Africa","lat":7.9,"lon":-1.0,"assets":["MTNGH","GCB","GGBL","FML","UNIL","BOPP","GOIL"],"type":"africa"},
+            {"n":"Nigeria","lat":9.0,"lon":8.0,"assets":["DANGCEM","MTNN","ZENITHB","SEPLAT","GOIL"],"type":"africa"},
+            {"n":"East Africa","lat":0.0,"lon":37.0,"assets":["SAFCOM","EQTY","KCB","KENGEN"],"type":"africa"},
+            {"n":"Gulf of Guinea","lat":3.0,"lon":2.0,"assets":["USOIL","UKOIL","SEPLAT","GOIL"],"type":"oil"},
+            {"n":"US Gulf Coast","lat":29.5,"lon":-90.0,"assets":["USOIL","UKOIL","NATGAS"],"type":"oil"},
+            {"n":"Middle East","lat":25.0,"lon":50.0,"assets":["USOIL","UKOIL","XAUUSD"],"type":"oil"},
+            {"n":"Ukraine","lat":49.0,"lon":32.0,"assets":["NATGAS","UKOIL","USOIL"],"type":"energy"},
+            {"n":"Australia","lat":-25.0,"lon":135.0,"assets":["NEWGOLD","BHP","GFI"],"type":"mining"},
+            {"n":"South Africa","lat":-29.0,"lon":25.0,"assets":["GFI","NPN","NEWGOLD","SBK"],"type":"mining"},
+            {"n":"Southeast Asia","lat":4.0,"lon":108.0,"assets":["BTCUSDT","BNBUSDT","ETHUSDT"],"type":"crypto"},
+            {"n":"Japan","lat":35.7,"lon":139.7,"assets":["BTCUSDT","ETHUSDT"],"type":"crypto"},
+            {"n":"Brazil","lat":-15.0,"lon":-47.0,"assets":["USOIL","UKOIL"],"type":"commodity"},
+            {"n":"Indonesia","lat":-6.0,"lon":107.0,"assets":["USOIL","GGBL","FML"],"type":"commodity"},
+            {"n":"India","lat":20.0,"lon":78.0,"assets":["BTCUSDT","ETHUSDT","BNBUSDT"],"type":"crypto"},
+        ]
+        _wx_events=[]
+        _wx_max=0
+        for _z in _ZONES:
+            try:
+                _r3=_rq.get("https://api.open-meteo.com/v1/forecast",
+                    params={"latitude":_z["lat"],"longitude":_z["lon"],
+                            "daily":"precipitation_sum,windspeed_10m_max,weathercode",
+                            "forecast_days":"3","timezone":"auto"},timeout=5)
+                if _r3.ok:
+                    _dd=_r3.json().get("daily",{})
+                    _pr=_dd.get("precipitation_sum",[0,0,0])
+                    _wd=_dd.get("windspeed_10m_max",[0,0,0])
+                    _wc=_dd.get("weathercode",[0,0,0])
+                    _rain=max(_pr[:3]) if _pr else 0
+                    _wind=max(_wd[:3]) if _wd else 0
+                    _severe=any(c2 in [65,75,82,85,95,96,99] for c2 in (_wc[:3] if _wc else []))
+                    if _rain>50 or _severe or _wind>80:
+                        _wx_events.append({"zone":_z["n"],"rain":_rain,"wind":_wind,
+                                           "severe":_severe,"assets":_z["assets"],"type":_z["type"]})
+                        _wx_max=max(_wx_max,_rain)
+            except: pass
+        _wx_val=_wx_max
+        _wx_ts=now
+        # Store events for signal application
+        _wx_events_cache=_wx_events
+    # Apply global weather signals
+    try:
+        _wec=globals().get('_wx_events_cache',[])
+    except: _wec=[]
+    for _ev in _wec:
+        if sym in _ev["assets"]:
+            _rain=_ev.get("rain",0)
+            _zn=_ev.get("zone","?")
+            if _ev["type"]=="oil" and is_oil and signal=="BUY":
+                adj+=min(20,int(_rain//5)+10)
+                reasons.append(f"Storm {_zn} - oil supply disruption +{min(20,int(_rain//5)+10)}")
+            elif _ev["type"]=="mining" and is_gold and signal=="BUY":
+                adj+=10; reasons.append(f"Extreme weather {_zn} - mining disruption")
+            elif _ev["type"]=="africa" and signal=="BUY":
+                adj-=min(15,int(_rain//5))
+                reasons.append(f"Flood {_zn} {_rain:.0f}mm - operations hit")
+            elif _ev["type"]=="crypto" and is_crypto and _ev.get("severe"):
+                adj+=5; reasons.append(f"Weather {_zn} - safe haven demand")
+    # Global extreme weather = gold/BTC safe haven
+    if _wx_val>80 and is_gold and signal=="BUY":
+        adj+=12; reasons.append(f"Global extreme weather {_wx_val:.0f}mm - gold safe haven")
+    elif _wx_val>80 and is_btc and signal=="BUY":
+        adj+=6; reasons.append(f"Extreme weather - BTC safe haven")
     if now-_cg_ts>7200:
         _trades=[]
         for _url in ["https://senatestockwatcher.com/api/transactions",
@@ -1985,7 +2422,15 @@ def log_intel_summary():
     except: _wx=0
     print(f"  MARITIME: Hormuz={_hz} {'***OIL SHOCK***' if _hz=='CLOSED' else ''}")
     print(f"  SEISMIC : {'***DPRK THREAT***' if _nk else 'No DPRK activity'}")
-    print(f"  WEATHER : Ghana={_wx:.0f}mm {'***FLOOD***' if _wx>50 else 'OK'}")
+    try:
+        _wec2=globals().get('_wx_events_cache',[])
+        if _wec2:
+            print(f"  WEATHER : {len(_wec2)} extreme events globally")
+            for _ev2 in _wec2[:3]:
+                print(f"    -> {_ev2['zone']}: {_ev2.get('rain',0):.0f}mm rain {'SEVERE' if _ev2.get('severe') else ''} | Affects: {_ev2['assets'][:3]}")
+        else:
+            print(f"  WEATHER : Global scan complete - no extreme events")
+    except: print(f"  WEATHER : Scanning global zones...")
     try:
         _r=_rq.get("https://gamma-api.polymarket.com/markets",
             params={"limit":200,"active":"true","closed":"false"},timeout=8)
@@ -2026,6 +2471,28 @@ def show_intel_signals(all_results):
         if _intel: print(f"      [INTEL] {_intel[0][:55]}")
         if _tech: print(f"      [TECH]  {_tech[0][:55]}")
 
+
+def get_available_capital(exchange):
+    """Get tradeable capital from all assets, not just USDT"""
+    try:
+        balances = exchange.fetch_balance()
+        usdt = float(balances.get('USDT', {}).get('free', 0))
+        # Check other tradeable assets
+        assets = {}
+        for coin in ['BTC','ETH','SOL','BNB','XRP','ADA','DOT','AVAX']:
+            bal = float(balances.get(coin, {}).get('free', 0))
+            if bal > 0:
+                try:
+                    ticker = exchange.fetch_ticker(f'{coin}/USDT')
+                    usd_val = bal * ticker['last']
+                    if usd_val > 1.0:
+                        assets[coin] = {'qty': bal, 'usd': usd_val}
+                except: pass
+        total_usd = usdt + sum(v['usd'] for v in assets.values())
+        return usdt, assets, total_usd
+    except Exception as e:
+        log(f"  [CAPITAL] {str(e)[:40]}", "warning")
+        return 0, {}, 0
 
 def main():
     build_ai_providers()
@@ -2098,6 +2565,16 @@ def main():
         except Exception as e:
             log(f"[Cycle error] {e}", "error")
             telegram(f"<b>CYCLE ERROR</b>\n{e}")
+        # ── Dream cycle ──────────────────────────────────
+        global dream_counter
+        dream_counter += 1
+        if dream_counter >= DREAM_EVERY:
+            dream_counter = 0
+            run_dream_cycle()
+
+        # ── trade.xyz independent scan ────────────────────
+        xyz_scan_and_trade()
+
         log(f"\n  Sleeping {SLEEP_SECS}s...")
         # Auto-reconnect if internet drops
     for attempt in range(SLEEP_SECS):
