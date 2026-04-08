@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-04-08T09:23:17.525030",
-  "cycle": 5875,
+  "timestamp": "2026-04-08T09:23:19.266913",
+  "cycle": 5805,
   "strategy": "aggressive",
-  "market_condition": "bull",
-  "assets_scanned": 26,
+  "market_condition": "bear",
+  "assets_scanned": 51,
   "open_trades": 3,
   "open_positions": [
     {
@@ -41,13 +41,35 @@
       "ghana": "F&G:17"
     },
     {
+      "symbol": "STOUSDT",
+      "signal": "BUY",
+      "score": 43,
+      "tech": 50,
+      "fund": 35,
+      "market": "crypto",
+      "price": 0.1319,
+      "reason": "F&G:17",
+      "ghana": "F&G:17"
+    },
+    {
       "symbol": "USDCHF",
-      "signal": "HOLD",
+      "signal": "BUY",
       "score": 42,
       "tech": 47,
       "fund": 35,
       "market": "hfm",
       "price": 0.79969,
+      "reason": "F&G:17",
+      "ghana": "F&G:17"
+    },
+    {
+      "symbol": "NOMUSDT",
+      "signal": "HOLD",
+      "score": 37,
+      "tech": 38,
+      "fund": 35,
+      "market": "crypto",
+      "price": 0.00678,
       "reason": "F&G:17",
       "ghana": "F&G:17"
     },
@@ -74,6 +96,28 @@
       "ghana": "F&G:17"
     },
     {
+      "symbol": "XAUTUSDT",
+      "signal": "HOLD",
+      "score": 28,
+      "tech": 22,
+      "fund": 35,
+      "market": "crypto",
+      "price": 4765.68,
+      "reason": "F&G:17",
+      "ghana": "F&G:17"
+    },
+    {
+      "symbol": "SUIUSDT",
+      "signal": "HOLD",
+      "score": 10,
+      "tech": 18,
+      "fund": 0,
+      "market": "crypto",
+      "price": 0.9506,
+      "reason": "Technical score too weak for AI analysis",
+      "ghana": "No action needed"
+    },
+    {
       "symbol": "GBPJPY",
       "signal": "HOLD",
       "score": -10,
@@ -91,62 +135,18 @@
       "tech": -16,
       "fund": 0,
       "market": "crypto",
-      "price": 2257.47,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
-    },
-    {
-      "symbol": "SP500",
-      "signal": "HOLD",
-      "score": 9,
-      "tech": 16,
-      "fund": 0,
-      "market": "hfm",
-      "price": 5200,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
-    },
-    {
-      "symbol": "XAUUSD",
-      "signal": "HOLD",
-      "score": -8,
-      "tech": -14,
-      "fund": 0,
-      "market": "hfm",
-      "price": 3000,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
-    },
-    {
-      "symbol": "USDGHS",
-      "signal": "HOLD",
-      "score": 8,
-      "tech": 15,
-      "fund": 0,
-      "market": "hfm",
-      "price": 15.3,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
-    },
-    {
-      "symbol": "TAOUSDT",
-      "signal": "HOLD",
-      "score": -6,
-      "tech": -10,
-      "fund": 0,
-      "market": "crypto",
-      "price": 348.2,
+      "price": 2257.29,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     }
   ],
-  "buy_signals": 0,
+  "buy_signals": 1,
   "sell_signals": 0,
   "fear_greed": {
     "value": 17,
     "label": "Extreme Fear",
     "trend": "improving",
-    "ts": 1775639911.439275
+    "ts": 1775639890.0769556
   },
   "markets": {
     "crypto": "active",
