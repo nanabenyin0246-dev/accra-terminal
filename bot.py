@@ -164,6 +164,34 @@ def xyz_scan_and_trade():
                 best_ticker = t
                 best_signal = sig
 
+        # Geopolitical override - force commodity trades on crisis signals
+        try:
+            global _hz_val, _nk_val
+            try: hz = _hz_val
+            except: hz = "UNKNOWN"
+            try: nk = _nk_val
+            except: nk = False
+
+            if hz == "CLOSED":
+                log("[XYZ] HORMUZ CLOSED - forcing CL/BRENTOIL long!")
+                for oil_ticker in ["CL", "BRENTOIL"]:
+                    oil_result = xyz_place_order(oil_ticker, True, round(bal * 0.3, 2), leverage=10)
+                    log("[XYZ] OIL CRISIS BUY %s: %s" % (oil_ticker, oil_result.get("status")))
+                    telegram("<b>XYZ OIL CRISIS</b>\nHormuz CLOSED\nLonging %s" % oil_ticker)
+            elif hz == "DISRUPTED":
+                log("[XYZ] HORMUZ DISRUPTED - boosting oil/gold score")
+                if best_ticker not in ["CL", "BRENTOIL", "GOLD", "SILVER"]:
+                    best_ticker = "GOLD"
+                    best_signal = "BUY"
+                    best_score  = max(best_score, 30)
+
+            if nk:
+                log("[XYZ] DPRK THREAT - forcing GOLD long!")
+                gold_result = xyz_place_order("GOLD", True, round(bal * 0.25, 2), leverage=10)
+                log("[XYZ] DPRK GOLD BUY: %s" % gold_result.get("status"))
+        except Exception as geo_e:
+            log("[XYZ] Geo override error: %s" % geo_e)
+
         if best_ticker and best_signal != "HOLD":
             amount = round(bal * 0.4, 2)
             is_buy = best_signal == "BUY"
@@ -450,6 +478,7 @@ def binance_time():
 
 
 def sign_binance(params):
+    params.setdefault("recvWindow", 10000)  # 10s window for clock drift
     q = urlencode(params)
     sig = hmac.new(BINANCE_SECRET.encode(), q.encode(), hashlib.sha256).hexdigest()
     return q + "&signature=" + sig
@@ -466,7 +495,7 @@ def get_top_crypto(n=20):
     try:
         r = requests.get("https://api.binance.com/api/v3/ticker/24hr", timeout=10)
         r.raise_for_status()
-        skip = {"USDTUSDT", "BUSDUSDT", "TUSDUSDT", "USDCUSDT", "FDUSDUSDT", "USD1USDT", "RLUSDUSDT", "UUSDT", "USDPUSDT", "DAIUSDT", "FRAXUSDT", "PAXGUSDT", "DUSDT", "ZECUSDT", "NIGHTUSDT"}
+        skip = {"USDTUSDT", "BUSDUSDT", "TUSDUSDT", "USDCUSDT", "FDUSDUSDT", "USD1USDT", "RLUSDUSDT", "UUSDT", "USDPUSDT", "DAIUSDT", "FRAXUSDT", "PAXGUSDT", "DUSDT", "ZECUSDT", "NIGHTUSDT", "ESPUSDT", "NOMUSDT", "KITEUSDT"}
         pairs = [t for t in r.json()
                  if t["symbol"].endswith("USDT")
                  and t["symbol"] not in skip
@@ -2039,7 +2068,7 @@ def run_cycle():
     try:
         _usdt = get_crypto_balance("USDT")
         log(f"  [ASSET MODE] USDT check: ${_usdt:.2f}")
-        if _usdt < 4:
+        if _usdt < 6:
             log(f"  [ASSET MODE] LOW USDT - activating asset trading!")
             strategy_now = load_strategy()
             trade_existing_assets(strategy_now, {})
@@ -2496,7 +2525,7 @@ def apply_multidim_intelligence(sym,signal,score,confidence,market):
             elif _fg<=20: adj-=15;reasons.append(f"Fear {_fg} - hold not sell")
     fs=score+adj; fc=max(0,min(100,confidence+ac))
     if adj!=0: log(f"  [INTEL] {sym}: {score:+d}->{fs:+d} conf:{confidence}%->{fc}% | {reasons[0] if reasons else ''}")
-    return fs,fc,reasons[:3]
+    return fs,fc,reasons[:5]
 
 def log_intel_summary():
     import requests as _rq
@@ -2522,6 +2551,20 @@ def log_intel_summary():
         else:
             print(f"  WEATHER : Global scan complete - no extreme events")
     except: print(f"  WEATHER : Scanning global zones...")
+
+    # Geo/Trump intelligence status
+    try:
+        _gs, _gr = get_geopolitical_score()
+        _ts, _tr = get_trump_analysis_score()
+        _blackout, _br = is_weekend_blackout()
+        geo_label = ("🟢 +" if _gs > 0 else "🔴 " if _gs < 0 else "⚪ ") + str(_gs)
+        trump_label = ("🟢 +" if _ts > 0 else "🔴 " if _ts < 0 else "⚪ ") + str(_ts)
+        print(f"  GEO     : {geo_label} | {_gr[:50]}")
+        print(f"  TRUMP   : {trump_label} | {_tr[:50]}")
+        if _blackout:
+            print(f"  ⛔ {_br}")
+    except Exception as e:
+        print(f"  GEO/TRUMP: error {e}")
     try:
         _r=_rq.get("https://gamma-api.polymarket.com/markets",
             params={"limit":200,"active":"true","closed":"false"},timeout=8)
