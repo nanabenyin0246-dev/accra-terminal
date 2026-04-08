@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-04-08T05:28:46.447350",
-  "cycle": 5393,
-  "strategy": "balanced",
-  "market_condition": "neutral",
-  "assets_scanned": 29,
+  "timestamp": "2026-04-08T05:29:04.983354",
+  "cycle": 5404,
+  "strategy": "conservative",
+  "market_condition": "bear",
+  "assets_scanned": 30,
   "open_trades": 3,
   "open_positions": [
     {
@@ -30,8 +30,19 @@
   ],
   "top_opportunities": [
     {
+      "symbol": "STOUSDT",
+      "signal": "HOLD",
+      "score": 42,
+      "tech": 47,
+      "fund": 35,
+      "market": "crypto",
+      "price": 0.1345,
+      "reason": "F&G:17",
+      "ghana": "F&G:17"
+    },
+    {
       "symbol": "WLDUSDT",
-      "signal": "BUY",
+      "signal": "HOLD",
       "score": 39,
       "tech": 43,
       "fund": 35,
@@ -42,7 +53,7 @@
     },
     {
       "symbol": "UNIUSDT",
-      "signal": "BUY",
+      "signal": "HOLD",
       "score": 30,
       "tech": 26,
       "fund": 35,
@@ -53,7 +64,7 @@
     },
     {
       "symbol": "NEARUSDT",
-      "signal": "BUY",
+      "signal": "HOLD",
       "score": 28,
       "tech": 22,
       "fund": 35,
@@ -69,7 +80,7 @@
       "tech": -62,
       "fund": 35,
       "market": "crypto",
-      "price": 0.00703,
+      "price": 0.007,
       "reason": "F&G:17",
       "ghana": "F&G:17"
     },
@@ -124,29 +135,18 @@
       "tech": -15,
       "fund": 0,
       "market": "crypto",
-      "price": 95.52,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
-    },
-    {
-      "symbol": "XPLUSDT",
-      "signal": "HOLD",
-      "score": -8,
-      "tech": -14,
-      "fund": 0,
-      "market": "crypto",
-      "price": 0.1281,
+      "price": 95.48,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     }
   ],
-  "buy_signals": 3,
+  "buy_signals": 0,
   "sell_signals": 0,
   "fear_greed": {
     "value": 17,
     "label": "Extreme Fear",
     "trend": "improving",
-    "ts": 1775625462.2651033
+    "ts": 1775625436.308089
   },
   "markets": {
     "crypto": "active",
