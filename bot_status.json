@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-04-08T02:03:00.203053",
-  "cycle": 5095,
-  "strategy": "conservative",
-  "market_condition": "bear",
-  "assets_scanned": 30,
+  "timestamp": "2026-04-08T02:03:18.165862",
+  "cycle": 5088,
+  "strategy": "balanced",
+  "market_condition": "neutral",
+  "assets_scanned": 29,
   "open_trades": 3,
   "open_positions": [
     {
@@ -30,37 +30,48 @@
   ],
   "top_opportunities": [
     {
-      "symbol": "UNIUSDT",
-      "signal": "HOLD",
-      "score": 32,
-      "tech": 30,
-      "fund": 35,
-      "market": "crypto",
-      "price": 3.234,
-      "reason": "F&G:17",
-      "ghana": "F&G:17"
-    },
-    {
       "symbol": "NEARUSDT",
-      "signal": "HOLD",
+      "signal": "BUY",
       "score": 30,
       "tech": 26,
       "fund": 35,
       "market": "crypto",
-      "price": 1.296,
+      "price": 1.295,
       "reason": "F&G:11",
       "ghana": "F&G:11"
     },
     {
       "symbol": "ESPUSDT",
-      "signal": "HOLD",
+      "signal": "BUY",
       "score": 27,
       "tech": 21,
       "fund": 35,
       "market": "crypto",
-      "price": 0.08938,
+      "price": 0.08932,
       "reason": "F&G:11",
       "ghana": "F&G:11"
+    },
+    {
+      "symbol": "REDUSDT",
+      "signal": "HOLD",
+      "score": 10,
+      "tech": 18,
+      "fund": 0,
+      "market": "crypto",
+      "price": 0.2022,
+      "reason": "Technical score too weak for AI analysis",
+      "ghana": "No action needed"
+    },
+    {
+      "symbol": "UNIUSDT",
+      "signal": "HOLD",
+      "score": 10,
+      "tech": 18,
+      "fund": 0,
+      "market": "crypto",
+      "price": 3.233,
+      "reason": "Technical score too weak for AI analysis",
+      "ghana": "No action needed"
     },
     {
       "symbol": "BTCUSDT",
@@ -69,7 +80,7 @@
       "tech": -17,
       "fund": 0,
       "market": "crypto",
-      "price": 71529.34,
+      "price": 71529.73,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     },
@@ -91,7 +102,7 @@
       "tech": -16,
       "fund": 0,
       "market": "crypto",
-      "price": 1.1683,
+      "price": 1.168,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     },
@@ -102,31 +113,9 @@
       "tech": -45,
       "fund": 35,
       "market": "crypto",
-      "price": 0.9733,
+      "price": 0.973,
       "reason": "F&G:17",
       "ghana": "F&G:17"
-    },
-    {
-      "symbol": "STOUSDT",
-      "signal": "HOLD",
-      "score": -9,
-      "tech": -17,
-      "fund": 0,
-      "market": "crypto",
-      "price": 0.139,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
-    },
-    {
-      "symbol": "NOMUSDT",
-      "signal": "HOLD",
-      "score": -9,
-      "tech": -17,
-      "fund": 0,
-      "market": "crypto",
-      "price": 0.00662,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
     },
     {
       "symbol": "LTCUSDT",
@@ -138,15 +127,26 @@
       "price": 55.04,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
+    },
+    {
+      "symbol": "WLDUSDT",
+      "signal": "HOLD",
+      "score": 9,
+      "tech": 16,
+      "fund": 0,
+      "market": "crypto",
+      "price": 0.2634,
+      "reason": "Technical score too weak for AI analysis",
+      "ghana": "No action needed"
     }
   ],
-  "buy_signals": 0,
+  "buy_signals": 2,
   "sell_signals": 0,
   "fear_greed": {
     "value": 17,
     "label": "Extreme Fear",
     "trend": "improving",
-    "ts": 1775610957.7789087
+    "ts": 1775610985.0564475
   },
   "markets": {
     "crypto": "active",
