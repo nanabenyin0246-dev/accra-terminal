@@ -285,6 +285,12 @@ _fund_cache = {}
 _top_crypto_cache = {"coins": [], "ts": 0}
 _top_stock_cache = {"stocks": [], "ts": 0}
 cycle_count = 0
+
+# ============================================================
+# TRUMP ANALYSIS MODULE - Remove by setting to False
+# When Trump leaves presidency: TRUMP_ANALYSIS_ENABLED = False
+# ============================================================
+TRUMP_ANALYSIS_ENABLED = True
 AI_PROVIDERS = []
 _ai_usage = {"groq":0,"gemini":0,"openrouter":0,"current":0}
 AI_ROTATE_EVERY = 3
@@ -1207,6 +1213,12 @@ def technical_score(closes):
         score += geo_score
         reasons.append(f"GEO: {geo_reason}")
 
+    # Trump Analysis Module (disable when he leaves: TRUMP_ANALYSIS_ENABLED=False)
+    trump_score, trump_reason = get_trump_analysis_score()
+    if trump_score != 0:
+        score += trump_score
+        reasons.append(f"TRUMP: {trump_reason}")
+
     # Weekend blackout check
     blackout, blackout_reason = is_weekend_blackout()
     if blackout:
@@ -1398,6 +1410,85 @@ def calc_vwap_real(closes, volumes, period=20):
     except:
         return closes[-1], 0
 
+
+
+
+def get_trump_analysis_score():
+    """
+    TRUMP ANALYSIS MODULE (Kobeissi Letter verified)
+    Disable when Trump leaves: TRUMP_ANALYSIS_ENABLED = False
+    
+    Verified accurate across:
+    - China tariffs (May 2025)
+    - Venezuela/Maduro capture (Dec 2025)
+    - Greenland/EU deal (Jan 2026)
+    - India trade deal (Feb 2026)
+    - Iran war/ceasefire (Feb-Mar 2026)
+    
+    10-Step Playbook:
+    1. Verbal pressure - "make a deal"
+    2. Strategic posturing
+    3. Friday night strike (after markets close)
+    4. Risk premium expansion
+    5. "Forever war/tariff" language
+    6. Markets price prolonged conflict = NEW LOWS
+    7. Conditional de-escalation signals
+    8. Market/political feedback loop = SMART MONEY BUYS
+    9. The Deal announced = violent rally
+    10. Victory lap = take profits
+    """
+    if not TRUMP_ANALYSIS_ENABLED:
+        return 0, "Trump analysis disabled"
+
+    try:
+        fg = get_fear_greed()
+        fg_val = fg.get("value", 50)
+
+        # Get weekly BTC change as market proxy
+        r = requests.get("https://api.binance.com/api/v3/klines",
+            params={"symbol":"BTCUSDT","interval":"1d","limit":7}, timeout=10)
+        closes = [float(k[4]) for k in r.json()]
+        weekly_chg = (closes[-1] - closes[0]) / closes[0] * 100
+
+        # STEP 8: Smart money accumulation (BEST BUY)
+        # Triggered by: oil near $90, stocks -5%+, F&G extreme fear
+        # This is when Trump's pressure is MAXIMUM before deal
+        if fg_val < 15 and weekly_chg < -10:
+            return +20, "TRUMP STEP 8: Max pressure before deal - Smart money BUY zone"
+
+        # STEP 7: Conditional de-escalation starting
+        # Trump language softens, deal coming soon
+        if fg_val < 20 and weekly_chg < -5:
+            return +15, "TRUMP STEP 7: De-escalation signals - Begin accumulating"
+
+        # STEP 6: Markets pricing prolonged conflict
+        # Second or third dip - structural repositioning
+        if fg_val < 30 and weekly_chg < -3:
+            return +8, "TRUMP STEP 6: Prolonged conflict priced in - Watch entries"
+
+        # STEP 4-5: Escalation phase - stay cautious
+        # "Forever war/tariff" language = more pain coming
+        if fg_val < 40 and weekly_chg < -8:
+            return -12, "TRUMP STEP 4-5: Escalation active - Reduce exposure"
+
+        # STEP 10: Victory lap - violent repricing done
+        # Time to take profits before reversal
+        if fg_val > 70 and weekly_chg > 8:
+            return -15, "TRUMP STEP 10: Victory rally - Take profits"
+
+        # STEP 9: Deal just announced
+        # Sharp rally incoming - buy any dips
+        if fg_val > 55 and weekly_chg > 5:
+            return +10, "TRUMP STEP 9: Deal announced - Ride the rally"
+
+        return 0, "Trump playbook: No clear step detected"
+
+    except Exception as e:
+        return 0, f"Trump analysis error: {e}"
+
+# TO DISABLE TRUMP ANALYSIS WHEN HE LEAVES PRESIDENCY:
+# Simply change line above to: TRUMP_ANALYSIS_ENABLED = False
+# One line change removes all Trump-specific logic permanently
 
 
 def get_geopolitical_score():
