@@ -123,29 +123,42 @@ def xyz_get_closes(ticker, limit=60):
     return []
 
 def xyz_scan_and_trade():
-    """Independent intelligence scan of all trade.xyz assets."""
+    """
+    Fully autonomous trade.xyz engine.
+    Scans ALL 61 assets independently.
+    Goes LONG or SHORT based on technical signals.
+    Completely separate from Binance crypto.
+    Asset classes: Stocks | Commodities | Forex | Indices
+    """
     if not XYZ_ENABLED:
         return
     try:
         bal = xyz_get_balance()
-        if bal < 10:
-            log("[XYZ] Balance too low: $%.2f - skipping scan" % bal)
+        if bal < 5:
+            log("[XYZ] Balance too low: $%.2f" % bal)
             return
 
-        # Get all prices
-        from tradexyz_trader import _get_xyz_meta, xyz_place_order as _xyz_order
-        meta      = _get_xyz_meta()
+        from tradexyz_trader import _get_xyz_meta, xyz_leverage_for
+        meta       = _get_xyz_meta(fresh=True)
         all_tickers = [u["name"].replace("xyz:", "") for u in meta["universe"]]
 
-        log("[XYZ] Scanning %d assets..." % len(all_tickers))
+        log("[XYZ] Scanning %d assets (long+short)..." % len(all_tickers))
 
-        best_score  = 0
-        best_ticker = None
-        best_signal = "HOLD"
-        prices      = {}
+        # Check existing positions to avoid doubling up
+        open_pos = set()
+        try:
+            for p in xyz_get_positions():
+                coin = p.get("position", {}).get("coin", "")
+                open_pos.add(coin.replace("xyz:", ""))
+        except:
+            pass
+
+        prices       = {}
         closes_cache = {}
 
         for t in all_tickers:
+            if t in open_pos:
+                continue  # skip already open
             try:
                 price = xyz_get_price(t)
                 if price <= 0:
@@ -157,6 +170,11 @@ def xyz_scan_and_trade():
             except:
                 continue
 
+        # Score all assets for both long AND short
+        best_score  = 0
+        best_ticker = None
+        best_signal = "HOLD"
+
         for t, price in prices.items():
             score, sig = xyz_score_asset(t, prices, closes_cache)
             if sig != "HOLD" and abs(score) > abs(best_score):
@@ -164,7 +182,7 @@ def xyz_scan_and_trade():
                 best_ticker = t
                 best_signal = sig
 
-        # Geopolitical override - force commodity trades on crisis signals
+        # Geopolitical override
         try:
             global _hz_val, _nk_val
             try: hz = _hz_val
@@ -175,36 +193,52 @@ def xyz_scan_and_trade():
             if hz == "CLOSED":
                 log("[XYZ] HORMUZ CLOSED - forcing CL/BRENTOIL long!")
                 for oil_ticker in ["CL", "BRENTOIL"]:
-                    oil_result = xyz_place_order(oil_ticker, True, round(bal * 0.3, 2), leverage=10)
-                    log("[XYZ] OIL CRISIS BUY %s: %s" % (oil_ticker, oil_result.get("status")))
-                    telegram("<b>XYZ OIL CRISIS</b>\nHormuz CLOSED\nLonging %s" % oil_ticker)
-            elif hz == "DISRUPTED":
-                log("[XYZ] HORMUZ DISRUPTED - boosting oil/gold score")
-                if best_ticker not in ["CL", "BRENTOIL", "GOLD", "SILVER"]:
-                    best_ticker = "GOLD"
-                    best_signal = "BUY"
-                    best_score  = max(best_score, 30)
+                    if oil_ticker not in open_pos:
+                        lev = xyz_leverage_for(oil_ticker)
+                        oil_result = xyz_place_order(oil_ticker, True,
+                                                     round(bal * 0.25, 2), leverage=lev)
+                        log("[XYZ] OIL CRISIS BUY %s: %s" % (
+                            oil_ticker, oil_result.get("status")))
+                        telegram("<b>XYZ OIL CRISIS</b>\nHormuz CLOSED\nLonging %s" % oil_ticker)
+                return
 
-            if nk:
+            elif hz == "DISRUPTED" and best_ticker not in ["CL","BRENTOIL","GOLD","SILVER"]:
+                best_ticker = "GOLD"
+                best_signal = "BUY"
+                best_score  = max(best_score, 30)
+
+            if nk and "GOLD" not in open_pos:
                 log("[XYZ] DPRK THREAT - forcing GOLD long!")
-                gold_result = xyz_place_order("GOLD", True, round(bal * 0.25, 2), leverage=10)
+                lev = xyz_leverage_for("GOLD")
+                gold_result = xyz_place_order("GOLD", True,
+                                              round(bal * 0.25, 2), leverage=lev)
                 log("[XYZ] DPRK GOLD BUY: %s" % gold_result.get("status"))
+                return
         except Exception as geo_e:
             log("[XYZ] Geo override error: %s" % geo_e)
 
         if best_ticker and best_signal != "HOLD":
-            amount = round(bal * 0.4, 2)
-            is_buy = best_signal == "BUY"
-            log("[XYZ] BEST OPPORTUNITY: %s %s score=%d" % (best_signal, best_ticker, best_score))
-            result = xyz_place_order(best_ticker, is_buy, amount, leverage=3)
-            log("[XYZ] %s %s $%.2f status=%s" % (best_signal, best_ticker, amount, result.get("status")))
-            telegram("<b>XYZ %s</b>\n%s @ $%.2f\nScore:%d Margin:$%.2f" % (
-                best_signal, best_ticker, prices.get(best_ticker, 0), best_score, amount))
+            amount   = round(bal * 0.35, 2)
+            is_buy   = best_signal == "BUY"
+            lev      = xyz_leverage_for(best_ticker)
+            direction = "LONG" if is_buy else "SHORT"
+            log("[XYZ] %s %s score=%d lev=%dx margin=$%.2f" % (
+                direction, best_ticker, best_score, lev, amount))
+            result = xyz_place_order(best_ticker, is_buy, amount, leverage=lev)
+            log("[XYZ] %s %s $%.2f status=%s filled=%s" % (
+                direction, best_ticker, amount,
+                result.get("status"), result.get("filled")))
+            if result.get("status") == "ok":
+                telegram("<b>XYZ %s</b>\n%s @ $%.2f\nScore:%d Lev:%dx Margin:$%.2f" % (
+                    direction, best_ticker,
+                    prices.get(best_ticker, 0),
+                    best_score, lev, amount))
         else:
-            log("[XYZ] No strong opportunity found this cycle")
+            log("[XYZ] No strong opportunity this cycle")
 
     except Exception as e:
         log("[XYZ] Scan error: %s" % e)
+
 
 def xyz_trade(signal, ticker=None, pct=0.4, _cycle=[0]):
     """Called after crypto signal - mirrors on best xyz asset."""
@@ -1844,12 +1878,6 @@ def execute(symbol, signal, price, cfg, conf, market):
                 if prec == 0:
                     qty = int(qty)
                 hl_trade("BUY", "SOL")
-                # Only XYZ trade if less than 2 open XYZ positions
-                from tradexyz_trader import xyz_get_positions
-                if len(xyz_get_positions()) < 2:
-                    xyz_trade("BUY", ticker=None)
-                else:
-                    log("[XYZ] Max positions reached - skipping")
                 order = place_crypto_order(symbol, "BUY", qty)
                 log(f"  BOUGHT {qty} {coin} @ ${price:,.4f} | ID:{order.get('orderId')}")
                 register_trade(symbol, price, cfg, "crypto")
@@ -1867,11 +1895,6 @@ def execute(symbol, signal, price, cfg, conf, market):
                     log(f"  SKIP {symbol}: no balance")
                     return False
                 hl_trade("SELL", "SOL")
-                from tradexyz_trader import xyz_get_positions
-                if len(xyz_get_positions()) < 2:
-                    xyz_trade("SELL", ticker=None)
-                else:
-                    log("[XYZ] Max positions reached - skipping")
                 order = place_crypto_order(symbol, "SELL", qty)
                 log(f"  SOLD {qty} {coin} @ ${price:,.4f} | ID:{order.get('orderId')}")
                 open_trades.pop(symbol, None)
