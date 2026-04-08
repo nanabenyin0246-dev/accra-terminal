@@ -1,11 +1,33 @@
 {
-  "timestamp": "2026-04-08T19:45:03.217616",
-  "cycle": 4,
+  "timestamp": "2026-04-08T19:45:22.227189",
+  "cycle": 6808,
   "strategy": "balanced",
   "market_condition": "neutral",
   "assets_scanned": 28,
-  "open_trades": 0,
-  "open_positions": [],
+  "open_trades": 3,
+  "open_positions": [
+    {
+      "symbol": "COPPER",
+      "entry": 4.2,
+      "market": "hfm",
+      "sl": 4.053,
+      "tp": 4.83
+    },
+    {
+      "symbol": "USDCHF",
+      "entry": 0.79969,
+      "market": "hfm",
+      "sl": 0.7800976,
+      "tp": 0.9436342
+    },
+    {
+      "symbol": "XPTUSD",
+      "entry": 950,
+      "market": "hfm",
+      "sl": 926.725,
+      "tp": 1121.0
+    }
+  ],
   "top_opportunities": [
     {
       "symbol": "ENAUSDT",
@@ -14,7 +36,7 @@
       "tech": 50,
       "fund": 35,
       "market": "crypto",
-      "price": 0.0888,
+      "price": 0.0887,
       "reason": "F&G:17",
       "ghana": "F&G:17"
     },
@@ -26,6 +48,17 @@
       "fund": 35,
       "market": "crypto",
       "price": 32.44,
+      "reason": "F&G:17",
+      "ghana": "F&G:17"
+    },
+    {
+      "symbol": "SOLUSDT",
+      "signal": "BUY",
+      "score": 39,
+      "tech": 42,
+      "fund": 35,
+      "market": "crypto",
+      "price": 82.94,
       "reason": "F&G:17",
       "ghana": "F&G:17"
     },
@@ -47,18 +80,7 @@
       "tech": 33,
       "fund": 35,
       "market": "crypto",
-      "price": 330.3,
-      "reason": "F&G:17",
-      "ghana": "F&G:17"
-    },
-    {
-      "symbol": "SOLUSDT",
-      "signal": "BUY",
-      "score": 32,
-      "tech": 30,
-      "fund": 35,
-      "market": "crypto",
-      "price": 82.87,
+      "price": 330.7,
       "reason": "F&G:17",
       "ghana": "F&G:17"
     },
@@ -113,7 +135,7 @@
       "tech": 18,
       "fund": 0,
       "market": "crypto",
-      "price": 0.0561,
+      "price": 0.056,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     }
@@ -124,7 +146,7 @@
     "value": 17,
     "label": "Extreme Fear",
     "trend": "improving",
-    "ts": 1775677088.5403385
+    "ts": 1775675994.5931234
   },
   "markets": {
     "crypto": "active",
