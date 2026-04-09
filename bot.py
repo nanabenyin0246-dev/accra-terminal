@@ -1877,7 +1877,6 @@ def execute(symbol, signal, price, cfg, conf, market):
                 # Round to correct precision
                 if prec == 0:
                     qty = int(qty)
-                hl_trade("BUY", "SOL")
                 order = place_crypto_order(symbol, "BUY", qty)
                 log(f"  BOUGHT {qty} {coin} @ ${price:,.4f} | ID:{order.get('orderId')}")
                 register_trade(symbol, price, cfg, "crypto")
@@ -1894,7 +1893,6 @@ def execute(symbol, signal, price, cfg, conf, market):
                 if qty < 0.00001:
                     log(f"  SKIP {symbol}: no balance")
                     return False
-                hl_trade("SELL", "SOL")
                 order = place_crypto_order(symbol, "SELL", qty)
                 log(f"  SOLD {qty} {coin} @ ${price:,.4f} | ID:{order.get('orderId')}")
                 open_trades.pop(symbol, None)
