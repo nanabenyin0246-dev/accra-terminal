@@ -53,11 +53,19 @@ def _get_xyz_meta(fresh=False):
 
 def xyz_leverage_for(ticker):
     """Smart leverage by asset class."""
-    if ticker in FOREX:       return 20   # EUR, JPY, DXY - most liquid
+    if ticker in FOREX:       return 10   # EUR, JPY - reduced for margin req
     if ticker in COMMODITIES: return 15   # GOLD, OIL etc - high liquidity
     if ticker in INDICES:     return 10   # SP500, XYZ100 etc
     if ticker in STOCKS:      return 5    # Individual stocks - more volatile
     return 5                              # Unknown - conservative
+
+def xyz_min_margin(ticker):
+    """Minimum margin needed by asset class."""
+    if ticker in FOREX:       return 8.0
+    if ticker in COMMODITIES: return 5.0
+    if ticker in INDICES:     return 8.0
+    if ticker in STOCKS:      return 8.0
+    return 8.0
 
 def xyz_get_price(ticker: str) -> float:
     try:
