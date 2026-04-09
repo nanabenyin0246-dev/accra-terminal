@@ -33,7 +33,7 @@ def hl_trade(signal, coin="SOL", pct=0.2):
 
 # ── TRADE.XYZ ────────────────────────────────────────────
 try:
-    from tradexyz_trader import xyz_place_order, xyz_get_balance, xyz_get_positions, xyz_close_position
+    from tradexyz_trader import xyz_place_order, xyz_get_balance, xyz_get_positions, xyz_close_position, xyz_get_price, xyz_get_all_prices
     XYZ_ENABLED = True
 except Exception as _xyz_err:
     XYZ_ENABLED = False
@@ -94,7 +94,7 @@ def xyz_score_asset(ticker, prices, closes_cache):
             pass
         if score >= 25:
             signal = "BUY"
-        elif score <= -25:
+        elif score <= -20:
             signal = "SELL"
         return score, signal
     except Exception as e:
@@ -138,7 +138,11 @@ def xyz_scan_and_trade():
             log("[XYZ] Balance too low: $%.2f" % bal)
             return
 
-        from tradexyz_trader import _get_xyz_meta, xyz_leverage_for
+        from tradexyz_trader import _get_xyz_meta, xyz_leverage_for, xyz_min_margin, xyz_free_margin
+        bal = xyz_free_margin()  # use FREE margin not total balance
+        if bal < 5:
+            log("[XYZ] Free margin too low: $%.2f" % bal)
+            return
         meta       = _get_xyz_meta(fresh=True)
         all_tickers = [u["name"].replace("xyz:", "") for u in meta["universe"]]
 
@@ -218,9 +222,10 @@ def xyz_scan_and_trade():
             log("[XYZ] Geo override error: %s" % geo_e)
 
         if best_ticker and best_signal != "HOLD":
-            amount   = round(bal * 0.35, 2)
-            is_buy   = best_signal == "BUY"
             lev      = xyz_leverage_for(best_ticker)
+            min_m    = xyz_min_margin(best_ticker)
+            amount   = max(min_m, round(bal * 0.25, 2))
+            is_buy   = best_signal == "BUY"
             direction = "LONG" if is_buy else "SHORT"
             log("[XYZ] %s %s score=%d lev=%dx margin=$%.2f" % (
                 direction, best_ticker, best_score, lev, amount))
@@ -529,7 +534,7 @@ def get_top_crypto(n=20):
     try:
         r = requests.get("https://api.binance.com/api/v3/ticker/24hr", timeout=10)
         r.raise_for_status()
-        skip = {"USDTUSDT", "BUSDUSDT", "TUSDUSDT", "USDCUSDT", "FDUSDUSDT", "USD1USDT", "RLUSDUSDT", "UUSDT", "USDPUSDT", "DAIUSDT", "FRAXUSDT", "PAXGUSDT", "DUSDT", "ZECUSDT", "NIGHTUSDT", "ESPUSDT", "NOMUSDT", "KITEUSDT"}
+        skip = {"USDTUSDT", "BUSDUSDT", "TUSDUSDT", "USDCUSDT", "FDUSDUSDT", "USD1USDT", "RLUSDUSDT", "UUSDT", "USDPUSDT", "DAIUSDT", "FRAXUSDT", "PAXGUSDT", "DUSDT", "ZECUSDT", "NIGHTUSDT", "ESPUSDT", "NOMUSDT", "KITEUSDT", "REDUSDT", "GIGGLEUSDT", "JOEUSDT"}
         pairs = [t for t in r.json()
                  if t["symbol"].endswith("USDT")
                  and t["symbol"] not in skip
