@@ -42,7 +42,7 @@ def _get_clients():
         _exch   = Exchange(account, MAINNET_API_URL, perp_dexs=["xyz"])
     return _info, _exch
 
-def _get_xyz_meta():
+def _get_xyz_meta(fresh=False):
     r = requests.post(MAINNET_API_URL + "/info",
                       json={"type": "metaAndAssetCtxs", "dex": "xyz"},
                       timeout=10)
