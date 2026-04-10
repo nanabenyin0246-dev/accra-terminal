@@ -122,33 +122,84 @@ def xyz_get_closes(ticker, limit=60):
         pass
     return []
 
+
+def xyz_active_asset_classes():
+    """
+    Return which asset classes are actively trading right now.
+    Avoids scanning stocks when NYSE is closed.
+    """
+    from datetime import datetime, timezone, timedelta
+    now_utc = datetime.now(timezone.utc)
+    now_ny  = now_utc - timedelta(hours=4)   # EDT
+    now_tok = now_utc + timedelta(hours=9)   # JST
+    now_lon = now_utc + timedelta(hours=1)   # BST
+
+    active = ["COMMODITIES", "CRYPTO"]  # always active
+
+    # Forex: Mon-Fri 24h
+    if now_utc.weekday() < 5:
+        active.append("FOREX")
+
+    # US Stocks: NYSE 9:30-16:00 NY time weekdays
+    if now_ny.weekday() < 5 and (
+        (now_ny.hour == 9 and now_ny.minute >= 30) or
+        (10 <= now_ny.hour < 16)):
+        active.append("US_STOCKS")
+
+    # Asian stocks: Tokyo 9-15 JST weekdays
+    if now_tok.weekday() < 5 and 9 <= now_tok.hour < 15:
+        active.append("ASIA_STOCKS")
+
+    # European stocks: London 8-16 BST weekdays  
+    if now_lon.weekday() < 5 and 8 <= now_lon.hour < 16:
+        active.append("EU_STOCKS")
+
+    return active
+
 def xyz_scan_and_trade():
     """
-    Fully autonomous trade.xyz engine.
-    Scans ALL 61 assets independently.
-    Goes LONG or SHORT based on technical signals.
-    Completely separate from Binance crypto.
-    Asset classes: Stocks | Commodities | Forex | Indices
+    Safe autonomous trade.xyz engine.
+    - Max 1 open position at a time
+    - Min balance $15 to trade
+    - Stop loss built into position sizing
+    - Only trades when score >= 30 (strong signal)
+    - Scans every 5 cycles not every cycle
     """
     if not XYZ_ENABLED:
         return
+
+    # Only scan every 5 cycles to reduce overtrading
+    global _xyz_scan_counter
+    try: _xyz_scan_counter
+    except: _xyz_scan_counter = 0
+    _xyz_scan_counter += 1
+    if _xyz_scan_counter < 5:
+        return
+    _xyz_scan_counter = 0
+
     try:
-        bal = xyz_get_balance()
-        if bal < 5:
-            log("[XYZ] Balance too low: $%.2f" % bal)
+        from tradexyz_trader import (
+            _get_xyz_meta, xyz_leverage_for, xyz_min_margin,
+            xyz_free_margin, xyz_get_price, STOCKS, COMMODITIES,
+            FOREX, INDICES
+        )
+
+        # Check free margin - need at least $15
+        free = xyz_free_margin()
+        total = xyz_get_balance()
+        log("[XYZ] Balance: $%.2f total, $%.2f free" % (total, free))
+
+        if total < 5:
+            log("[XYZ] Balance too low: $%.2f - not trading" % total)
             return
 
-        from tradexyz_trader import _get_xyz_meta, xyz_leverage_for, xyz_min_margin, xyz_free_margin
-        bal = xyz_free_margin()  # use FREE margin not total balance
-        if bal < 5:
-            log("[XYZ] Free margin too low: $%.2f" % bal)
+        if free < 5:
+            log("[XYZ] No free margin: $%.2f - positions full" % free)
+            # Check if open positions need stop loss
+            _xyz_check_stops()
             return
-        meta       = _get_xyz_meta(fresh=True)
-        all_tickers = [u["name"].replace("xyz:", "") for u in meta["universe"]]
 
-        log("[XYZ] Scanning %d assets (long+short)..." % len(all_tickers))
-
-        # Check existing positions to avoid doubling up
+        # Max 1 position at a time
         open_pos = set()
         try:
             for p in xyz_get_positions():
@@ -157,12 +208,34 @@ def xyz_scan_and_trade():
         except:
             pass
 
+        if len(open_pos) >= 1:
+            log("[XYZ] Max positions reached (%d open) - waiting" % len(open_pos))
+            _xyz_check_stops()
+            return
+
+        # Active market filter
+        active = xyz_active_asset_classes()
+        log("[XYZ] Active markets: %s" % ", ".join(active))
+
+        def _is_active(ticker):
+            if ticker in COMMODITIES: return True
+            if ticker in FOREX:       return "FOREX" in active
+            if ticker in INDICES:     return "US_STOCKS" in active
+            if ticker in STOCKS:      return "US_STOCKS" in active
+            return True
+
+        # Scan assets
+        meta        = _get_xyz_meta(fresh=True)
+        all_tickers = [u["name"].replace("xyz:", "") for u in meta["universe"]]
+
+        log("[XYZ] Scanning %d assets..." % len(all_tickers))
+
         prices       = {}
         closes_cache = {}
 
         for t in all_tickers:
-            if t in open_pos:
-                continue  # skip already open
+            if t in open_pos or not _is_active(t):
+                continue
             try:
                 price = xyz_get_price(t)
                 if price <= 0:
@@ -174,14 +247,14 @@ def xyz_scan_and_trade():
             except:
                 continue
 
-        # Score all assets for both long AND short
+        # Find best signal - require score >= 30 (strong only)
         best_score  = 0
         best_ticker = None
         best_signal = "HOLD"
 
         for t, price in prices.items():
             score, sig = xyz_score_asset(t, prices, closes_cache)
-            if sig != "HOLD" and abs(score) > abs(best_score):
+            if sig != "HOLD" and abs(score) >= 30 and abs(score) > abs(best_score):
                 best_score  = score
                 best_ticker = t
                 best_signal = sig
@@ -194,55 +267,87 @@ def xyz_scan_and_trade():
             try: nk = _nk_val
             except: nk = False
 
-            if hz == "CLOSED":
-                log("[XYZ] HORMUZ CLOSED - forcing CL/BRENTOIL long!")
-                for oil_ticker in ["CL", "BRENTOIL"]:
-                    if oil_ticker not in open_pos:
-                        lev = xyz_leverage_for(oil_ticker)
-                        oil_result = xyz_place_order(oil_ticker, True,
-                                                     round(bal * 0.25, 2), leverage=lev)
-                        log("[XYZ] OIL CRISIS BUY %s: %s" % (
-                            oil_ticker, oil_result.get("status")))
-                        telegram("<b>XYZ OIL CRISIS</b>\nHormuz CLOSED\nLonging %s" % oil_ticker)
-                return
-
+            if hz == "CLOSED" and "CL" not in open_pos:
+                log("[XYZ] HORMUZ CLOSED - forcing CL long!")
+                best_ticker = "CL"
+                best_signal = "BUY"
+                best_score  = 55
             elif hz == "DISRUPTED" and best_ticker not in ["CL","BRENTOIL","GOLD","SILVER"]:
                 best_ticker = "GOLD"
                 best_signal = "BUY"
                 best_score  = max(best_score, 30)
-
             if nk and "GOLD" not in open_pos:
-                log("[XYZ] DPRK THREAT - forcing GOLD long!")
-                lev = xyz_leverage_for("GOLD")
-                gold_result = xyz_place_order("GOLD", True,
-                                              round(bal * 0.25, 2), leverage=lev)
-                log("[XYZ] DPRK GOLD BUY: %s" % gold_result.get("status"))
-                return
+                log("[XYZ] DPRK - forcing GOLD long!")
+                best_ticker = "GOLD"
+                best_signal = "BUY"
+                best_score  = 40
         except Exception as geo_e:
-            log("[XYZ] Geo override error: %s" % geo_e)
+            log("[XYZ] Geo error: %s" % geo_e)
 
         if best_ticker and best_signal != "HOLD":
-            lev      = xyz_leverage_for(best_ticker)
-            min_m    = xyz_min_margin(best_ticker)
-            amount   = max(min_m, round(bal * 0.25, 2))
-            is_buy   = best_signal == "BUY"
+            lev    = xyz_leverage_for(best_ticker)
+            min_m  = xyz_min_margin(best_ticker)
+            # Use 30% of free margin, respect minimum
+            amount = max(min_m, round(free * 0.30, 2))
+            # Never use more than 50% of total balance in one trade
+            amount = min(amount, round(total * 0.50, 2))
+            is_buy = best_signal == "BUY"
             direction = "LONG" if is_buy else "SHORT"
+
             log("[XYZ] %s %s score=%d lev=%dx margin=$%.2f" % (
                 direction, best_ticker, best_score, lev, amount))
+
             result = xyz_place_order(best_ticker, is_buy, amount, leverage=lev)
-            log("[XYZ] %s %s $%.2f status=%s filled=%s" % (
-                direction, best_ticker, amount,
-                result.get("status"), result.get("filled")))
-            if result.get("status") == "ok":
-                telegram("<b>XYZ %s</b>\n%s @ $%.2f\nScore:%d Lev:%dx Margin:$%.2f" % (
+            status = result.get("status")
+            log("[XYZ] %s %s $%.2f → %s" % (
+                direction, best_ticker, amount, status))
+
+            if status == "ok":
+                telegram("<b>XYZ %s</b>\n%s @ $%.2f\nScore:%d Lev:%dx $%.2f" % (
                     direction, best_ticker,
                     prices.get(best_ticker, 0),
                     best_score, lev, amount))
         else:
-            log("[XYZ] No strong opportunity this cycle")
+            log("[XYZ] No strong opportunity (need score>=30)")
 
     except Exception as e:
         log("[XYZ] Scan error: %s" % e)
+
+def _xyz_check_stops():
+    """Check open xyz positions for stop loss / take profit."""
+    try:
+        import requests as _rq
+        from dotenv import load_dotenv as _lde
+        import os as _os
+        _lde()
+        HL_WALLET = _os.getenv("HYPERLIQUID_WALLET","")
+        r = _rq.post("https://api.hyperliquid.xyz/info",
+                     json={"type": "clearinghouseState",
+                           "user": HL_WALLET, "dex": "xyz"},
+                     timeout=10)
+        positions = r.json().get("assetPositions", [])
+        for p in positions:
+            pos    = p.get("position", {})
+            szi    = float(pos.get("szi", 0))
+            if szi == 0:
+                continue
+            ticker  = pos.get("coin","").replace("xyz:","")
+            pnl     = float(pos.get("unrealizedPnl", 0))
+            margin  = float(pos.get("marginUsed", 1))
+            pnl_pct = (pnl / margin * 100) if margin > 0 else 0
+
+            # Stop loss: -8% of margin
+            # Take profit: +15% of margin
+            if pnl_pct <= -8:
+                log("[XYZ] STOP LOSS %s pnl=%.1f%% - closing" % (ticker, pnl_pct))
+                xyz_close_position(ticker)
+                telegram("<b>XYZ STOP LOSS</b>\n%s\nPnL: %.1f%%" % (ticker, pnl_pct))
+            elif pnl_pct >= 15:
+                log("[XYZ] TAKE PROFIT %s pnl=%.1f%% - closing" % (ticker, pnl_pct))
+                xyz_close_position(ticker)
+                telegram("<b>XYZ TAKE PROFIT</b>\n%s\nPnL: %.1f%%" % (ticker, pnl_pct))
+    except Exception as e:
+        log("[XYZ] Stop check error: %s" % e)
 
 
 def xyz_trade(signal, ticker=None, pct=0.4, _cycle=[0]):
