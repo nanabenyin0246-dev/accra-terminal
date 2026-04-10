@@ -156,6 +156,48 @@ def xyz_active_asset_classes():
 
     return active
 
+
+def xyz_ai_consensus(ticker, price, is_buy_candidate):
+    """
+    Ask AI providers to vote on a trade.
+    Returns (agrees, confidence, reason)
+    Only trades when AI agrees with confidence >= 65.
+    """
+    try:
+        # Ensure AI providers are initialized
+        build_ai_providers()
+        direction = "BUY/LONG" if is_buy_candidate else "SELL/SHORT"
+        prompt = """You are a professional trader. Should we %s %s at $%.2f right now?
+Fear & Greed Index: 14 (Extreme Fear)
+Consider: technicals, macro conditions, risk/reward.
+Respond ONLY in JSON: {"vote": "BUY" or "SELL" or "HOLD", "confidence": 0-100, "reason": "one line"}
+Be decisive. If uncertain vote HOLD.""" % (direction, ticker, price)
+
+        result = call_multi_ai(prompt, "Return valid JSON only. No markdown.")
+        if not result:
+            return False, 0, "No AI response"
+
+        import json as _j
+        data     = _j.loads(result)
+        vote     = data.get("vote", "HOLD").upper()
+        conf     = int(data.get("confidence", 0))
+        reason   = data.get("reason", "")
+        expected = "BUY" if is_buy_candidate else "SELL"
+        agrees   = (vote == expected) and (conf >= 65)
+        log("[XYZ AI] %s vote=%s conf=%d%% | %s" % (ticker, vote, conf, reason[:50]))
+        return agrees, conf, reason
+    except Exception as e:
+        log("[XYZ AI] error: %s" % e)
+        return False, 0, str(e)
+
+def xyz_multi_ai_vote(ticker, price, is_buy_candidate):
+    agrees, conf, reason = xyz_ai_consensus(ticker, price, is_buy_candidate)
+    if not agrees:
+        log("[XYZ] AI BLOCKED %s conf=%d%%" % (ticker, conf))
+        return False, reason
+    log("[XYZ] AI APPROVED %s conf=%d%%" % (ticker, conf))
+    return True, reason
+
 def xyz_scan_and_trade():
     """
     Safe autonomous trade.xyz engine.
@@ -297,16 +339,23 @@ def xyz_scan_and_trade():
             log("[XYZ] %s %s score=%d lev=%dx margin=$%.2f" % (
                 direction, best_ticker, best_score, lev, amount))
 
+            # AI GATE - must pass before executing
+            ai_ok, ai_reason = xyz_multi_ai_vote(
+                best_ticker, prices.get(best_ticker, 0), is_buy)
+            if not ai_ok:
+                log("[XYZ] Trade blocked by AI: %s" % ai_reason)
+                return
+
             result = xyz_place_order(best_ticker, is_buy, amount, leverage=lev)
             status = result.get("status")
             log("[XYZ] %s %s $%.2f → %s" % (
                 direction, best_ticker, amount, status))
 
             if status == "ok":
-                telegram("<b>XYZ %s</b>\n%s @ $%.2f\nScore:%d Lev:%dx $%.2f" % (
+                telegram("<b>XYZ %s</b>\n%s @ $%.2f\nScore:%d Lev:%dx $%.2f\nAI:%s" % (
                     direction, best_ticker,
                     prices.get(best_ticker, 0),
-                    best_score, lev, amount))
+                    best_score, lev, amount, ai_reason[:40]))
         else:
             log("[XYZ] No strong opportunity (need score>=30)")
 
@@ -1972,6 +2021,9 @@ def execute(symbol, signal, price, cfg, conf, market):
             coin = symbol.replace("USDT", "")
             prec = crypto_precision(symbol)
             if signal == "BUY":
+                if conf < 45:
+                    log(f"  SKIP {symbol}: conf {conf}% < 45% minimum")
+                    return False
                 bal    = get_crypto_balance("USDT")
                 # Position sizing - 40% of balance, max $15
                 amount = round(bal * 0.40, 2)
@@ -1982,8 +2034,8 @@ def execute(symbol, signal, price, cfg, conf, market):
                     return False
                 qty   = round(amount / price, prec)
                 # Ensure minimum $5 notional value
-                if qty * price < 5:
-                    qty = round(5.5 / price, prec)
+                if qty * price < 11:
+                    qty = round(12 / price, prec)
                 # Round to correct precision
                 if prec == 0:
                     qty = int(qty)
