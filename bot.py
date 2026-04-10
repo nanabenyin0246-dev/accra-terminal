@@ -2489,6 +2489,37 @@ def run_cycle():
             "stocks": "open" if market_open() else "closed",
             "hfm":    "signal_mode" if (HFM_ACCOUNT or EXNESS_LOGIN) else "disabled",
         },
+        "binance_balance": (lambda: (lambda b: {"usdt": round(b,2)})(get_crypto_balance("USDT")))(),
+        "xyz": (lambda: {
+            "balance":   round(xyz_get_balance(), 2),
+            "free":      round(xyz_free_margin(), 2),
+            "positions": [
+                {"coin": p.get("position",{}).get("coin","").replace("xyz:",""),
+                 "szi":  p.get("position",{}).get("szi",""),
+                 "pnl":  p.get("position",{}).get("unrealizedPnl",""),
+                 "margin": p.get("position",{}).get("marginUsed","")}
+                for p in (xyz_get_positions() or [])
+            ]
+        })(),
+        "dream": (lambda i: {
+            "win_rate":   i.get("win_rate_pct", 0) if i else 0,
+            "best_asset": i.get("best_asset","") if i else "",
+            "avoid":      i.get("directives",{}).get("avoid_asset","") if i else "",
+            "defensive":  i.get("directives",{}).get("go_defensive", False) if i else False,
+            "streak":     i.get("current_losing_streak", 0) if i else 0,
+        })(load_insights()),
+        "intelligence": {
+            "hormuz":     _hz_val if "_hz_val" in dir() else "UNKNOWN",
+            "dprk":       bool(_nk_val) if "_nk_val" in dir() else False,
+            "geo_score":  get_geopolitical_score()[0],
+            "trump_score": get_trump_analysis_score()[0],
+        },
+        "performance": {
+            "total_trades":  len(load_history()),
+            "trade_log_size": len(trade_log),
+        },
+        "version": "v9",
+        "uptime_cycles": cycle_count,
     }
     push_status(status)
 
