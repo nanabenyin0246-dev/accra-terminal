@@ -11,6 +11,7 @@ log = logging.getLogger(__name__)
 
 HL_KEY    = os.getenv("HYPERLIQUID_PRIVATE_KEY", "")
 HL_WALLET = os.getenv("HYPERLIQUID_WALLET", "")
+HL_URL    = "https://api.hyperliquid.xyz"
 
 # ALL non-crypto assets — bot picks best one automatically
 STOCKS      = {"TSLA","NVDA","AAPL","META","GOOGL","AMZN","MSFT","COIN",
@@ -66,6 +67,21 @@ def xyz_min_margin(ticker):
     if ticker in INDICES:     return 8.0
     if ticker in STOCKS:      return 8.0
     return 8.0
+
+def xyz_free_margin() -> float:
+    """Get available free margin on xyz DEX."""
+    try:
+        r = requests.post(HL_URL + "/info",
+                          json={"type": "clearinghouseState",
+                                "user": HL_WALLET, "dex": "xyz"},
+                          timeout=10)
+        state = r.json()
+        total = float(state["marginSummary"]["accountValue"])
+        used  = float(state["marginSummary"]["totalMarginUsed"])
+        return round(total - used, 2)
+    except Exception as e:
+        log.error("[XYZ] Free margin failed: %s", e)
+        return 0.0
 
 def xyz_get_price(ticker: str) -> float:
     try:
