@@ -1,42 +1,50 @@
 {
-  "timestamp": "2026-04-14T12:09:20.375484",
-  "cycle": 4,
+  "timestamp": "2026-04-14T12:15:18.993965",
+  "cycle": 6,
   "strategy": "balanced",
   "market_condition": "neutral",
-  "assets_scanned": 30,
-  "open_trades": 0,
-  "open_positions": [],
+  "assets_scanned": 28,
+  "open_trades": 1,
+  "open_positions": [
+    {
+      "symbol": "COPPER",
+      "entry": 4.2,
+      "market": "hfm",
+      "sl": 4.053,
+      "tp": 4.83
+    }
+  ],
   "top_opportunities": [
     {
       "symbol": "BROCCOLI714USDT",
       "signal": "BUY",
-      "score": 38,
-      "tech": 40,
+      "score": 40,
+      "tech": 45,
       "fund": 35,
       "market": "crypto",
-      "price": 0.01632,
+      "price": 0.01633,
       "reason": "F&G:21",
       "ghana": "F&G:21"
     },
     {
-      "symbol": "ETHUSDT",
+      "symbol": "XPLUSDT",
+      "signal": "HOLD",
+      "score": 10,
+      "tech": 18,
+      "fund": 0,
+      "market": "crypto",
+      "price": 0.1409,
+      "reason": "Technical score too weak for AI analysis",
+      "ghana": "No action needed"
+    },
+    {
+      "symbol": "XAUTUSDT",
       "signal": "HOLD",
       "score": -9,
       "tech": -45,
       "fund": 35,
       "market": "crypto",
-      "price": 2375.82,
-      "reason": "F&G:21",
-      "ghana": "F&G:21"
-    },
-    {
-      "symbol": "ZAMAUSDT",
-      "signal": "HOLD",
-      "score": -9,
-      "tech": -45,
-      "fund": 35,
-      "market": "crypto",
-      "price": 0.03726,
+      "price": 4748.04,
       "reason": "F&G:21",
       "ghana": "F&G:21"
     },
@@ -52,6 +60,28 @@
       "ghana": "No action needed"
     },
     {
+      "symbol": "FETUSDT",
+      "signal": "HOLD",
+      "score": -9,
+      "tech": -17,
+      "fund": 0,
+      "market": "crypto",
+      "price": 0.2346,
+      "reason": "Technical score too weak for AI analysis",
+      "ghana": "No action needed"
+    },
+    {
+      "symbol": "DOGEUSDT",
+      "signal": "HOLD",
+      "score": 8,
+      "tech": 15,
+      "fund": 0,
+      "market": "crypto",
+      "price": 0.09407,
+      "reason": "Technical score too weak for AI analysis",
+      "ghana": "No action needed"
+    },
+    {
       "symbol": "TAOUSDT",
       "signal": "HOLD",
       "score": 8,
@@ -59,17 +89,6 @@
       "fund": 0,
       "market": "crypto",
       "price": 249.5,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
-    },
-    {
-      "symbol": "LTCUSDT",
-      "signal": "HOLD",
-      "score": 8,
-      "tech": 15,
-      "fund": 0,
-      "market": "crypto",
-      "price": 54.69,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     },
@@ -91,7 +110,7 @@
       "tech": -13,
       "fund": 0,
       "market": "crypto",
-      "price": 74399.26,
+      "price": 74298.46,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     },
@@ -102,18 +121,7 @@
       "tech": -13,
       "fund": 0,
       "market": "crypto",
-      "price": 616.14,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
-    },
-    {
-      "symbol": "PEPEUSDT",
-      "signal": "HOLD",
-      "score": 7,
-      "tech": 13,
-      "fund": 0,
-      "market": "crypto",
-      "price": 3.69e-06,
+      "price": 616.25,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     }
@@ -153,9 +161,9 @@
     "trump_score": 0
   },
   "performance": {
-    "total_trades": 6,
-    "trade_log_size": 0
+    "total_trades": 1,
+    "trade_log_size": 1
   },
   "version": "v9",
-  "uptime_cycles": 4
+  "uptime_cycles": 6
 }
