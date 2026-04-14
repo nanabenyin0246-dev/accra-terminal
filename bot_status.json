@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-04-14T21:15:59.770817",
-  "cycle": 1524,
-  "strategy": "conservative",
-  "market_condition": "bear",
-  "assets_scanned": 3,
+  "timestamp": "2026-04-14T21:28:19.335979",
+  "cycle": 1526,
+  "strategy": "balanced",
+  "market_condition": "neutral",
+  "assets_scanned": 5,
   "open_trades": 4,
   "open_positions": [
     {
@@ -38,14 +38,25 @@
   "top_opportunities": [
     {
       "symbol": "SOLUSDT",
-      "signal": "HOLD",
+      "signal": "BUY",
       "score": 28,
       "tech": 22,
       "fund": 35,
       "market": "crypto",
-      "price": 83.78,
+      "price": 83.73,
       "reason": "F&G:21",
       "ghana": "F&G:21"
+    },
+    {
+      "symbol": "ETHUSDT",
+      "signal": "HOLD",
+      "score": -10,
+      "tech": -18,
+      "fund": 0,
+      "market": "crypto",
+      "price": 2319.44,
+      "reason": "Technical score too weak for AI analysis",
+      "ghana": "No action needed"
     },
     {
       "symbol": "XRPUSDT",
@@ -54,9 +65,20 @@
       "tech": -35,
       "fund": 35,
       "market": "crypto",
-      "price": 1.3588,
+      "price": 1.3591,
       "reason": "F&G:21",
       "ghana": "F&G:21"
+    },
+    {
+      "symbol": "BTCUSDT",
+      "signal": "HOLD",
+      "score": 3,
+      "tech": 5,
+      "fund": 0,
+      "market": "crypto",
+      "price": 74092.15,
+      "reason": "Technical score too weak for AI analysis",
+      "ghana": "No action needed"
     },
     {
       "symbol": "DOGEUSDT",
@@ -65,12 +87,12 @@
       "tech": -27,
       "fund": 35,
       "market": "crypto",
-      "price": 0.09295,
+      "price": 0.09309,
       "reason": "F&G:21",
       "ghana": "F&G:21"
     }
   ],
-  "buy_signals": 0,
+  "buy_signals": 1,
   "sell_signals": 0,
   "fear_greed": {
     "value": 21,
@@ -109,5 +131,5 @@
     "trade_log_size": 6
   },
   "version": "v9",
-  "uptime_cycles": 1524
+  "uptime_cycles": 1526
 }
