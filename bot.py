@@ -222,11 +222,11 @@ def xyz_scan_and_trade():
     try:
         from tradexyz_trader import (
             _get_xyz_meta, xyz_leverage_for, xyz_min_margin,
-            xyz_free_margin, xyz_get_price, STOCKS, COMMODITIES,
-            FOREX, INDICES
+            xyz_free_margin, xyz_get_price, xyz_get_balance,
+            STOCKS, COMMODITIES, FOREX, INDICES
         )
 
-        # Check free margin - need at least $15
+        # Check free margin - need at least $5
         free = xyz_free_margin()
         total = xyz_get_balance()
         log("[XYZ] Balance: $%.2f total, $%.2f free" % (total, free))
@@ -688,10 +688,11 @@ def get_top_crypto(n=20):
     try:
         r = requests.get("https://api.binance.com/api/v3/ticker/24hr", timeout=10)
         r.raise_for_status()
-        skip = {"USDTUSDT", "BUSDUSDT", "TUSDUSDT", "USDCUSDT", "FDUSDUSDT", "USD1USDT", "RLUSDUSDT", "UUSDT", "USDPUSDT", "DAIUSDT", "FRAXUSDT", "PAXGUSDT", "DUSDT", "ZECUSDT", "NIGHTUSDT", "ESPUSDT", "NOMUSDT", "KITEUSDT", "REDUSDT", "GIGGLEUSDT", "JOEUSDT"}
+        skip = {"USDTUSDT", "BUSDUSDT", "TUSDUSDT", "USDCUSDT", "FDUSDUSDT", "USD1USDT", "RLUSDUSDT", "UUSDT", "USDPUSDT", "DAIUSDT", "FRAXUSDT", "PAXGUSDT", "DUSDT", "ZECUSDT", "NIGHTUSDT", "ESPUSDT", "NOMUSDT", "KITEUSDT", "REDUSDT", "GIGGLEUSDT", "JOEUSDT", "DASHUSDT", "0GUSDT", "ENJUSDT", "MMTUSDT", "KATUSDT", "TRUMPUSDT"}
         pairs = [t for t in r.json()
                  if t["symbol"].endswith("USDT")
                  and t["symbol"] not in skip
+                 and t["symbol"].isascii()
                  and float(t["quoteVolume"]) > 1000000]
         pairs.sort(key=lambda x: float(x["quoteVolume"]), reverse=True)
         coins = [t["symbol"] for t in pairs[:n]]
@@ -2492,7 +2493,7 @@ def run_cycle():
         "binance_balance": (lambda: (lambda b: {"usdt": round(b,2)})(get_crypto_balance("USDT")))(),
         "xyz": (lambda: {
             "balance":   round(xyz_get_balance(), 2),
-            "free":      round(xyz_free_margin(), 2),
+            "free":      (lambda: __import__("tradexyz_trader").xyz_free_margin())(),
             "positions": [
                 {"coin": p.get("position",{}).get("coin","").replace("xyz:",""),
                  "szi":  p.get("position",{}).get("szi",""),
