@@ -1,11 +1,26 @@
 {
-  "timestamp": "2026-04-23T06:42:56.715329",
-  "cycle": 5,
+  "timestamp": "2026-04-23T06:43:07.353942",
+  "cycle": 29,
   "strategy": "balanced",
   "market_condition": "neutral",
   "assets_scanned": 30,
-  "open_trades": 0,
-  "open_positions": [],
+  "open_trades": 2,
+  "open_positions": [
+    {
+      "symbol": "COPPER",
+      "entry": 4.2,
+      "market": "hfm",
+      "sl": 4.095,
+      "tp": 4.641
+    },
+    {
+      "symbol": "ORDIUSDT",
+      "entry": 4.244,
+      "market": "crypto",
+      "sl": 4.1379,
+      "tp": 4.54108
+    }
+  ],
   "top_opportunities": [
     {
       "symbol": "SPKUSDT",
@@ -14,7 +29,7 @@
       "tech": -38,
       "fund": 0,
       "market": "crypto",
-      "price": 0.053442,
+      "price": 0.053475,
       "reason": "F&G:46",
       "ghana": "F&G:46"
     },
@@ -36,7 +51,7 @@
       "tech": 38,
       "fund": 0,
       "market": "crypto",
-      "price": 9.235e-05,
+      "price": 9.22e-05,
       "reason": "F&G:46",
       "ghana": "F&G:46"
     },
@@ -124,7 +139,7 @@
     "value": 46,
     "label": "Fear",
     "trend": "improving",
-    "ts": 1776926488.4905493
+    "ts": 1776924372.42365
   },
   "markets": {
     "crypto": "active",
@@ -141,8 +156,8 @@
   },
   "dream": {
     "win_rate": 0,
-    "best_asset": "",
-    "avoid": "",
+    "best_asset": "ETH",
+    "avoid": null,
     "defensive": false,
     "streak": 0
   },
@@ -153,9 +168,9 @@
     "trump_score": 0
   },
   "performance": {
-    "total_trades": 0,
-    "trade_log_size": 0
+    "total_trades": 2,
+    "trade_log_size": 2
   },
   "version": "v9",
-  "uptime_cycles": 5
+  "uptime_cycles": 29
 }
