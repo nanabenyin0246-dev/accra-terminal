@@ -1,10 +1,10 @@
 {
-  "timestamp": "2026-04-23T06:31:15.835310",
-  "cycle": 14,
+  "timestamp": "2026-04-23T06:31:25.689174",
+  "cycle": 20,
   "strategy": "balanced",
   "market_condition": "neutral",
-  "assets_scanned": 30,
-  "open_trades": 1,
+  "assets_scanned": 51,
+  "open_trades": 2,
   "open_positions": [
     {
       "symbol": "COPPER",
@@ -12,9 +12,49 @@
       "market": "hfm",
       "sl": 4.095,
       "tp": 4.641
+    },
+    {
+      "symbol": "ORDIUSDT",
+      "entry": 4.244,
+      "market": "crypto",
+      "sl": 4.1379,
+      "tp": 4.54108
     }
   ],
   "top_opportunities": [
+    {
+      "symbol": "COPPER",
+      "signal": "BUY",
+      "score": 50,
+      "tech": 91,
+      "fund": 0,
+      "market": "hfm",
+      "price": 4.2,
+      "reason": "F&G:46",
+      "ghana": "F&G:46"
+    },
+    {
+      "symbol": "EURUSD",
+      "signal": "HOLD",
+      "score": -28,
+      "tech": -50,
+      "fund": 0,
+      "market": "hfm",
+      "price": 1.1732957878681216,
+      "reason": "F&G:46",
+      "ghana": "F&G:46"
+    },
+    {
+      "symbol": "NEIROUSDT",
+      "signal": "HOLD",
+      "score": 22,
+      "tech": 40,
+      "fund": 0,
+      "market": "crypto",
+      "price": 9.178e-05,
+      "reason": "F&G:46",
+      "ghana": "F&G:46"
+    },
     {
       "symbol": "SPKUSDT",
       "signal": "HOLD",
@@ -22,40 +62,29 @@
       "tech": -38,
       "fund": 0,
       "market": "crypto",
-      "price": 0.053725,
-      "reason": "F&G:46",
-      "ghana": "F&G:46"
-    },
-    {
-      "symbol": "NEIROUSDT",
-      "signal": "HOLD",
-      "score": 21,
-      "tech": 38,
-      "fund": 0,
-      "market": "crypto",
-      "price": 9.224e-05,
-      "reason": "F&G:46",
-      "ghana": "F&G:46"
-    },
-    {
-      "symbol": "TAOUSDT",
-      "signal": "HOLD",
-      "score": -19,
-      "tech": -35,
-      "fund": 0,
-      "market": "crypto",
-      "price": 243.3,
+      "price": 0.053628,
       "reason": "F&G:46",
       "ghana": "F&G:46"
     },
     {
       "symbol": "BNBUSDT",
       "signal": "HOLD",
-      "score": -18,
-      "tech": -33,
+      "score": -21,
+      "tech": -38,
       "fund": 0,
       "market": "crypto",
-      "price": 637.83,
+      "price": 637.62,
+      "reason": "F&G:46",
+      "ghana": "F&G:46"
+    },
+    {
+      "symbol": "XAGUSD",
+      "signal": "HOLD",
+      "score": -20,
+      "tech": -36,
+      "fund": 0,
+      "market": "hfm",
+      "price": 32,
       "reason": "F&G:46",
       "ghana": "F&G:46"
     },
@@ -71,57 +100,35 @@
       "ghana": "F&G:46"
     },
     {
-      "symbol": "LTCUSDT",
+      "symbol": "XPTUSD",
       "signal": "HOLD",
-      "score": -14,
-      "tech": -25,
+      "score": 17,
+      "tech": 31,
       "fund": 0,
-      "market": "crypto",
-      "price": 55.3,
+      "market": "hfm",
+      "price": 950,
       "reason": "F&G:46",
       "ghana": "F&G:46"
     },
     {
       "symbol": "LINKUSDT",
       "signal": "HOLD",
-      "score": -13,
-      "tech": -23,
+      "score": -16,
+      "tech": -30,
       "fund": 0,
       "market": "crypto",
-      "price": 9.25,
+      "price": 9.26,
       "reason": "F&G:46",
       "ghana": "F&G:46"
     },
     {
       "symbol": "NEARUSDT",
       "signal": "HOLD",
-      "score": -13,
-      "tech": -23,
+      "score": -15,
+      "tech": -28,
       "fund": 0,
       "market": "crypto",
-      "price": 1.39,
-      "reason": "F&G:46",
-      "ghana": "F&G:46"
-    },
-    {
-      "symbol": "TRXUSDT",
-      "signal": "HOLD",
-      "score": -12,
-      "tech": -22,
-      "fund": 0,
-      "market": "crypto",
-      "price": 0.3275,
-      "reason": "F&G:46",
-      "ghana": "F&G:46"
-    },
-    {
-      "symbol": "DOGEUSDT",
-      "signal": "HOLD",
-      "score": -11,
-      "tech": -20,
-      "fund": 0,
-      "market": "crypto",
-      "price": 0.09639,
+      "price": 1.389,
       "reason": "F&G:46",
       "ghana": "F&G:46"
     }
@@ -132,7 +139,7 @@
     "value": 46,
     "label": "Fear",
     "trend": "improving",
-    "ts": 1776925640.3988237
+    "ts": 1776924372.42365
   },
   "markets": {
     "crypto": "active",
@@ -149,8 +156,8 @@
   },
   "dream": {
     "win_rate": 0,
-    "best_asset": "",
-    "avoid": "",
+    "best_asset": "ETH",
+    "avoid": null,
     "defensive": false,
     "streak": 0
   },
@@ -161,9 +168,9 @@
     "trump_score": 0
   },
   "performance": {
-    "total_trades": 1,
-    "trade_log_size": 1
+    "total_trades": 2,
+    "trade_log_size": 2
   },
   "version": "v9",
-  "uptime_cycles": 14
+  "uptime_cycles": 20
 }
