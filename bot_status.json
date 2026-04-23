@@ -1,10 +1,10 @@
 {
-  "timestamp": "2026-04-23T06:21:52.197955",
-  "cycle": 121,
+  "timestamp": "2026-04-23T06:22:01.044588",
+  "cycle": 13,
   "strategy": "balanced",
   "market_condition": "neutral",
   "assets_scanned": 30,
-  "open_trades": 1,
+  "open_trades": 2,
   "open_positions": [
     {
       "symbol": "COPPER",
@@ -12,20 +12,16 @@
       "market": "hfm",
       "sl": 4.095,
       "tp": 4.641
+    },
+    {
+      "symbol": "ORDIUSDT",
+      "entry": 4.244,
+      "market": "crypto",
+      "sl": 4.1379,
+      "tp": 4.54108
     }
   ],
   "top_opportunities": [
-    {
-      "symbol": "NEIROUSDT",
-      "signal": "BUY",
-      "score": 22,
-      "tech": 40,
-      "fund": 0,
-      "market": "crypto",
-      "price": 9.189e-05,
-      "reason": "F&G:46",
-      "ghana": "F&G:46"
-    },
     {
       "symbol": "BNBUSDT",
       "signal": "HOLD",
@@ -33,7 +29,18 @@
       "tech": -38,
       "fund": 0,
       "market": "crypto",
-      "price": 637.29,
+      "price": 637.35,
+      "reason": "F&G:46",
+      "ghana": "F&G:46"
+    },
+    {
+      "symbol": "NEIROUSDT",
+      "signal": "HOLD",
+      "score": 21,
+      "tech": 38,
+      "fund": 0,
+      "market": "crypto",
+      "price": 9.232e-05,
       "reason": "F&G:46",
       "ghana": "F&G:46"
     },
@@ -44,7 +51,40 @@
       "tech": -33,
       "fund": 0,
       "market": "crypto",
-      "price": 0.054596,
+      "price": 0.054509,
+      "reason": "F&G:46",
+      "ghana": "F&G:46"
+    },
+    {
+      "symbol": "ORDIUSDT",
+      "signal": "HOLD",
+      "score": 15,
+      "tech": 28,
+      "fund": 0,
+      "market": "crypto",
+      "price": 4.26,
+      "reason": "F&G:46",
+      "ghana": "F&G:46"
+    },
+    {
+      "symbol": "DOGEUSDT",
+      "signal": "HOLD",
+      "score": -14,
+      "tech": -25,
+      "fund": 0,
+      "market": "crypto",
+      "price": 0.09617,
+      "reason": "F&G:46",
+      "ghana": "F&G:46"
+    },
+    {
+      "symbol": "STRKUSDT",
+      "signal": "HOLD",
+      "score": -14,
+      "tech": -25,
+      "fund": 0,
+      "market": "crypto",
+      "price": 0.049,
       "reason": "F&G:46",
       "ghana": "F&G:46"
     },
@@ -55,7 +95,7 @@
       "tech": -25,
       "fund": 0,
       "market": "crypto",
-      "price": 55.29,
+      "price": 55.3,
       "reason": "F&G:46",
       "ghana": "F&G:46"
     },
@@ -77,29 +117,7 @@
       "tech": -22,
       "fund": 0,
       "market": "crypto",
-      "price": 0.3275,
-      "reason": "F&G:46",
-      "ghana": "F&G:46"
-    },
-    {
-      "symbol": "EURUSDT",
-      "signal": "HOLD",
-      "score": 12,
-      "tech": 22,
-      "fund": 0,
-      "market": "crypto",
-      "price": 1.1698,
-      "reason": "F&G:46",
-      "ghana": "F&G:46"
-    },
-    {
-      "symbol": "DOGEUSDT",
-      "signal": "HOLD",
-      "score": -11,
-      "tech": -20,
-      "fund": 0,
-      "market": "crypto",
-      "price": 0.09619,
+      "price": 0.3274,
       "reason": "F&G:46",
       "ghana": "F&G:46"
     },
@@ -113,26 +131,15 @@
       "price": 456.9,
       "reason": "F&G:46",
       "ghana": "F&G:46"
-    },
-    {
-      "symbol": "ETHUSDT",
-      "signal": "HOLD",
-      "score": -10,
-      "tech": -18,
-      "fund": 0,
-      "market": "crypto",
-      "price": 2352.14,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
     }
   ],
-  "buy_signals": 1,
+  "buy_signals": 0,
   "sell_signals": 0,
   "fear_greed": {
     "value": 46,
     "label": "Fear",
     "trend": "improving",
-    "ts": 1776923064.1436841
+    "ts": 1776924372.42365
   },
   "markets": {
     "crypto": "active",
@@ -149,8 +156,8 @@
   },
   "dream": {
     "win_rate": 0,
-    "best_asset": "",
-    "avoid": "",
+    "best_asset": "ETH",
+    "avoid": null,
     "defensive": false,
     "streak": 0
   },
@@ -161,9 +168,9 @@
     "trump_score": 0
   },
   "performance": {
-    "total_trades": 1,
-    "trade_log_size": 1
+    "total_trades": 2,
+    "trade_log_size": 2
   },
   "version": "v9",
-  "uptime_cycles": 121
+  "uptime_cycles": 13
 }
