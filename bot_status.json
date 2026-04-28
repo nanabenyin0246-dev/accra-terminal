@@ -1,41 +1,42 @@
 {
-  "timestamp": "2026-04-28T19:07:23.050701",
-  "cycle": 4097,
+  "timestamp": "2026-04-28T19:07:24.309436",
+  "cycle": 18,
   "strategy": "balanced",
   "market_condition": "neutral",
-  "assets_scanned": 15,
-  "open_trades": 4,
+  "assets_scanned": 20,
+  "open_trades": 1,
   "open_positions": [
     {
       "symbol": "COPPER",
       "entry": 4.2,
       "market": "hfm",
-      "sl": 4.053,
+      "sl": 4.0971,
       "tp": 4.956
-    },
-    {
-      "symbol": "SOLUSDT",
-      "entry": 83.88,
-      "market": "crypto",
-      "sl": 81.82494,
-      "tp": 98.9784
-    },
-    {
-      "symbol": "PENGUUSDT",
-      "entry": 0.010416,
-      "market": "crypto",
-      "sl": 0.01016081,
-      "tp": 0.01229088
-    },
-    {
-      "symbol": "DOGEUSDT",
-      "entry": 0.09955,
-      "market": "crypto",
-      "sl": 0.09711103,
-      "tp": 0.117469
     }
   ],
   "top_opportunities": [
+    {
+      "symbol": "BTCUSDT",
+      "signal": "HOLD",
+      "score": 19,
+      "tech": 22,
+      "fund": 15,
+      "market": "crypto",
+      "price": 76174.02,
+      "reason": "F&G:33",
+      "ghana": "F&G:33"
+    },
+    {
+      "symbol": "TRXUSDT",
+      "signal": "HOLD",
+      "score": -19,
+      "tech": -47,
+      "fund": 15,
+      "market": "crypto",
+      "price": 0.3236,
+      "reason": "F&G:33",
+      "ghana": "F&G:33"
+    },
     {
       "symbol": "ZBTUSDT",
       "signal": "HOLD",
@@ -43,20 +44,20 @@
       "tech": 20,
       "fund": 15,
       "market": "crypto",
-      "price": 0.1959,
+      "price": 0.1957,
       "reason": "F&G:33",
       "ghana": "F&G:33"
     },
     {
-      "symbol": "ETHUSDT",
+      "symbol": "TAOUSDT",
       "signal": "HOLD",
-      "score": -10,
-      "tech": -18,
-      "fund": 0,
+      "score": -18,
+      "tech": -45,
+      "fund": 15,
       "market": "crypto",
-      "price": 2294.62,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
+      "price": 258.7,
+      "reason": "F&G:33",
+      "ghana": "F&G:33"
     },
     {
       "symbol": "SOLUSDT",
@@ -65,7 +66,7 @@
       "tech": -18,
       "fund": 0,
       "market": "crypto",
-      "price": 83.83,
+      "price": 83.8,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     },
@@ -87,18 +88,7 @@
       "tech": 18,
       "fund": 0,
       "market": "crypto",
-      "price": 6.21e-05,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
-    },
-    {
-      "symbol": "BTCUSDT",
-      "signal": "HOLD",
-      "score": 9,
-      "tech": 17,
-      "fund": 0,
-      "market": "crypto",
-      "price": 76175.86,
+      "price": 6.206e-05,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     },
@@ -109,7 +99,7 @@
       "tech": -28,
       "fund": 15,
       "market": "crypto",
-      "price": 623.48,
+      "price": 623.41,
       "reason": "F&G:33",
       "ghana": "F&G:33"
     },
@@ -120,7 +110,7 @@
       "tech": 17,
       "fund": 0,
       "market": "crypto",
-      "price": 0.1613,
+      "price": 0.1612,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     },
@@ -131,18 +121,7 @@
       "tech": 15,
       "fund": 0,
       "market": "crypto",
-      "price": 0.07078,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
-    },
-    {
-      "symbol": "XAUTUSDT",
-      "signal": "HOLD",
-      "score": 8,
-      "tech": 14,
-      "fund": 0,
-      "market": "crypto",
-      "price": 4593.6,
+      "price": 0.07082,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     }
@@ -153,7 +132,7 @@
     "value": 33,
     "label": "Fear",
     "trend": "declining",
-    "ts": 1777403159.8168855
+    "ts": 1777401622.0592415
   },
   "markets": {
     "crypto": "active",
@@ -170,8 +149,8 @@
   },
   "dream": {
     "win_rate": 0,
-    "best_asset": "",
-    "avoid": "",
+    "best_asset": "ETH",
+    "avoid": null,
     "defensive": false,
     "streak": 0
   },
@@ -182,9 +161,9 @@
     "trump_score": 0
   },
   "performance": {
-    "total_trades": 500,
-    "trade_log_size": 992
+    "total_trades": 1,
+    "trade_log_size": 1
   },
   "version": "v9",
-  "uptime_cycles": 4097
+  "uptime_cycles": 18
 }
