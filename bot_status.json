@@ -1,17 +1,38 @@
 {
-  "timestamp": "2026-04-28T21:54:02.657395",
-  "cycle": 125,
+  "timestamp": "2026-04-28T21:54:23.144843",
+  "cycle": 4935,
   "strategy": "aggressive",
   "market_condition": "bear",
   "assets_scanned": 41,
-  "open_trades": 1,
+  "open_trades": 4,
   "open_positions": [
     {
       "symbol": "COPPER",
       "entry": 4.2,
       "market": "hfm",
-      "sl": 4.0971,
+      "sl": 4.053,
       "tp": 4.956
+    },
+    {
+      "symbol": "SOLUSDT",
+      "entry": 83.88,
+      "market": "crypto",
+      "sl": 81.82494,
+      "tp": 98.9784
+    },
+    {
+      "symbol": "PENGUUSDT",
+      "entry": 0.010416,
+      "market": "crypto",
+      "sl": 0.01016081,
+      "tp": 0.01229088
+    },
+    {
+      "symbol": "DOGEUSDT",
+      "entry": 0.09955,
+      "market": "crypto",
+      "sl": 0.09711103,
+      "tp": 0.117469
     }
   ],
   "top_opportunities": [
@@ -28,7 +49,7 @@
     },
     {
       "symbol": "USDCHF",
-      "signal": "HOLD",
+      "signal": "BUY",
       "score": 33,
       "tech": 47,
       "fund": 15,
@@ -60,6 +81,17 @@
       "ghana": "F&G:33"
     },
     {
+      "symbol": "BIOUSDT",
+      "signal": "HOLD",
+      "score": -20,
+      "tech": -48,
+      "fund": 15,
+      "market": "crypto",
+      "price": 0.0364,
+      "reason": "F&G:33",
+      "ghana": "F&G:33"
+    },
+    {
       "symbol": "USDCAD",
       "signal": "HOLD",
       "score": 19,
@@ -67,6 +99,17 @@
       "fund": 15,
       "market": "hfm",
       "price": 1.3676,
+      "reason": "F&G:33",
+      "ghana": "F&G:33"
+    },
+    {
+      "symbol": "DOGEUSDT",
+      "signal": "HOLD",
+      "score": 18,
+      "tech": 20,
+      "fund": 15,
+      "market": "crypto",
+      "price": 0.09941,
       "reason": "F&G:33",
       "ghana": "F&G:33"
     },
@@ -102,28 +145,6 @@
       "price": 32,
       "reason": "F&G:33",
       "ghana": "F&G:33"
-    },
-    {
-      "symbol": "BIOUSDT",
-      "signal": "HOLD",
-      "score": -12,
-      "tech": -35,
-      "fund": 15,
-      "market": "crypto",
-      "price": 0.036,
-      "reason": "F&G:33",
-      "ghana": "F&G:33"
-    },
-    {
-      "symbol": "GBPJPY",
-      "signal": "HOLD",
-      "score": -12,
-      "tech": -34,
-      "fund": 15,
-      "market": "hfm",
-      "price": 215.16,
-      "reason": "F&G:33",
-      "ghana": "F&G:33"
     }
   ],
   "buy_signals": 0,
@@ -132,7 +153,7 @@
     "value": 33,
     "label": "Fear",
     "trend": "declining",
-    "ts": 1777412455.3031929
+    "ts": 1777410361.3839269
   },
   "markets": {
     "crypto": "active",
@@ -149,8 +170,8 @@
   },
   "dream": {
     "win_rate": 0,
-    "best_asset": "ETH",
-    "avoid": null,
+    "best_asset": "",
+    "avoid": "",
     "defensive": false,
     "streak": 0
   },
@@ -161,9 +182,9 @@
     "trump_score": 0
   },
   "performance": {
-    "total_trades": 1,
-    "trade_log_size": 1
+    "total_trades": 500,
+    "trade_log_size": 1825
   },
   "version": "v9",
-  "uptime_cycles": 125
+  "uptime_cycles": 4935
 }
