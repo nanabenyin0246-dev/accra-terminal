@@ -1,17 +1,38 @@
 {
-  "timestamp": "2026-04-28T22:24:55.325893",
-  "cycle": 769,
-  "strategy": "conservative",
-  "market_condition": "bear",
-  "assets_scanned": 19,
-  "open_trades": 1,
+  "timestamp": "2026-04-28T22:25:10.278870",
+  "cycle": 5103,
+  "strategy": "balanced",
+  "market_condition": "neutral",
+  "assets_scanned": 20,
+  "open_trades": 4,
   "open_positions": [
     {
       "symbol": "COPPER",
       "entry": 4.2,
       "market": "hfm",
-      "sl": 4.0971,
+      "sl": 4.053,
       "tp": 4.956
+    },
+    {
+      "symbol": "SOLUSDT",
+      "entry": 83.88,
+      "market": "crypto",
+      "sl": 81.82494,
+      "tp": 98.9784
+    },
+    {
+      "symbol": "PENGUUSDT",
+      "entry": 0.010416,
+      "market": "crypto",
+      "sl": 0.01016081,
+      "tp": 0.01229088
+    },
+    {
+      "symbol": "DOGEUSDT",
+      "entry": 0.09955,
+      "market": "crypto",
+      "sl": 0.09711103,
+      "tp": 0.117469
     }
   ],
   "top_opportunities": [
@@ -44,7 +65,18 @@
       "tech": -30,
       "fund": 15,
       "market": "crypto",
-      "price": 76336.01,
+      "price": 76335.89,
+      "reason": "F&G:33",
+      "ghana": "F&G:33"
+    },
+    {
+      "symbol": "ETHUSDT",
+      "signal": "HOLD",
+      "score": -10,
+      "tech": -30,
+      "fund": 15,
+      "market": "crypto",
+      "price": 2289.58,
       "reason": "F&G:33",
       "ghana": "F&G:33"
     },
@@ -55,7 +87,7 @@
       "tech": -18,
       "fund": 0,
       "market": "crypto",
-      "price": 623.69,
+      "price": 623.72,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     },
@@ -66,7 +98,7 @@
       "tech": 18,
       "fund": 0,
       "market": "crypto",
-      "price": 0.1603,
+      "price": 0.1602,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     },
@@ -77,18 +109,7 @@
       "tech": 15,
       "fund": 0,
       "market": "crypto",
-      "price": 0.010453,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
-    },
-    {
-      "symbol": "LUNCUSDT",
-      "signal": "HOLD",
-      "score": 8,
-      "tech": 15,
-      "fund": 0,
-      "market": "crypto",
-      "price": 6.571e-05,
+      "price": 0.010465,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     },
@@ -99,20 +120,9 @@
       "tech": 12,
       "fund": 0,
       "market": "crypto",
-      "price": 0.09973,
+      "price": 0.09972,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
-    },
-    {
-      "symbol": "BIOUSDT",
-      "signal": "HOLD",
-      "score": -7,
-      "tech": -25,
-      "fund": 15,
-      "market": "crypto",
-      "price": 0.0357,
-      "reason": "F&G:33",
-      "ghana": "F&G:33"
     },
     {
       "symbol": "SOLUSDT",
@@ -124,6 +134,17 @@
       "price": 83.74,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
+    },
+    {
+      "symbol": "LUNCUSDT",
+      "signal": "HOLD",
+      "score": 6,
+      "tech": 10,
+      "fund": 0,
+      "market": "crypto",
+      "price": 6.558e-05,
+      "reason": "Technical score too weak for AI analysis",
+      "ghana": "No action needed"
     }
   ],
   "buy_signals": 0,
@@ -132,7 +153,7 @@
     "value": 33,
     "label": "Fear",
     "trend": "declining",
-    "ts": 1777412455.3031929
+    "ts": 1777413962.290177
   },
   "markets": {
     "crypto": "active",
@@ -149,8 +170,8 @@
   },
   "dream": {
     "win_rate": 0,
-    "best_asset": "ETH",
-    "avoid": null,
+    "best_asset": "",
+    "avoid": "",
     "defensive": false,
     "streak": 0
   },
@@ -161,9 +182,9 @@
     "trump_score": 0
   },
   "performance": {
-    "total_trades": 1,
-    "trade_log_size": 1
+    "total_trades": 500,
+    "trade_log_size": 1891
   },
   "version": "v9",
-  "uptime_cycles": 769
+  "uptime_cycles": 5103
 }
