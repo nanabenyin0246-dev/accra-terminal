@@ -1,28 +1,83 @@
 {
-  "timestamp": "2026-05-03T20:32:59.462939",
-  "cycle": 22,
+  "timestamp": "2026-05-03T20:32:57.070752",
+  "cycle": 10,
   "strategy": "balanced",
   "market_condition": "neutral",
-  "assets_scanned": 20,
+  "assets_scanned": 41,
   "open_trades": 1,
   "open_positions": [
     {
       "symbol": "COPPER",
       "entry": 4.2,
       "market": "hfm",
-      "sl": 3.78,
-      "tp": 4.83
+      "sl": 4.095,
+      "tp": 4.641
     }
   ],
   "top_opportunities": [
     {
-      "symbol": "BIOUSDT",
+      "symbol": "COPPER",
+      "signal": "BUY",
+      "score": 50,
+      "tech": 91,
+      "fund": 0,
+      "market": "hfm",
+      "price": 4.2,
+      "reason": "F&G:47",
+      "ghana": "F&G:47"
+    },
+    {
+      "symbol": "EURUSD",
       "signal": "HOLD",
-      "score": 22,
-      "tech": 40,
+      "score": -28,
+      "tech": -50,
+      "fund": 0,
+      "market": "hfm",
+      "price": 1.1702065414545666,
+      "reason": "F&G:47",
+      "ghana": "F&G:47"
+    },
+    {
+      "symbol": "BABYUSDT",
+      "signal": "HOLD",
+      "score": 24,
+      "tech": 43,
       "fund": 0,
       "market": "crypto",
-      "price": 0.0611,
+      "price": 0.02033,
+      "reason": "F&G:47",
+      "ghana": "F&G:47"
+    },
+    {
+      "symbol": "XAGUSD",
+      "signal": "HOLD",
+      "score": -20,
+      "tech": -36,
+      "fund": 0,
+      "market": "hfm",
+      "price": 32,
+      "reason": "F&G:47",
+      "ghana": "F&G:47"
+    },
+    {
+      "symbol": "USDJPY",
+      "signal": "HOLD",
+      "score": -20,
+      "tech": -37,
+      "fund": 0,
+      "market": "hfm",
+      "price": 156.56,
+      "reason": "F&G:47",
+      "ghana": "F&G:47"
+    },
+    {
+      "symbol": "XPTUSD",
+      "signal": "HOLD",
+      "score": 17,
+      "tech": 31,
+      "fund": 0,
+      "market": "hfm",
+      "price": 950,
       "reason": "F&G:47",
       "ghana": "F&G:47"
     },
@@ -33,18 +88,7 @@
       "tech": -30,
       "fund": 0,
       "market": "crypto",
-      "price": 0.669,
-      "reason": "F&G:47",
-      "ghana": "F&G:47"
-    },
-    {
-      "symbol": "BABYUSDT",
-      "signal": "HOLD",
-      "score": 15,
-      "tech": 28,
-      "fund": 0,
-      "market": "crypto",
-      "price": 0.02038,
+      "price": 0.67,
       "reason": "F&G:47",
       "ghana": "F&G:47"
     },
@@ -55,7 +99,7 @@
       "tech": 28,
       "fund": 0,
       "market": "crypto",
-      "price": 5.313,
+      "price": 5.318,
       "reason": "F&G:47",
       "ghana": "F&G:47"
     },
@@ -66,7 +110,7 @@
       "tech": 28,
       "fund": 0,
       "market": "crypto",
-      "price": 0.12589,
+      "price": 0.12584,
       "reason": "F&G:47",
       "ghana": "F&G:47"
     },
@@ -77,51 +121,7 @@
       "tech": -25,
       "fund": 0,
       "market": "crypto",
-      "price": 2335.89,
-      "reason": "F&G:47",
-      "ghana": "F&G:47"
-    },
-    {
-      "symbol": "XRPUSDT",
-      "signal": "HOLD",
-      "score": -14,
-      "tech": -25,
-      "fund": 0,
-      "market": "crypto",
-      "price": 1.3948,
-      "reason": "F&G:47",
-      "ghana": "F&G:47"
-    },
-    {
-      "symbol": "PARTIUSDT",
-      "signal": "HOLD",
-      "score": 14,
-      "tech": 25,
-      "fund": 0,
-      "market": "crypto",
-      "price": 0.0481,
-      "reason": "F&G:47",
-      "ghana": "F&G:47"
-    },
-    {
-      "symbol": "ADAUSDT",
-      "signal": "HOLD",
-      "score": -14,
-      "tech": -25,
-      "fund": 0,
-      "market": "crypto",
-      "price": 0.2508,
-      "reason": "F&G:47",
-      "ghana": "F&G:47"
-    },
-    {
-      "symbol": "SOLUSDT",
-      "signal": "HOLD",
-      "score": -13,
-      "tech": -23,
-      "fund": 0,
-      "market": "crypto",
-      "price": 84.5,
+      "price": 2335.25,
       "reason": "F&G:47",
       "ghana": "F&G:47"
     }
@@ -132,7 +132,7 @@
     "value": 47,
     "label": "Neutral",
     "trend": "improving",
-    "ts": 1777840129.400446
+    "ts": 1777839172.606912
   },
   "markets": {
     "crypto": "active",
@@ -149,8 +149,8 @@
   },
   "dream": {
     "win_rate": 0,
-    "best_asset": "",
-    "avoid": "",
+    "best_asset": "ETH",
+    "avoid": null,
     "defensive": false,
     "streak": 0
   },
@@ -165,5 +165,5 @@
     "trade_log_size": 1
   },
   "version": "v9",
-  "uptime_cycles": 22
+  "uptime_cycles": 10
 }
