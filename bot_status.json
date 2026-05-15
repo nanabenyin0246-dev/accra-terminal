@@ -1,10 +1,10 @@
 {
-  "timestamp": "2026-05-15T00:03:13.924463",
-  "cycle": 57969,
-  "strategy": "balanced",
-  "market_condition": "neutral",
-  "assets_scanned": 20,
-  "open_trades": 2,
+  "timestamp": "2026-05-15T00:03:36.552079",
+  "cycle": 57970,
+  "strategy": "aggressive",
+  "market_condition": "bear",
+  "assets_scanned": 41,
+  "open_trades": 1,
   "open_positions": [
     {
       "symbol": "COPPER",
@@ -12,35 +12,50 @@
       "market": "hfm",
       "sl": 3.78,
       "tp": 4.83
-    },
-    {
-      "symbol": "USDCHF",
-      "entry": 0.88,
-      "market": "hfm",
-      "sl": 0.8184,
-      "tp": 1.1176
     }
   ],
   "top_opportunities": [
     {
-      "symbol": "ICPUSDT",
-      "signal": "HOLD",
-      "score": 41,
-      "tech": 63,
+      "symbol": "COPPER",
+      "signal": "BUY",
+      "score": 57,
+      "tech": 91,
       "fund": 15,
-      "market": "crypto",
-      "price": 2.794,
+      "market": "hfm",
+      "price": 4.2,
       "reason": "F&G:34",
       "ghana": "F&G:34"
     },
     {
-      "symbol": "AIUSDT",
-      "signal": "HOLD",
-      "score": 28,
-      "tech": 38,
+      "symbol": "ICPUSDT",
+      "signal": "BUY",
+      "score": 44,
+      "tech": 68,
       "fund": 15,
       "market": "crypto",
-      "price": 0.032,
+      "price": 2.793,
+      "reason": "F&G:34",
+      "ghana": "F&G:34"
+    },
+    {
+      "symbol": "AUDUSD",
+      "signal": "HOLD",
+      "score": 34,
+      "tech": 49,
+      "fund": 15,
+      "market": "hfm",
+      "price": 0.7240605314604301,
+      "reason": "F&G:34",
+      "ghana": "F&G:34"
+    },
+    {
+      "symbol": "USDCAD",
+      "signal": "HOLD",
+      "score": 26,
+      "tech": 35,
+      "fund": 15,
+      "market": "hfm",
+      "price": 1.3724,
       "reason": "F&G:34",
       "ghana": "F&G:34"
     },
@@ -62,7 +77,29 @@
       "tech": 33,
       "fund": 15,
       "market": "crypto",
-      "price": 0.2711,
+      "price": 0.2712,
+      "reason": "F&G:34",
+      "ghana": "F&G:34"
+    },
+    {
+      "symbol": "XPTUSD",
+      "signal": "HOLD",
+      "score": 24,
+      "tech": 31,
+      "fund": 15,
+      "market": "hfm",
+      "price": 950,
+      "reason": "F&G:34",
+      "ghana": "F&G:34"
+    },
+    {
+      "symbol": "EURUSD",
+      "signal": "HOLD",
+      "score": -21,
+      "tech": -50,
+      "fund": 15,
+      "market": "hfm",
+      "price": 1.1702065414545666,
       "reason": "F&G:34",
       "ghana": "F&G:34"
     },
@@ -73,7 +110,7 @@
       "tech": 25,
       "fund": 15,
       "market": "crypto",
-      "price": 81137.69,
+      "price": 81145.11,
       "reason": "F&G:34",
       "ghana": "F&G:34"
     },
@@ -84,56 +121,12 @@
       "tech": -40,
       "fund": 15,
       "market": "crypto",
-      "price": 1.568,
+      "price": 1.567,
       "reason": "F&G:34",
       "ghana": "F&G:34"
-    },
-    {
-      "symbol": "LINKUSDT",
-      "signal": "HOLD",
-      "score": -10,
-      "tech": -19,
-      "fund": 0,
-      "market": "crypto",
-      "price": 10.47,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
-    },
-    {
-      "symbol": "TAOUSDT",
-      "signal": "HOLD",
-      "score": 10,
-      "tech": 18,
-      "fund": 0,
-      "market": "crypto",
-      "price": 305.0,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
-    },
-    {
-      "symbol": "DOGEUSDT",
-      "signal": "HOLD",
-      "score": -9,
-      "tech": -17,
-      "fund": 0,
-      "market": "crypto",
-      "price": 0.11564,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
-    },
-    {
-      "symbol": "SPKUSDT",
-      "signal": "HOLD",
-      "score": -9,
-      "tech": -17,
-      "fund": 0,
-      "market": "crypto",
-      "price": 0.033761,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
     }
   ],
-  "buy_signals": 0,
+  "buy_signals": 1,
   "sell_signals": 0,
   "fear_greed": {
     "value": 34,
@@ -168,9 +161,9 @@
     "trump_score": 0
   },
   "performance": {
-    "total_trades": 8,
-    "trade_log_size": 8
+    "total_trades": 9,
+    "trade_log_size": 9
   },
   "version": "v9",
-  "uptime_cycles": 57969
+  "uptime_cycles": 57970
 }
