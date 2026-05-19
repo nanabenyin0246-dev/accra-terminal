@@ -1,8 +1,8 @@
 {
-  "timestamp": "2026-05-19T14:43:15.773331",
-  "cycle": 95764,
-  "strategy": "balanced",
-  "market_condition": "neutral",
+  "timestamp": "2026-05-19T14:43:41.654113",
+  "cycle": 95765,
+  "strategy": "conservative",
+  "market_condition": "bear",
   "assets_scanned": 5,
   "open_trades": 5,
   "open_positions": [
@@ -46,13 +46,24 @@
     {
       "symbol": "BTCUSDT",
       "signal": "HOLD",
-      "score": 30,
-      "tech": 26,
-      "fund": 35,
+      "score": -8,
+      "tech": -14,
+      "fund": 0,
       "market": "crypto",
-      "price": 76583.95,
-      "reason": "F&G:25",
-      "ghana": "F&G:25"
+      "price": 76551.26,
+      "reason": "Technical score too weak for AI analysis",
+      "ghana": "No action needed"
+    },
+    {
+      "symbol": "ETHUSDT",
+      "signal": "HOLD",
+      "score": 8,
+      "tech": 15,
+      "fund": 0,
+      "market": "crypto",
+      "price": 2108.82,
+      "reason": "Technical score too weak for AI analysis",
+      "ghana": "No action needed"
     },
     {
       "symbol": "SOLUSDT",
@@ -61,18 +72,7 @@
       "tech": 15,
       "fund": 0,
       "market": "crypto",
-      "price": 84.41,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
-    },
-    {
-      "symbol": "ETHUSDT",
-      "signal": "HOLD",
-      "score": -6,
-      "tech": -10,
-      "fund": 0,
-      "market": "crypto",
-      "price": 2110.03,
+      "price": 84.38,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     },
@@ -83,7 +83,7 @@
       "tech": -37,
       "fund": 35,
       "market": "crypto",
-      "price": 639.25,
+      "price": 639.13,
       "reason": "F&G:25",
       "ghana": "F&G:25"
     },
@@ -138,5 +138,5 @@
     "trade_log_size": 41
   },
   "version": "v9",
-  "uptime_cycles": 95764
+  "uptime_cycles": 95765
 }
