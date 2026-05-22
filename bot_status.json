@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-05-22T14:47:12.456069",
-  "cycle": 120964,
-  "strategy": "balanced",
-  "market_condition": "neutral",
-  "assets_scanned": 20,
+  "timestamp": "2026-05-22T14:47:40.045419",
+  "cycle": 120965,
+  "strategy": "aggressive",
+  "market_condition": "bear",
+  "assets_scanned": 41,
   "open_trades": 8,
   "open_positions": [
     {
@@ -65,35 +65,57 @@
   ],
   "top_opportunities": [
     {
+      "symbol": "COPPER",
+      "signal": "BUY",
+      "score": 57,
+      "tech": 91,
+      "fund": 15,
+      "market": "hfm",
+      "price": 4.2,
+      "reason": "F&G:28",
+      "ghana": "F&G:28"
+    },
+    {
       "symbol": "ALLOUSDT",
-      "signal": "HOLD",
-      "score": 34,
-      "tech": 49,
+      "signal": "BUY",
+      "score": 30,
+      "tech": 42,
       "fund": 15,
       "market": "crypto",
-      "price": 0.0952,
+      "price": 0.095,
       "reason": "F&G:28",
       "ghana": "F&G:28"
     },
     {
       "symbol": "LINKUSDT",
-      "signal": "HOLD",
+      "signal": "BUY",
       "score": 30,
       "tech": 42,
       "fund": 15,
       "market": "crypto",
-      "price": 9.806,
+      "price": 9.8,
       "reason": "F&G:28",
       "ghana": "F&G:28"
     },
     {
       "symbol": "EURUSDT",
       "signal": "HOLD",
-      "score": -26,
-      "tech": -60,
+      "score": -24,
+      "tech": -55,
       "fund": 15,
       "market": "crypto",
-      "price": 1.1614,
+      "price": 1.1612,
+      "reason": "F&G:28",
+      "ghana": "F&G:28"
+    },
+    {
+      "symbol": "XPTUSD",
+      "signal": "HOLD",
+      "score": 24,
+      "tech": 31,
+      "fund": 15,
+      "market": "hfm",
+      "price": 950,
       "reason": "F&G:28",
       "ghana": "F&G:28"
     },
@@ -104,7 +126,18 @@
       "tech": 30,
       "fund": 15,
       "market": "crypto",
-      "price": 281.9,
+      "price": 281.7,
+      "reason": "F&G:28",
+      "ghana": "F&G:28"
+    },
+    {
+      "symbol": "ONDOUSDT",
+      "signal": "HOLD",
+      "score": -22,
+      "tech": -52,
+      "fund": 15,
+      "market": "crypto",
+      "price": 0.4569,
       "reason": "F&G:28",
       "ghana": "F&G:28"
     },
@@ -115,67 +148,34 @@
       "tech": 27,
       "fund": 15,
       "market": "crypto",
-      "price": 1.962,
+      "price": 1.96,
       "reason": "F&G:28",
       "ghana": "F&G:28"
     },
     {
-      "symbol": "ONDOUSDT",
+      "symbol": "GBPUSD",
       "signal": "HOLD",
-      "score": -21,
-      "tech": -50,
+      "score": -15,
+      "tech": -40,
       "fund": 15,
-      "market": "crypto",
-      "price": 0.4594,
+      "market": "hfm",
+      "price": 1.341741580571582,
       "reason": "F&G:28",
       "ghana": "F&G:28"
     },
     {
-      "symbol": "SOLUSDT",
+      "symbol": "XAGUSD",
       "signal": "HOLD",
-      "score": -11,
-      "tech": -33,
+      "score": -13,
+      "tech": -36,
       "fund": 15,
-      "market": "crypto",
-      "price": 86.72,
+      "market": "hfm",
+      "price": 32,
       "reason": "F&G:28",
       "ghana": "F&G:28"
-    },
-    {
-      "symbol": "BNBUSDT",
-      "signal": "HOLD",
-      "score": -10,
-      "tech": -18,
-      "fund": 0,
-      "market": "crypto",
-      "price": 658.39,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
-    },
-    {
-      "symbol": "ADAUSDT",
-      "signal": "HOLD",
-      "score": -10,
-      "tech": -18,
-      "fund": 0,
-      "market": "crypto",
-      "price": 0.2501,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
-    },
-    {
-      "symbol": "NEARUSDT",
-      "signal": "HOLD",
-      "score": -6,
-      "tech": -10,
-      "fund": 0,
-      "market": "crypto",
-      "price": 2.251,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
     }
   ],
-  "buy_signals": 0,
+  "buy_signals": 1,
   "sell_signals": 0,
   "fear_greed": {
     "value": 28,
@@ -214,5 +214,5 @@
     "trade_log_size": 64
   },
   "version": "v9",
-  "uptime_cycles": 120964
+  "uptime_cycles": 120965
 }
