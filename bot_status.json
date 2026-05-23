@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-05-23T04:36:25.248188",
-  "cycle": 125579,
-  "strategy": "balanced",
-  "market_condition": "neutral",
-  "assets_scanned": 19,
+  "timestamp": "2026-05-23T04:36:43.744562",
+  "cycle": 125580,
+  "strategy": "aggressive",
+  "market_condition": "bear",
+  "assets_scanned": 40,
   "open_trades": 8,
   "open_positions": [
     {
@@ -65,24 +65,24 @@
   ],
   "top_opportunities": [
     {
+      "symbol": "COPPER",
+      "signal": "BUY",
+      "score": 57,
+      "tech": 91,
+      "fund": 15,
+      "market": "hfm",
+      "price": 4.2,
+      "reason": "F&G:28",
+      "ghana": "F&G:28"
+    },
+    {
       "symbol": "TONUSDT",
-      "signal": "HOLD",
+      "signal": "BUY",
       "score": 54,
       "tech": 85,
       "fund": 15,
       "market": "crypto",
       "price": 1.839,
-      "reason": "F&G:28",
-      "ghana": "F&G:28"
-    },
-    {
-      "symbol": "EDENUSDT",
-      "signal": "HOLD",
-      "score": 34,
-      "tech": 50,
-      "fund": 15,
-      "market": "crypto",
-      "price": 0.0946,
       "reason": "F&G:28",
       "ghana": "F&G:28"
     },
@@ -93,7 +93,7 @@
       "tech": 31,
       "fund": 15,
       "market": "crypto",
-      "price": 0.0905,
+      "price": 0.0907,
       "reason": "F&G:28",
       "ghana": "F&G:28"
     },
@@ -109,13 +109,24 @@
       "ghana": "F&G:28"
     },
     {
+      "symbol": "XPTUSD",
+      "signal": "HOLD",
+      "score": 24,
+      "tech": 31,
+      "fund": 15,
+      "market": "hfm",
+      "price": 950,
+      "reason": "F&G:28",
+      "ghana": "F&G:28"
+    },
+    {
       "symbol": "ETHUSDT",
       "signal": "HOLD",
       "score": 20,
       "tech": 24,
       "fund": 15,
       "market": "crypto",
-      "price": 2067.05,
+      "price": 2067.01,
       "reason": "F&G:28",
       "ghana": "F&G:28"
     },
@@ -126,7 +137,18 @@
       "tech": 24,
       "fund": 15,
       "market": "crypto",
-      "price": 84.49,
+      "price": 84.5,
+      "reason": "F&G:28",
+      "ghana": "F&G:28"
+    },
+    {
+      "symbol": "EDENUSDT",
+      "signal": "HOLD",
+      "score": 20,
+      "tech": 25,
+      "fund": 15,
+      "market": "crypto",
+      "price": 0.0955,
       "reason": "F&G:28",
       "ghana": "F&G:28"
     },
@@ -148,34 +170,12 @@
       "tech": 21,
       "fund": 15,
       "market": "crypto",
-      "price": 0.3848,
+      "price": 0.3846,
       "reason": "F&G:28",
       "ghana": "F&G:28"
-    },
-    {
-      "symbol": "ALTUSDT",
-      "signal": "HOLD",
-      "score": 10,
-      "tech": 18,
-      "fund": 0,
-      "market": "crypto",
-      "price": 0.00799,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
-    },
-    {
-      "symbol": "XRPUSDT",
-      "signal": "HOLD",
-      "score": 8,
-      "tech": 14,
-      "fund": 0,
-      "market": "crypto",
-      "price": 1.3366,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
     }
   ],
-  "buy_signals": 0,
+  "buy_signals": 1,
   "sell_signals": 0,
   "fear_greed": {
     "value": 28,
@@ -214,5 +214,5 @@
     "trade_log_size": 64
   },
   "version": "v9",
-  "uptime_cycles": 125579
+  "uptime_cycles": 125580
 }
