@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-06-07T14:47:31.270567",
-  "cycle": 17749,
-  "strategy": "balanced",
-  "market_condition": "neutral",
-  "assets_scanned": 20,
+  "timestamp": "2026-06-07T14:47:51.526478",
+  "cycle": 17750,
+  "strategy": "aggressive",
+  "market_condition": "bear",
+  "assets_scanned": 41,
   "open_trades": 9,
   "open_positions": [
     {
@@ -72,13 +72,24 @@
   ],
   "top_opportunities": [
     {
+      "symbol": "COPPER",
+      "signal": "BUY",
+      "score": 71,
+      "tech": 100,
+      "fund": 35,
+      "market": "hfm",
+      "price": 4.2,
+      "reason": "F&G:12",
+      "ghana": "F&G:12"
+    },
+    {
       "symbol": "ALLOUSDT",
       "signal": "BUY",
       "score": 63,
       "tech": 86,
       "fund": 35,
       "market": "crypto",
-      "price": 0.3054,
+      "price": 0.3056,
       "reason": "F&G:12",
       "ghana": "F&G:12"
     },
@@ -89,7 +100,7 @@
       "tech": 83,
       "fund": 35,
       "market": "crypto",
-      "price": 64.65,
+      "price": 64.67,
       "reason": "F&G:12",
       "ghana": "F&G:12"
     },
@@ -100,18 +111,29 @@
       "tech": 83,
       "fund": 35,
       "market": "crypto",
-      "price": 1.1289,
+      "price": 1.1295,
       "reason": "F&G:12",
       "ghana": "F&G:12"
     },
     {
-      "symbol": "TAOUSDT",
+      "symbol": "XPTUSD",
       "signal": "BUY",
-      "score": 60,
-      "tech": 81,
+      "score": 58,
+      "tech": 76,
+      "fund": 35,
+      "market": "hfm",
+      "price": 950,
+      "reason": "F&G:12",
+      "ghana": "F&G:12"
+    },
+    {
+      "symbol": "BTCUSDT",
+      "signal": "BUY",
+      "score": 57,
+      "tech": 75,
       "fund": 35,
       "market": "crypto",
-      "price": 211.2,
+      "price": 61836.81,
       "reason": "F&G:12",
       "ghana": "F&G:12"
     },
@@ -122,7 +144,7 @@
       "tech": 75,
       "fund": 35,
       "market": "crypto",
-      "price": 590.32,
+      "price": 590.4,
       "reason": "F&G:12",
       "ghana": "F&G:12"
     },
@@ -133,56 +155,34 @@
       "tech": 75,
       "fund": 35,
       "market": "crypto",
-      "price": 0.08428,
+      "price": 0.08426,
+      "reason": "F&G:12",
+      "ghana": "F&G:12"
+    },
+    {
+      "symbol": "TAOUSDT",
+      "signal": "BUY",
+      "score": 55,
+      "tech": 71,
+      "fund": 35,
+      "market": "crypto",
+      "price": 211.4,
       "reason": "F&G:12",
       "ghana": "F&G:12"
     },
     {
       "symbol": "WLDUSDT",
-      "signal": "HOLD",
+      "signal": "BUY",
       "score": 54,
       "tech": 70,
       "fund": 35,
       "market": "crypto",
-      "price": 0.4697,
-      "reason": "F&G:12",
-      "ghana": "F&G:12"
-    },
-    {
-      "symbol": "PORTALUSDT",
-      "signal": "HOLD",
-      "score": 53,
-      "tech": 68,
-      "fund": 35,
-      "market": "crypto",
-      "price": 0.01792,
-      "reason": "F&G:12",
-      "ghana": "F&G:12"
-    },
-    {
-      "symbol": "TONUSDT",
-      "signal": "HOLD",
-      "score": 50,
-      "tech": 63,
-      "fund": 35,
-      "market": "crypto",
-      "price": 1.694,
-      "reason": "F&G:12",
-      "ghana": "F&G:12"
-    },
-    {
-      "symbol": "ETHUSDT",
-      "signal": "HOLD",
-      "score": 49,
-      "tech": 60,
-      "fund": 35,
-      "market": "crypto",
-      "price": 1623.92,
+      "price": 0.4695,
       "reason": "F&G:12",
       "ghana": "F&G:12"
     }
   ],
-  "buy_signals": 6,
+  "buy_signals": 15,
   "sell_signals": 0,
   "fear_greed": {
     "value": 12,
@@ -221,5 +221,5 @@
     "trade_log_size": 11
   },
   "version": "v9",
-  "uptime_cycles": 17749
+  "uptime_cycles": 17750
 }
