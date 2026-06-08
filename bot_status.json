@@ -1,10 +1,10 @@
 {
-  "timestamp": "2026-06-08T02:46:31.724549",
-  "cycle": 21709,
-  "strategy": "balanced",
-  "market_condition": "neutral",
-  "assets_scanned": 20,
-  "open_trades": 9,
+  "timestamp": "2026-06-08T02:46:57.691703",
+  "cycle": 21710,
+  "strategy": "aggressive",
+  "market_condition": "bear",
+  "assets_scanned": 41,
+  "open_trades": 10,
   "open_positions": [
     {
       "symbol": "COPPER",
@@ -68,12 +68,52 @@
       "market": "hfm",
       "sl": 0.66409597,
       "tp": 0.90688375
+    },
+    {
+      "symbol": "GBPUSD",
+      "entry": 0.79,
+      "market": "hfm",
+      "sl": 0.7347,
+      "tp": 1.0033
     }
   ],
   "top_opportunities": [
     {
+      "symbol": "COPPER",
+      "signal": "BUY",
+      "score": 71,
+      "tech": 100,
+      "fund": 35,
+      "market": "hfm",
+      "price": 4.2,
+      "reason": "F&G:8",
+      "ghana": "F&G:8"
+    },
+    {
+      "symbol": "GBPUSD",
+      "signal": "BUY",
+      "score": 53,
+      "tech": 67,
+      "fund": 35,
+      "market": "hfm",
+      "price": 0.79,
+      "reason": "F&G:12",
+      "ghana": "F&G:12"
+    },
+    {
+      "symbol": "XPTUSD",
+      "signal": "BUY",
+      "score": 52,
+      "tech": 66,
+      "fund": 35,
+      "market": "hfm",
+      "price": 950,
+      "reason": "F&G:8",
+      "ghana": "F&G:8"
+    },
+    {
       "symbol": "SUIUSDT",
-      "signal": "HOLD",
+      "signal": "BUY",
       "score": 50,
       "tech": 63,
       "fund": 35,
@@ -84,40 +124,40 @@
     },
     {
       "symbol": "LTCUSDT",
-      "signal": "HOLD",
+      "signal": "BUY",
       "score": 49,
       "tech": 60,
       "fund": 35,
       "market": "crypto",
-      "price": 42.39,
+      "price": 42.4,
       "reason": "F&G:8",
       "ghana": "F&G:8"
     },
     {
       "symbol": "NEARUSDT",
-      "signal": "HOLD",
+      "signal": "BUY",
       "score": 48,
       "tech": 59,
       "fund": 35,
       "market": "crypto",
-      "price": 2.089,
+      "price": 2.093,
       "reason": "F&G:8",
       "ghana": "F&G:8"
     },
     {
       "symbol": "HOMEUSDT",
-      "signal": "HOLD",
+      "signal": "BUY",
       "score": 48,
       "tech": 58,
       "fund": 35,
       "market": "crypto",
-      "price": 0.03064,
+      "price": 0.03062,
       "reason": "F&G:12",
       "ghana": "F&G:12"
     },
     {
       "symbol": "TAOUSDT",
-      "signal": "HOLD",
+      "signal": "BUY",
       "score": 45,
       "tech": 53,
       "fund": 35,
@@ -128,7 +168,7 @@
     },
     {
       "symbol": "ENAUSDT",
-      "signal": "HOLD",
+      "signal": "BUY",
       "score": 45,
       "tech": 53,
       "fund": 35,
@@ -138,51 +178,18 @@
       "ghana": "F&G:8"
     },
     {
-      "symbol": "SOLUSDT",
-      "signal": "HOLD",
-      "score": 42,
-      "tech": 48,
+      "symbol": "EURJPY",
+      "signal": "BUY",
+      "score": 44,
+      "tech": 51,
       "fund": 35,
-      "market": "crypto",
-      "price": 66.34,
-      "reason": "F&G:8",
-      "ghana": "F&G:8"
-    },
-    {
-      "symbol": "LINKUSDT",
-      "signal": "HOLD",
-      "score": 41,
-      "tech": 46,
-      "fund": 35,
-      "market": "crypto",
-      "price": 7.904,
-      "reason": "F&G:8",
-      "ghana": "F&G:8"
-    },
-    {
-      "symbol": "WLDUSDT",
-      "signal": "HOLD",
-      "score": 40,
-      "tech": 44,
-      "fund": 35,
-      "market": "crypto",
-      "price": 0.4897,
-      "reason": "F&G:8",
-      "ghana": "F&G:8"
-    },
-    {
-      "symbol": "XLMUSDT",
-      "signal": "HOLD",
-      "score": 40,
-      "tech": 45,
-      "fund": 35,
-      "market": "crypto",
-      "price": 0.2026,
+      "market": "hfm",
+      "price": 186.08,
       "reason": "F&G:8",
       "ghana": "F&G:8"
     }
   ],
-  "buy_signals": 0,
+  "buy_signals": 12,
   "sell_signals": 0,
   "fear_greed": {
     "value": 8,
@@ -217,9 +224,9 @@
     "trump_score": 15
   },
   "performance": {
-    "total_trades": 11,
-    "trade_log_size": 11
+    "total_trades": 12,
+    "trade_log_size": 12
   },
   "version": "v9",
-  "uptime_cycles": 21709
+  "uptime_cycles": 21710
 }
