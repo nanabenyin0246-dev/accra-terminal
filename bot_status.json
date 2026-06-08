@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-06-08T10:01:47.049997",
-  "cycle": 24054,
-  "strategy": "balanced",
-  "market_condition": "neutral",
-  "assets_scanned": 20,
+  "timestamp": "2026-06-08T10:02:07.940434",
+  "cycle": 24055,
+  "strategy": "aggressive",
+  "market_condition": "bear",
+  "assets_scanned": 41,
   "open_trades": 7,
   "open_positions": [
     {
@@ -58,13 +58,79 @@
   ],
   "top_opportunities": [
     {
+      "symbol": "COPPER",
+      "signal": "BUY",
+      "score": 71,
+      "tech": 100,
+      "fund": 35,
+      "market": "hfm",
+      "price": 4.2,
+      "reason": "F&G:8",
+      "ghana": "F&G:8"
+    },
+    {
       "symbol": "BCHUSDT",
-      "signal": "HOLD",
+      "signal": "BUY",
       "score": 50,
       "tech": 63,
       "fund": 35,
       "market": "crypto",
       "price": 206.7,
+      "reason": "F&G:8",
+      "ghana": "F&G:8"
+    },
+    {
+      "symbol": "XPTUSD",
+      "signal": "BUY",
+      "score": 44,
+      "tech": 51,
+      "fund": 35,
+      "market": "hfm",
+      "price": 950,
+      "reason": "F&G:8",
+      "ghana": "F&G:8"
+    },
+    {
+      "symbol": "EURJPY",
+      "signal": "BUY",
+      "score": 44,
+      "tech": 51,
+      "fund": 35,
+      "market": "hfm",
+      "price": 186.08,
+      "reason": "F&G:8",
+      "ghana": "F&G:8"
+    },
+    {
+      "symbol": "SP500",
+      "signal": "BUY",
+      "score": 44,
+      "tech": 51,
+      "fund": 35,
+      "market": "hfm",
+      "price": 5200,
+      "reason": "F&G:8",
+      "ghana": "F&G:8"
+    },
+    {
+      "symbol": "UKOIL",
+      "signal": "BUY",
+      "score": 41,
+      "tech": 46,
+      "fund": 35,
+      "market": "hfm",
+      "price": 85,
+      "reason": "F&G:8",
+      "ghana": "F&G:8"
+    },
+    {
+      "symbol": "USOIL",
+      "signal": "BUY",
+      "score": 40,
+      "tech": 45,
+      "fund": 35,
+      "market": "hfm",
+      "price": 82,
       "reason": "F&G:8",
       "ghana": "F&G:8"
     },
@@ -75,18 +141,18 @@
       "tech": 41,
       "fund": 35,
       "market": "crypto",
-      "price": 0.1656,
+      "price": 0.1655,
       "reason": "F&G:8",
       "ghana": "F&G:8"
     },
     {
-      "symbol": "BTCUSDT",
+      "symbol": "GBPJPY",
       "signal": "HOLD",
-      "score": 35,
-      "tech": 35,
+      "score": 38,
+      "tech": 40,
       "fund": 35,
-      "market": "crypto",
-      "price": 63512.94,
+      "market": "hfm",
+      "price": 215.29,
       "reason": "F&G:8",
       "ghana": "F&G:8"
     },
@@ -97,78 +163,12 @@
       "tech": 35,
       "fund": 35,
       "market": "crypto",
-      "price": 1.1513,
-      "reason": "F&G:8",
-      "ghana": "F&G:8"
-    },
-    {
-      "symbol": "ETHUSDT",
-      "signal": "HOLD",
-      "score": 34,
-      "tech": 33,
-      "fund": 35,
-      "market": "crypto",
-      "price": 1671.01,
-      "reason": "F&G:8",
-      "ghana": "F&G:8"
-    },
-    {
-      "symbol": "BNBUSDT",
-      "signal": "HOLD",
-      "score": 30,
-      "tech": 25,
-      "fund": 35,
-      "market": "crypto",
-      "price": 599.58,
-      "reason": "F&G:8",
-      "ghana": "F&G:8"
-    },
-    {
-      "symbol": "TAOUSDT",
-      "signal": "HOLD",
-      "score": 28,
-      "tech": 23,
-      "fund": 35,
-      "market": "crypto",
-      "price": 212.4,
-      "reason": "F&G:8",
-      "ghana": "F&G:8"
-    },
-    {
-      "symbol": "SOLUSDT",
-      "signal": "HOLD",
-      "score": 27,
-      "tech": 21,
-      "fund": 35,
-      "market": "crypto",
-      "price": 66.4,
-      "reason": "F&G:8",
-      "ghana": "F&G:8"
-    },
-    {
-      "symbol": "HOMEUSDT",
-      "signal": "HOLD",
-      "score": 27,
-      "tech": 21,
-      "fund": 35,
-      "market": "crypto",
-      "price": 0.03315,
-      "reason": "F&G:8",
-      "ghana": "F&G:8"
-    },
-    {
-      "symbol": "SUIUSDT",
-      "signal": "HOLD",
-      "score": 27,
-      "tech": 21,
-      "fund": 35,
-      "market": "crypto",
-      "price": 0.7545,
+      "price": 1.1503,
       "reason": "F&G:8",
       "ghana": "F&G:8"
     }
   ],
-  "buy_signals": 0,
+  "buy_signals": 1,
   "sell_signals": 0,
   "fear_greed": {
     "value": 8,
@@ -199,13 +199,13 @@
   "intelligence": {
     "hormuz": "UNKNOWN",
     "dprk": false,
-    "geo_score": 12,
-    "trump_score": 8
+    "geo_score": 20,
+    "trump_score": 15
   },
   "performance": {
     "total_trades": 29,
     "trade_log_size": 29
   },
   "version": "v9",
-  "uptime_cycles": 24054
+  "uptime_cycles": 24055
 }
