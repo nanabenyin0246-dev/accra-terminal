@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-06-09T02:24:49.554684",
-  "cycle": 29304,
-  "strategy": "balanced",
-  "market_condition": "neutral",
-  "assets_scanned": 20,
+  "timestamp": "2026-06-09T02:25:10.443693",
+  "cycle": 29305,
+  "strategy": "aggressive",
+  "market_condition": "bear",
+  "assets_scanned": 41,
   "open_trades": 9,
   "open_positions": [
     {
@@ -72,15 +72,37 @@
   ],
   "top_opportunities": [
     {
+      "symbol": "COPPER",
+      "signal": "BUY",
+      "score": 66,
+      "tech": 91,
+      "fund": 35,
+      "market": "hfm",
+      "price": 4.2,
+      "reason": "F&G:10",
+      "ghana": "F&G:10"
+    },
+    {
       "symbol": "HOMEUSDT",
-      "signal": "HOLD",
+      "signal": "BUY",
       "score": 49,
       "tech": 61,
       "fund": 35,
       "market": "crypto",
-      "price": 0.02836,
+      "price": 0.02834,
       "reason": "F&G:8",
       "ghana": "F&G:8"
+    },
+    {
+      "symbol": "USDCHF",
+      "signal": "BUY",
+      "score": 42,
+      "tech": 47,
+      "fund": 35,
+      "market": "hfm",
+      "price": 0.7961,
+      "reason": "F&G:10",
+      "ghana": "F&G:10"
     },
     {
       "symbol": "ENAUSDT",
@@ -89,7 +111,7 @@
       "tech": 41,
       "fund": 35,
       "market": "crypto",
-      "price": 0.081,
+      "price": 0.0809,
       "reason": "F&G:8",
       "ghana": "F&G:8"
     },
@@ -105,84 +127,62 @@
       "ghana": "F&G:10"
     },
     {
+      "symbol": "XPTUSD",
+      "signal": "HOLD",
+      "score": 33,
+      "tech": 31,
+      "fund": 35,
+      "market": "hfm",
+      "price": 950,
+      "reason": "F&G:10",
+      "ghana": "F&G:10"
+    },
+    {
+      "symbol": "USDCAD",
+      "signal": "HOLD",
+      "score": 33,
+      "tech": 31,
+      "fund": 35,
+      "market": "hfm",
+      "price": 1.3937,
+      "reason": "F&G:10",
+      "ghana": "F&G:10"
+    },
+    {
       "symbol": "BNBUSDT",
       "signal": "HOLD",
       "score": -10,
       "tech": -47,
       "fund": 35,
       "market": "crypto",
-      "price": 597.38,
+      "price": 597.2,
       "reason": "F&G:10",
       "ghana": "F&G:10"
     },
     {
-      "symbol": "TRXUSDT",
+      "symbol": "GBPUSD",
       "signal": "HOLD",
-      "score": -9,
-      "tech": -17,
+      "score": 10,
+      "tech": 19,
       "fund": 0,
-      "market": "crypto",
-      "price": 0.3253,
+      "market": "hfm",
+      "price": 1.3362731342286365,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     },
     {
-      "symbol": "ADAUSDT",
+      "symbol": "GBPJPY",
       "signal": "HOLD",
-      "score": -8,
-      "tech": -14,
+      "score": -10,
+      "tech": -19,
       "fund": 0,
-      "market": "crypto",
-      "price": 0.1667,
+      "market": "hfm",
+      "price": 213.76,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
-    },
-    {
-      "symbol": "XLMUSDT",
-      "signal": "HOLD",
-      "score": -7,
-      "tech": -12,
-      "fund": 0,
-      "market": "crypto",
-      "price": 0.1976,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
-    },
-    {
-      "symbol": "DOGEUSDT",
-      "signal": "HOLD",
-      "score": -6,
-      "tech": -40,
-      "fund": 35,
-      "market": "crypto",
-      "price": 0.08493,
-      "reason": "F&G:10",
-      "ghana": "F&G:10"
-    },
-    {
-      "symbol": "SUIUSDT",
-      "signal": "HOLD",
-      "score": -6,
-      "tech": -40,
-      "fund": 35,
-      "market": "crypto",
-      "price": 0.7427,
-      "reason": "F&G:10",
-      "ghana": "F&G:10"
-    },
-    {
-      "symbol": "BTCUSDT",
-      "signal": "HOLD",
-      "score": -5,
-      "tech": -37,
-      "fund": 35,
-      "market": "crypto",
-      "price": 62722.0,
-      "reason": "F&G:10",
-      "ghana": "F&G:10"
     }
   ],
-  "buy_signals": 0,
+  "buy_signals": 1,
   "sell_signals": 0,
   "fear_greed": {
     "value": 10,
@@ -221,5 +221,5 @@
     "trade_log_size": 45
   },
   "version": "v9",
-  "uptime_cycles": 29304
+  "uptime_cycles": 29305
 }
