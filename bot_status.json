@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-06-17T08:02:24.460412",
-  "cycle": 93079,
-  "strategy": "balanced",
-  "market_condition": "neutral",
-  "assets_scanned": 20,
+  "timestamp": "2026-06-17T08:02:46.097657",
+  "cycle": 93080,
+  "strategy": "aggressive",
+  "market_condition": "bear",
+  "assets_scanned": 41,
   "open_trades": 8,
   "open_positions": [
     {
@@ -65,13 +65,46 @@
   ],
   "top_opportunities": [
     {
+      "symbol": "COPPER",
+      "signal": "BUY",
+      "score": 66,
+      "tech": 91,
+      "fund": 35,
+      "market": "hfm",
+      "price": 4.2,
+      "reason": "F&G:22",
+      "ghana": "F&G:22"
+    },
+    {
       "symbol": "BABYUSDT",
-      "signal": "HOLD",
-      "score": 38,
-      "tech": 41,
+      "signal": "BUY",
+      "score": 45,
+      "tech": 53,
       "fund": 35,
       "market": "crypto",
-      "price": 0.01601,
+      "price": 0.01603,
+      "reason": "F&G:22",
+      "ghana": "F&G:22"
+    },
+    {
+      "symbol": "USDCHF",
+      "signal": "BUY",
+      "score": 42,
+      "tech": 47,
+      "fund": 35,
+      "market": "hfm",
+      "price": 0.79558,
+      "reason": "F&G:22",
+      "ghana": "F&G:22"
+    },
+    {
+      "symbol": "XPTUSD",
+      "signal": "HOLD",
+      "score": 33,
+      "tech": 31,
+      "fund": 35,
+      "market": "hfm",
+      "price": 950,
       "reason": "F&G:22",
       "ghana": "F&G:22"
     },
@@ -82,7 +115,7 @@
       "tech": -72,
       "fund": 35,
       "market": "crypto",
-      "price": 1784.26,
+      "price": 1782.85,
       "reason": "F&G:22",
       "ghana": "F&G:22"
     },
@@ -93,7 +126,7 @@
       "tech": -47,
       "fund": 35,
       "market": "crypto",
-      "price": 0.7986,
+      "price": 0.7988,
       "reason": "F&G:22",
       "ghana": "F&G:22"
     },
@@ -104,78 +137,45 @@
       "tech": 16,
       "fund": 0,
       "market": "crypto",
-      "price": 0.7842,
+      "price": 0.7844,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     },
     {
-      "symbol": "EURUSDT",
+      "symbol": "SP500",
       "signal": "HOLD",
-      "score": -9,
-      "tech": -45,
-      "fund": 35,
-      "market": "crypto",
-      "price": 1.1616,
-      "reason": "F&G:22",
-      "ghana": "F&G:22"
-    },
-    {
-      "symbol": "BTCUSDT",
-      "signal": "HOLD",
-      "score": -7,
-      "tech": -12,
+      "score": 9,
+      "tech": 16,
       "fund": 0,
-      "market": "crypto",
-      "price": 65528.01,
+      "market": "hfm",
+      "price": 5200,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     },
     {
-      "symbol": "SOLUSDT",
+      "symbol": "XAUUSD",
       "signal": "HOLD",
-      "score": -7,
-      "tech": -12,
+      "score": -8,
+      "tech": -14,
       "fund": 0,
-      "market": "crypto",
-      "price": 73.21,
+      "market": "hfm",
+      "price": 3000,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     },
     {
-      "symbol": "XRPUSDT",
+      "symbol": "USDGHS",
       "signal": "HOLD",
-      "score": -6,
-      "tech": -10,
+      "score": 8,
+      "tech": 15,
       "fund": 0,
-      "market": "crypto",
-      "price": 1.2092,
+      "market": "hfm",
+      "price": 15.3,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
-    },
-    {
-      "symbol": "DOGEUSDT",
-      "signal": "HOLD",
-      "score": -5,
-      "tech": -37,
-      "fund": 35,
-      "market": "crypto",
-      "price": 0.08675,
-      "reason": "F&G:22",
-      "ghana": "F&G:22"
-    },
-    {
-      "symbol": "TRXUSDT",
-      "signal": "HOLD",
-      "score": -5,
-      "tech": -38,
-      "fund": 35,
-      "market": "crypto",
-      "price": 0.3189,
-      "reason": "F&G:22",
-      "ghana": "F&G:22"
     }
   ],
-  "buy_signals": 0,
+  "buy_signals": 1,
   "sell_signals": 0,
   "fear_greed": {
     "value": 22,
@@ -214,5 +214,5 @@
     "trade_log_size": 76
   },
   "version": "v9",
-  "uptime_cycles": 93079
+  "uptime_cycles": 93080
 }
