@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-06-19T12:44:28.415191",
-  "cycle": 110284,
-  "strategy": "balanced",
-  "market_condition": "neutral",
-  "assets_scanned": 19,
+  "timestamp": "2026-06-19T12:44:47.709791",
+  "cycle": 110285,
+  "strategy": "aggressive",
+  "market_condition": "bear",
+  "assets_scanned": 40,
   "open_trades": 6,
   "open_positions": [
     {
@@ -57,7 +57,18 @@
       "tech": 98,
       "fund": 35,
       "market": "crypto",
-      "price": 0.704,
+      "price": 0.7041,
+      "reason": "F&G:14",
+      "ghana": "F&G:14"
+    },
+    {
+      "symbol": "COPPER",
+      "signal": "BUY",
+      "score": 66,
+      "tech": 91,
+      "fund": 35,
+      "market": "hfm",
+      "price": 4.2,
       "reason": "F&G:14",
       "ghana": "F&G:14"
     },
@@ -68,13 +79,13 @@
       "tech": 84,
       "fund": 35,
       "market": "crypto",
-      "price": 6.074,
+      "price": 6.071,
       "reason": "F&G:14",
       "ghana": "F&G:14"
     },
     {
       "symbol": "XRPUSDT",
-      "signal": "HOLD",
+      "signal": "BUY",
       "score": 53,
       "tech": 67,
       "fund": 35,
@@ -85,7 +96,7 @@
     },
     {
       "symbol": "ASTERUSDT",
-      "signal": "HOLD",
+      "signal": "BUY",
       "score": 53,
       "tech": 67,
       "fund": 35,
@@ -112,7 +123,7 @@
       "tech": 40,
       "fund": 35,
       "market": "crypto",
-      "price": 226.8,
+      "price": 226.7,
       "reason": "F&G:14",
       "ghana": "F&G:14"
     },
@@ -128,6 +139,17 @@
       "ghana": "F&G:14"
     },
     {
+      "symbol": "XPTUSD",
+      "signal": "HOLD",
+      "score": 33,
+      "tech": 31,
+      "fund": 35,
+      "market": "hfm",
+      "price": 950,
+      "reason": "F&G:14",
+      "ghana": "F&G:14"
+    },
+    {
       "symbol": "SOLUSDT",
       "signal": "HOLD",
       "score": 31,
@@ -137,31 +159,9 @@
       "price": 68.29,
       "reason": "F&G:14",
       "ghana": "F&G:14"
-    },
-    {
-      "symbol": "BNBUSDT",
-      "signal": "HOLD",
-      "score": 27,
-      "tech": 20,
-      "fund": 35,
-      "market": "crypto",
-      "price": 573.6,
-      "reason": "F&G:14",
-      "ghana": "F&G:14"
-    },
-    {
-      "symbol": "XPLUSDT",
-      "signal": "HOLD",
-      "score": 10,
-      "tech": 19,
-      "fund": 0,
-      "market": "crypto",
-      "price": 0.0949,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
     }
   ],
-  "buy_signals": 2,
+  "buy_signals": 4,
   "sell_signals": 0,
   "fear_greed": {
     "value": 14,
@@ -200,5 +200,5 @@
     "trade_log_size": 88
   },
   "version": "v9",
-  "uptime_cycles": 110284
+  "uptime_cycles": 110285
 }
