@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-06-19T12:28:23.932853",
-  "cycle": 110199,
-  "strategy": "balanced",
-  "market_condition": "neutral",
-  "assets_scanned": 19,
+  "timestamp": "2026-06-19T12:28:43.637727",
+  "cycle": 110200,
+  "strategy": "aggressive",
+  "market_condition": "bear",
+  "assets_scanned": 40,
   "open_trades": 6,
   "open_positions": [
     {
@@ -57,18 +57,29 @@
       "tech": 98,
       "fund": 35,
       "market": "crypto",
-      "price": 0.7045,
+      "price": 0.7044,
+      "reason": "F&G:14",
+      "ghana": "F&G:14"
+    },
+    {
+      "symbol": "COPPER",
+      "signal": "BUY",
+      "score": 66,
+      "tech": 91,
+      "fund": 35,
+      "market": "hfm",
+      "price": 4.2,
       "reason": "F&G:14",
       "ghana": "F&G:14"
     },
     {
       "symbol": "AVAXUSDT",
-      "signal": "BUY",
+      "signal": "HOLD",
       "score": 59,
       "tech": 79,
       "fund": 35,
       "market": "crypto",
-      "price": 6.056,
+      "price": 6.057,
       "reason": "F&G:14",
       "ghana": "F&G:14"
     },
@@ -79,7 +90,7 @@
       "tech": 67,
       "fund": 35,
       "market": "crypto",
-      "price": 1.1237,
+      "price": 1.1235,
       "reason": "F&G:14",
       "ghana": "F&G:14"
     },
@@ -123,7 +134,7 @@
       "tech": 35,
       "fund": 35,
       "market": "crypto",
-      "price": 226.3,
+      "price": 226.4,
       "reason": "F&G:14",
       "ghana": "F&G:14"
     },
@@ -139,29 +150,18 @@
       "ghana": "F&G:14"
     },
     {
-      "symbol": "BNBUSDT",
+      "symbol": "XPTUSD",
       "signal": "HOLD",
-      "score": 27,
-      "tech": 20,
+      "score": 33,
+      "tech": 31,
       "fund": 35,
-      "market": "crypto",
-      "price": 573.56,
+      "market": "hfm",
+      "price": 950,
       "reason": "F&G:14",
       "ghana": "F&G:14"
-    },
-    {
-      "symbol": "BTCUSDT",
-      "signal": "HOLD",
-      "score": -8,
-      "tech": -15,
-      "fund": 0,
-      "market": "crypto",
-      "price": 62563.52,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
     }
   ],
-  "buy_signals": 2,
+  "buy_signals": 1,
   "sell_signals": 0,
   "fear_greed": {
     "value": 14,
@@ -200,5 +200,5 @@
     "trade_log_size": 88
   },
   "version": "v9",
-  "uptime_cycles": 110199
+  "uptime_cycles": 110200
 }
