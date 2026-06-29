@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-06-29T03:36:48.746867",
-  "cycle": 186184,
-  "strategy": "balanced",
-  "market_condition": "neutral",
-  "assets_scanned": 20,
+  "timestamp": "2026-06-29T03:37:07.128611",
+  "cycle": 186185,
+  "strategy": "aggressive",
+  "market_condition": "bear",
+  "assets_scanned": 41,
   "open_trades": 9,
   "open_positions": [
     {
@@ -72,63 +72,74 @@
   ],
   "top_opportunities": [
     {
+      "symbol": "COPPER",
+      "signal": "BUY",
+      "score": 71,
+      "tech": 100,
+      "fund": 35,
+      "market": "hfm",
+      "price": 4.2,
+      "reason": "F&G:12",
+      "ghana": "F&G:12"
+    },
+    {
       "symbol": "SYNUSDT",
       "signal": "BUY",
       "score": 64,
       "tech": 87,
       "fund": 35,
       "market": "crypto",
-      "price": 0.38779,
+      "price": 0.38684,
       "reason": "F&G:18",
       "ghana": "F&G:18"
     },
     {
       "symbol": "ACTUSDT",
-      "signal": "HOLD",
+      "signal": "BUY",
       "score": 53,
       "tech": 68,
       "fund": 35,
       "market": "crypto",
-      "price": 0.01151,
+      "price": 0.01146,
       "reason": "F&G:12",
       "ghana": "F&G:12"
     },
     {
       "symbol": "SUSDT",
-      "signal": "HOLD",
+      "signal": "BUY",
       "score": 48,
       "tech": 58,
       "fund": 35,
       "market": "crypto",
-      "price": 0.02487,
+      "price": 0.02486,
       "reason": "F&G:12",
       "ghana": "F&G:12"
     },
     {
       "symbol": "CELOUSDT",
-      "signal": "HOLD",
+      "signal": "BUY",
       "score": 47,
       "tech": 56,
       "fund": 35,
       "market": "crypto",
-      "price": 0.06925,
+      "price": 0.06918,
       "reason": "F&G:12",
       "ghana": "F&G:12"
     },
     {
-      "symbol": "BTCUSDT",
-      "signal": "HOLD",
+      "symbol": "XPTUSD",
+      "signal": "BUY",
       "score": 44,
-      "tech": 52,
+      "tech": 51,
       "fund": 35,
-      "market": "crypto",
-      "price": 59976.05,
-      "reason": "F&G:18",
-      "ghana": "F&G:18"
+      "market": "hfm",
+      "price": 950,
+      "reason": "F&G:12",
+      "ghana": "F&G:12"
     },
     {
       "symbol": "LTCUSDT",
-      "signal": "HOLD",
+      "signal": "BUY",
       "score": 40,
       "tech": 45,
       "fund": 35,
@@ -138,13 +149,24 @@
       "ghana": "F&G:12"
     },
     {
+      "symbol": "BTCUSDT",
+      "signal": "HOLD",
+      "score": 39,
+      "tech": 42,
+      "fund": 35,
+      "market": "crypto",
+      "price": 59963.99,
+      "reason": "F&G:18",
+      "ghana": "F&G:18"
+    },
+    {
       "symbol": "HYPERUSDT",
       "signal": "HOLD",
       "score": 39,
       "tech": 43,
       "fund": 35,
       "market": "crypto",
-      "price": 0.0788,
+      "price": 0.0787,
       "reason": "F&G:18",
       "ghana": "F&G:18"
     },
@@ -155,34 +177,12 @@
       "tech": 41,
       "fund": 35,
       "market": "crypto",
-      "price": 0.08535,
+      "price": 0.0854,
       "reason": "F&G:18",
       "ghana": "F&G:18"
-    },
-    {
-      "symbol": "NEARUSDT",
-      "signal": "HOLD",
-      "score": 33,
-      "tech": 31,
-      "fund": 35,
-      "market": "crypto",
-      "price": 1.866,
-      "reason": "F&G:18",
-      "ghana": "F&G:18"
-    },
-    {
-      "symbol": "XRPUSDT",
-      "signal": "HOLD",
-      "score": 32,
-      "tech": 30,
-      "fund": 35,
-      "market": "crypto",
-      "price": 1.0505,
-      "reason": "F&G:12",
-      "ghana": "F&G:12"
     }
   ],
-  "buy_signals": 1,
+  "buy_signals": 5,
   "sell_signals": 0,
   "fear_greed": {
     "value": 12,
@@ -221,5 +221,5 @@
     "trade_log_size": 121
   },
   "version": "v9",
-  "uptime_cycles": 186184
+  "uptime_cycles": 186185
 }
