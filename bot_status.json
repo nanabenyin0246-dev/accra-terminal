@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-07-06T03:30:47.020930",
-  "cycle": 241609,
-  "strategy": "balanced",
-  "market_condition": "neutral",
-  "assets_scanned": 20,
+  "timestamp": "2026-07-06T03:31:06.239796",
+  "cycle": 241610,
+  "strategy": "aggressive",
+  "market_condition": "bear",
+  "assets_scanned": 41,
   "open_trades": 7,
   "open_positions": [
     {
@@ -58,13 +58,57 @@
   ],
   "top_opportunities": [
     {
+      "symbol": "COPPER",
+      "signal": "BUY",
+      "score": 66,
+      "tech": 91,
+      "fund": 35,
+      "market": "hfm",
+      "price": 4.2,
+      "reason": "F&G:24",
+      "ghana": "F&G:24"
+    },
+    {
+      "symbol": "GBPJPY",
+      "signal": "BUY",
+      "score": 62,
+      "tech": 84,
+      "fund": 35,
+      "market": "hfm",
+      "price": 215.21,
+      "reason": "F&G:24",
+      "ghana": "F&G:24"
+    },
+    {
+      "symbol": "USDCAD",
+      "signal": "BUY",
+      "score": 44,
+      "tech": 51,
+      "fund": 35,
+      "market": "hfm",
+      "price": 1.4202,
+      "reason": "F&G:24",
+      "ghana": "F&G:24"
+    },
+    {
+      "symbol": "XPTUSD",
+      "signal": "HOLD",
+      "score": 33,
+      "tech": 31,
+      "fund": 35,
+      "market": "hfm",
+      "price": 950,
+      "reason": "F&G:24",
+      "ghana": "F&G:24"
+    },
+    {
       "symbol": "SYNUSDT",
       "signal": "HOLD",
       "score": 32,
       "tech": 30,
       "fund": 35,
       "market": "crypto",
-      "price": 0.4304,
+      "price": 0.43044,
       "reason": "F&G:24",
       "ghana": "F&G:24"
     },
@@ -75,7 +119,7 @@
       "tech": -52,
       "fund": 35,
       "market": "crypto",
-      "price": 80.56,
+      "price": 80.57,
       "reason": "F&G:24",
       "ghana": "F&G:24"
     },
@@ -86,20 +130,20 @@
       "tech": 18,
       "fund": 0,
       "market": "crypto",
-      "price": 0.005488,
+      "price": 0.005506,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     },
     {
-      "symbol": "ETHUSDT",
+      "symbol": "GBPUSD",
       "signal": "HOLD",
-      "score": -9,
-      "tech": -45,
-      "fund": 35,
-      "market": "crypto",
-      "price": 1775.21,
-      "reason": "F&G:24",
-      "ghana": "F&G:24"
+      "score": 10,
+      "tech": 19,
+      "fund": 0,
+      "market": "hfm",
+      "price": 1.3355057560298085,
+      "reason": "Technical score too weak for AI analysis",
+      "ghana": "No action needed"
     },
     {
       "symbol": "AIGENSYNUSDT",
@@ -108,7 +152,7 @@
       "tech": -17,
       "fund": 0,
       "market": "crypto",
-      "price": 0.02811,
+      "price": 0.02813,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     },
@@ -122,53 +166,9 @@
       "price": 0.188,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
-    },
-    {
-      "symbol": "XLMUSDT",
-      "signal": "HOLD",
-      "score": -9,
-      "tech": -17,
-      "fund": 0,
-      "market": "crypto",
-      "price": 0.1995,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
-    },
-    {
-      "symbol": "DOGEUSDT",
-      "signal": "HOLD",
-      "score": -7,
-      "tech": -12,
-      "fund": 0,
-      "market": "crypto",
-      "price": 0.07729,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
-    },
-    {
-      "symbol": "NEARUSDT",
-      "signal": "HOLD",
-      "score": 7,
-      "tech": 12,
-      "fund": 0,
-      "market": "crypto",
-      "price": 1.98,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
-    },
-    {
-      "symbol": "XPLUSDT",
-      "signal": "HOLD",
-      "score": -7,
-      "tech": -41,
-      "fund": 35,
-      "market": "crypto",
-      "price": 0.10915,
-      "reason": "F&G:23",
-      "ghana": "F&G:23"
     }
   ],
-  "buy_signals": 0,
+  "buy_signals": 1,
   "sell_signals": 0,
   "fear_greed": {
     "value": 24,
@@ -207,5 +207,5 @@
     "trade_log_size": 143
   },
   "version": "v9",
-  "uptime_cycles": 241609
+  "uptime_cycles": 241610
 }
