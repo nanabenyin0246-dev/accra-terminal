@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-07-08T09:35:45.387292",
-  "cycle": 259269,
-  "strategy": "balanced",
-  "market_condition": "neutral",
-  "assets_scanned": 20,
+  "timestamp": "2026-07-08T09:36:05.591946",
+  "cycle": 259270,
+  "strategy": "aggressive",
+  "market_condition": "bear",
+  "assets_scanned": 41,
   "open_trades": 8,
   "open_positions": [
     {
@@ -65,24 +65,46 @@
   ],
   "top_opportunities": [
     {
+      "symbol": "COPPER",
+      "signal": "BUY",
+      "score": 66,
+      "tech": 91,
+      "fund": 35,
+      "market": "hfm",
+      "price": 4.2,
+      "reason": "F&G:20",
+      "ghana": "F&G:20"
+    },
+    {
       "symbol": "ADAUSDT",
       "signal": "BUY",
       "score": 63,
       "tech": 85,
       "fund": 35,
       "market": "crypto",
-      "price": 0.1662,
+      "price": 0.1661,
       "reason": "F&G:20",
       "ghana": "F&G:20"
     },
     {
       "symbol": "WLDUSDT",
-      "signal": "HOLD",
+      "signal": "BUY",
       "score": 49,
       "tech": 60,
       "fund": 35,
       "market": "crypto",
-      "price": 0.3695,
+      "price": 0.3693,
+      "reason": "F&G:20",
+      "ghana": "F&G:20"
+    },
+    {
+      "symbol": "USDCAD",
+      "signal": "BUY",
+      "score": 44,
+      "tech": 51,
+      "fund": 35,
+      "market": "hfm",
+      "price": 1.4218,
       "reason": "F&G:20",
       "ghana": "F&G:20"
     },
@@ -109,13 +131,13 @@
       "ghana": "F&G:20"
     },
     {
-      "symbol": "AAVEUSDT",
+      "symbol": "GBPJPY",
       "signal": "HOLD",
-      "score": 38,
-      "tech": 40,
+      "score": 37,
+      "tech": 38,
       "fund": 35,
-      "market": "crypto",
-      "price": 87.35,
+      "market": "hfm",
+      "price": 216.71,
       "reason": "F&G:20",
       "ghana": "F&G:20"
     },
@@ -126,7 +148,18 @@
       "tech": 36,
       "fund": 35,
       "market": "crypto",
-      "price": 1.875,
+      "price": 1.874,
+      "reason": "F&G:20",
+      "ghana": "F&G:20"
+    },
+    {
+      "symbol": "AAVEUSDT",
+      "signal": "HOLD",
+      "score": 35,
+      "tech": 35,
+      "fund": 35,
+      "market": "crypto",
+      "price": 87.31,
       "reason": "F&G:20",
       "ghana": "F&G:20"
     },
@@ -137,45 +170,12 @@
       "tech": 34,
       "fund": 35,
       "market": "crypto",
-      "price": 0.02675,
-      "reason": "F&G:20",
-      "ghana": "F&G:20"
-    },
-    {
-      "symbol": "XRPUSDT",
-      "signal": "HOLD",
-      "score": 34,
-      "tech": 34,
-      "fund": 35,
-      "market": "crypto",
-      "price": 1.0811,
-      "reason": "F&G:20",
-      "ghana": "F&G:20"
-    },
-    {
-      "symbol": "UNIUSDT",
-      "signal": "HOLD",
-      "score": 34,
-      "tech": 34,
-      "fund": 35,
-      "market": "crypto",
-      "price": 3.274,
-      "reason": "F&G:20",
-      "ghana": "F&G:20"
-    },
-    {
-      "symbol": "XAUTUSDT",
-      "signal": "HOLD",
-      "score": 33,
-      "tech": 32,
-      "fund": 35,
-      "market": "crypto",
-      "price": 4052.55,
+      "price": 0.02676,
       "reason": "F&G:20",
       "ghana": "F&G:20"
     }
   ],
-  "buy_signals": 1,
+  "buy_signals": 2,
   "sell_signals": 0,
   "fear_greed": {
     "value": 20,
@@ -214,5 +214,5 @@
     "trade_log_size": 150
   },
   "version": "v9",
-  "uptime_cycles": 259269
+  "uptime_cycles": 259270
 }
