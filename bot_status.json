@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-07-11T23:56:26.896292",
-  "cycle": 286834,
-  "strategy": "balanced",
-  "market_condition": "neutral",
-  "assets_scanned": 20,
+  "timestamp": "2026-07-11T23:56:44.723086",
+  "cycle": 286835,
+  "strategy": "aggressive",
+  "market_condition": "bear",
+  "assets_scanned": 41,
   "open_trades": 6,
   "open_positions": [
     {
@@ -57,18 +57,29 @@
       "tech": 94,
       "fund": 15,
       "market": "crypto",
-      "price": 0.07334,
+      "price": 0.07333,
+      "reason": "F&G:26",
+      "ghana": "F&G:26"
+    },
+    {
+      "symbol": "COPPER",
+      "signal": "BUY",
+      "score": 57,
+      "tech": 91,
+      "fund": 15,
+      "market": "hfm",
+      "price": 4.2,
       "reason": "F&G:26",
       "ghana": "F&G:26"
     },
     {
       "symbol": "XRPUSDT",
-      "signal": "HOLD",
+      "signal": "BUY",
       "score": 40,
       "tech": 60,
       "fund": 15,
       "market": "crypto",
-      "price": 1.0982,
+      "price": 1.0981,
       "reason": "F&G:26",
       "ghana": "F&G:26"
     },
@@ -84,24 +95,13 @@
       "ghana": "F&G:26"
     },
     {
-      "symbol": "ARBUSDT",
-      "signal": "HOLD",
-      "score": 34,
-      "tech": 50,
-      "fund": 15,
-      "market": "crypto",
-      "price": 0.095,
-      "reason": "F&G:26",
-      "ghana": "F&G:26"
-    },
-    {
       "symbol": "UNIUSDT",
       "signal": "HOLD",
       "score": 33,
       "tech": 47,
       "fund": 15,
       "market": "crypto",
-      "price": 3.662,
+      "price": 3.663,
       "reason": "F&G:26",
       "ghana": "F&G:26"
     },
@@ -128,40 +128,40 @@
       "ghana": "F&G:26"
     },
     {
-      "symbol": "BTCUSDT",
+      "symbol": "ARBUSDT",
       "signal": "HOLD",
-      "score": 8,
-      "tech": 15,
-      "fund": 0,
-      "market": "crypto",
-      "price": 63890.0,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
-    },
-    {
-      "symbol": "SXTUSDT",
-      "signal": "HOLD",
-      "score": -7,
-      "tech": -25,
+      "score": 26,
+      "tech": 35,
       "fund": 15,
       "market": "crypto",
-      "price": 0.00941,
+      "price": 0.0949,
       "reason": "F&G:26",
       "ghana": "F&G:26"
     },
     {
-      "symbol": "ADAUSDT",
+      "symbol": "XPTUSD",
       "signal": "HOLD",
-      "score": -7,
-      "tech": -13,
-      "fund": 0,
-      "market": "crypto",
-      "price": 0.166,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
+      "score": 24,
+      "tech": 31,
+      "fund": 15,
+      "market": "hfm",
+      "price": 950,
+      "reason": "F&G:26",
+      "ghana": "F&G:26"
+    },
+    {
+      "symbol": "EURUSD",
+      "signal": "HOLD",
+      "score": -15,
+      "tech": -40,
+      "fund": 15,
+      "market": "hfm",
+      "price": 1.143000834390609,
+      "reason": "F&G:26",
+      "ghana": "F&G:26"
     }
   ],
-  "buy_signals": 1,
+  "buy_signals": 2,
   "sell_signals": 0,
   "fear_greed": {
     "value": 26,
@@ -200,5 +200,5 @@
     "trade_log_size": 180
   },
   "version": "v9",
-  "uptime_cycles": 286834
+  "uptime_cycles": 286835
 }
