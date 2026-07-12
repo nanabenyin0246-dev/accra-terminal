@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-07-12T09:40:18.378651",
-  "cycle": 290014,
-  "strategy": "balanced",
-  "market_condition": "neutral",
-  "assets_scanned": 20,
+  "timestamp": "2026-07-12T09:40:39.105216",
+  "cycle": 290015,
+  "strategy": "aggressive",
+  "market_condition": "bear",
+  "assets_scanned": 41,
   "open_trades": 6,
   "open_positions": [
     {
@@ -51,8 +51,19 @@
   ],
   "top_opportunities": [
     {
+      "symbol": "COPPER",
+      "signal": "BUY",
+      "score": 57,
+      "tech": 91,
+      "fund": 15,
+      "market": "hfm",
+      "price": 4.2,
+      "reason": "F&G:26",
+      "ghana": "F&G:26"
+    },
+    {
       "symbol": "AVAXUSDT",
-      "signal": "HOLD",
+      "signal": "BUY",
       "score": 42,
       "tech": 64,
       "fund": 15,
@@ -90,7 +101,18 @@
       "tech": -60,
       "fund": 15,
       "market": "crypto",
-      "price": 63962.18,
+      "price": 63986.37,
+      "reason": "F&G:26",
+      "ghana": "F&G:26"
+    },
+    {
+      "symbol": "XPTUSD",
+      "signal": "HOLD",
+      "score": 24,
+      "tech": 31,
+      "fund": 15,
+      "market": "hfm",
+      "price": 950,
       "reason": "F&G:26",
       "ghana": "F&G:26"
     },
@@ -112,7 +134,7 @@
       "tech": 30,
       "fund": 15,
       "market": "crypto",
-      "price": 0.7425,
+      "price": 0.7429,
       "reason": "F&G:26",
       "ghana": "F&G:26"
     },
@@ -128,40 +150,18 @@
       "ghana": "F&G:26"
     },
     {
-      "symbol": "NEARUSDT",
+      "symbol": "EURUSD",
       "signal": "HOLD",
-      "score": -18,
-      "tech": -45,
+      "score": -15,
+      "tech": -40,
       "fund": 15,
-      "market": "crypto",
-      "price": 1.883,
-      "reason": "F&G:26",
-      "ghana": "F&G:26"
-    },
-    {
-      "symbol": "ETHUSDT",
-      "signal": "HOLD",
-      "score": -12,
-      "tech": -35,
-      "fund": 15,
-      "market": "crypto",
-      "price": 1802.18,
-      "reason": "F&G:26",
-      "ghana": "F&G:26"
-    },
-    {
-      "symbol": "SOLUSDT",
-      "signal": "HOLD",
-      "score": -12,
-      "tech": -35,
-      "fund": 15,
-      "market": "crypto",
-      "price": 76.79,
+      "market": "hfm",
+      "price": 1.143000834390609,
       "reason": "F&G:26",
       "ghana": "F&G:26"
     }
   ],
-  "buy_signals": 0,
+  "buy_signals": 1,
   "sell_signals": 0,
   "fear_greed": {
     "value": 26,
@@ -200,5 +200,5 @@
     "trade_log_size": 180
   },
   "version": "v9",
-  "uptime_cycles": 290014
+  "uptime_cycles": 290015
 }
