@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-07-15T13:02:42.096905",
-  "cycle": 314519,
-  "strategy": "balanced",
-  "market_condition": "neutral",
-  "assets_scanned": 20,
+  "timestamp": "2026-07-15T13:03:00.903084",
+  "cycle": 314520,
+  "strategy": "aggressive",
+  "market_condition": "bear",
+  "assets_scanned": 41,
   "open_trades": 6,
   "open_positions": [
     {
@@ -51,13 +51,35 @@
   ],
   "top_opportunities": [
     {
+      "symbol": "COPPER",
+      "signal": "BUY",
+      "score": 66,
+      "tech": 91,
+      "fund": 35,
+      "market": "hfm",
+      "price": 4.2,
+      "reason": "F&G:25",
+      "ghana": "F&G:25"
+    },
+    {
       "symbol": "AAVEUSDT",
       "signal": "HOLD",
       "score": 37,
       "tech": 38,
       "fund": 35,
       "market": "crypto",
-      "price": 99.69,
+      "price": 99.65,
+      "reason": "F&G:25",
+      "ghana": "F&G:25"
+    },
+    {
+      "symbol": "XPTUSD",
+      "signal": "HOLD",
+      "score": 33,
+      "tech": 31,
+      "fund": 35,
+      "market": "hfm",
+      "price": 950,
       "reason": "F&G:25",
       "ghana": "F&G:25"
     },
@@ -68,7 +90,7 @@
       "tech": -70,
       "fund": 35,
       "market": "crypto",
-      "price": 583.59,
+      "price": 583.61,
       "reason": "F&G:25",
       "ghana": "F&G:25"
     },
@@ -79,9 +101,20 @@
       "tech": -57,
       "fund": 35,
       "market": "crypto",
-      "price": 65324.23,
+      "price": 65329.99,
       "reason": "F&G:25",
       "ghana": "F&G:25"
+    },
+    {
+      "symbol": "DEXEUSDT",
+      "signal": "HOLD",
+      "score": 10,
+      "tech": 18,
+      "fund": 0,
+      "market": "crypto",
+      "price": 37.942,
+      "reason": "Technical score too weak for AI analysis",
+      "ghana": "No action needed"
     },
     {
       "symbol": "TAOUSDT",
@@ -90,7 +123,29 @@
       "tech": 19,
       "fund": 0,
       "market": "crypto",
-      "price": 201.7,
+      "price": 201.3,
+      "reason": "Technical score too weak for AI analysis",
+      "ghana": "No action needed"
+    },
+    {
+      "symbol": "GBPUSD",
+      "signal": "HOLD",
+      "score": 10,
+      "tech": 19,
+      "fund": 0,
+      "market": "hfm",
+      "price": 1.338383500408207,
+      "reason": "Technical score too weak for AI analysis",
+      "ghana": "No action needed"
+    },
+    {
+      "symbol": "USDCAD",
+      "signal": "HOLD",
+      "score": 10,
+      "tech": 18,
+      "fund": 0,
+      "market": "hfm",
+      "price": 1.4112,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     },
@@ -101,64 +156,9 @@
       "tech": -17,
       "fund": 0,
       "market": "crypto",
-      "price": 45.74,
+      "price": 45.75,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
-    },
-    {
-      "symbol": "MUBUSDT",
-      "signal": "HOLD",
-      "score": -8,
-      "tech": -15,
-      "fund": 0,
-      "market": "crypto",
-      "price": 980.13,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
-    },
-    {
-      "symbol": "DEXEUSDT",
-      "signal": "HOLD",
-      "score": -7,
-      "tech": -12,
-      "fund": 0,
-      "market": "crypto",
-      "price": 38.046,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
-    },
-    {
-      "symbol": "OPNUSDT",
-      "signal": "HOLD",
-      "score": -7,
-      "tech": -12,
-      "fund": 0,
-      "market": "crypto",
-      "price": 0.0638,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
-    },
-    {
-      "symbol": "DOGEUSDT",
-      "signal": "HOLD",
-      "score": 5,
-      "tech": -20,
-      "fund": 35,
-      "market": "crypto",
-      "price": 0.07497,
-      "reason": "F&G:25",
-      "ghana": "F&G:25"
-    },
-    {
-      "symbol": "EURUSDT",
-      "signal": "HOLD",
-      "score": 5,
-      "tech": -20,
-      "fund": 35,
-      "market": "crypto",
-      "price": 1.1436,
-      "reason": "F&G:25",
-      "ghana": "F&G:25"
     }
   ],
   "buy_signals": 0,
@@ -200,5 +200,5 @@
     "trade_log_size": 186
   },
   "version": "v9",
-  "uptime_cycles": 314519
+  "uptime_cycles": 314520
 }
