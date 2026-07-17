@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-07-17T15:51:29.815522",
-  "cycle": 330909,
-  "strategy": "balanced",
-  "market_condition": "neutral",
-  "assets_scanned": 20,
+  "timestamp": "2026-07-17T15:51:57.113637",
+  "cycle": 330910,
+  "strategy": "aggressive",
+  "market_condition": "bear",
+  "assets_scanned": 41,
   "open_trades": 7,
   "open_positions": [
     {
@@ -58,13 +58,24 @@
   ],
   "top_opportunities": [
     {
+      "symbol": "COPPER",
+      "signal": "BUY",
+      "score": 57,
+      "tech": 91,
+      "fund": 15,
+      "market": "hfm",
+      "price": 4.2,
+      "reason": "F&G:27",
+      "ghana": "F&G:27"
+    },
+    {
       "symbol": "HOMEUSDT",
-      "signal": "HOLD",
+      "signal": "BUY",
       "score": 51,
       "tech": 80,
       "fund": 15,
       "market": "crypto",
-      "price": 0.00852,
+      "price": 0.00851,
       "reason": "F&G:27",
       "ghana": "F&G:27"
     },
@@ -86,7 +97,7 @@
       "tech": 47,
       "fund": 15,
       "market": "crypto",
-      "price": 123.77,
+      "price": 123.8,
       "reason": "F&G:27",
       "ghana": "F&G:27"
     },
@@ -97,7 +108,7 @@
       "tech": 42,
       "fund": 15,
       "market": "crypto",
-      "price": 74.52,
+      "price": 74.51,
       "reason": "F&G:27",
       "ghana": "F&G:27"
     },
@@ -119,7 +130,7 @@
       "tech": 39,
       "fund": 15,
       "market": "crypto",
-      "price": 561.94,
+      "price": 561.96,
       "reason": "F&G:27",
       "ghana": "F&G:27"
     },
@@ -135,40 +146,29 @@
       "ghana": "F&G:27"
     },
     {
+      "symbol": "XPTUSD",
+      "signal": "HOLD",
+      "score": 24,
+      "tech": 31,
+      "fund": 15,
+      "market": "hfm",
+      "price": 950,
+      "reason": "F&G:27",
+      "ghana": "F&G:27"
+    },
+    {
       "symbol": "SOXLBUSDT",
       "signal": "HOLD",
       "score": 18,
       "tech": 20,
       "fund": 15,
       "market": "crypto",
-      "price": 134.56,
+      "price": 135.34,
       "reason": "F&G:27",
       "ghana": "F&G:27"
-    },
-    {
-      "symbol": "TRXUSDT",
-      "signal": "HOLD",
-      "score": -10,
-      "tech": -30,
-      "fund": 15,
-      "market": "crypto",
-      "price": 0.323,
-      "reason": "F&G:27",
-      "ghana": "F&G:27"
-    },
-    {
-      "symbol": "ETHUSDT",
-      "signal": "HOLD",
-      "score": 9,
-      "tech": 17,
-      "fund": 0,
-      "market": "crypto",
-      "price": 1825.32,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
     }
   ],
-  "buy_signals": 0,
+  "buy_signals": 1,
   "sell_signals": 0,
   "fear_greed": {
     "value": 27,
@@ -207,5 +207,5 @@
     "trade_log_size": 229
   },
   "version": "v9",
-  "uptime_cycles": 330909
+  "uptime_cycles": 330910
 }
