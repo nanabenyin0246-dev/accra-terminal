@@ -1,10 +1,10 @@
 {
-  "timestamp": "2026-07-17T12:00:11.753366",
-  "cycle": 329729,
-  "strategy": "balanced",
-  "market_condition": "neutral",
-  "assets_scanned": 15,
-  "open_trades": 7,
+  "timestamp": "2026-07-17T12:00:34.186187",
+  "cycle": 329730,
+  "strategy": "aggressive",
+  "market_condition": "bear",
+  "assets_scanned": 36,
+  "open_trades": 8,
   "open_positions": [
     {
       "symbol": "COPPER",
@@ -54,17 +54,46 @@
       "market": "hfm",
       "sl": 203.8002,
       "tp": 278.3078
+    },
+    {
+      "symbol": "USDCHF",
+      "entry": 0.88,
+      "market": "hfm",
+      "sl": 0.8184,
+      "tp": 1.1176
     }
   ],
   "top_opportunities": [
     {
+      "symbol": "COPPER",
+      "signal": "BUY",
+      "score": 57,
+      "tech": 91,
+      "fund": 15,
+      "market": "hfm",
+      "price": 4.2,
+      "reason": "F&G:27",
+      "ghana": "F&G:27"
+    },
+    {
       "symbol": "HOMEUSDT",
-      "signal": "HOLD",
+      "signal": "BUY",
       "score": 50,
       "tech": 78,
       "fund": 15,
       "market": "crypto",
-      "price": 0.00814,
+      "price": 0.00816,
+      "reason": "F&G:27",
+      "ghana": "F&G:27"
+    },
+    {
+      "symbol": "USDCHF",
+      "signal": "BUY",
+      "score": 42,
+      "tech": 65,
+      "fund": 15,
+      "market": "hfm",
+      "price": 0.88,
       "reason": "F&G:27",
       "ghana": "F&G:27"
     },
@@ -80,13 +109,24 @@
       "ghana": "F&G:27"
     },
     {
+      "symbol": "ETHUSDT",
+      "signal": "HOLD",
+      "score": 31,
+      "tech": 44,
+      "fund": 15,
+      "market": "crypto",
+      "price": 1839.21,
+      "reason": "F&G:27",
+      "ghana": "F&G:27"
+    },
+    {
       "symbol": "REUSDT",
       "signal": "HOLD",
       "score": 30,
       "tech": 43,
       "fund": 15,
       "market": "crypto",
-      "price": 0.4399,
+      "price": 0.4398,
       "reason": "F&G:27",
       "ghana": "F&G:27"
     },
@@ -97,7 +137,7 @@
       "tech": 43,
       "fund": 15,
       "market": "crypto",
-      "price": 0.3801,
+      "price": 0.3802,
       "reason": "F&G:27",
       "ghana": "F&G:27"
     },
@@ -108,67 +148,34 @@
       "tech": 39,
       "fund": 15,
       "market": "crypto",
-      "price": 125.8,
+      "price": 125.66,
       "reason": "F&G:27",
       "ghana": "F&G:27"
     },
     {
-      "symbol": "NEARUSDT",
+      "symbol": "GBPJPY",
       "signal": "HOLD",
-      "score": 22,
-      "tech": 27,
+      "score": 28,
+      "tech": 38,
       "fund": 15,
-      "market": "crypto",
-      "price": 1.915,
+      "market": "hfm",
+      "price": 219.14,
       "reason": "F&G:27",
       "ghana": "F&G:27"
     },
     {
-      "symbol": "SNDKBUSDT",
+      "symbol": "XPTUSD",
       "signal": "HOLD",
-      "score": 20,
-      "tech": 25,
+      "score": 24,
+      "tech": 31,
       "fund": 15,
-      "market": "crypto",
-      "price": 1395.13,
-      "reason": "F&G:27",
-      "ghana": "F&G:27"
-    },
-    {
-      "symbol": "XRPUSDT",
-      "signal": "HOLD",
-      "score": 18,
-      "tech": 20,
-      "fund": 15,
-      "market": "crypto",
-      "price": 1.0846,
-      "reason": "F&G:27",
-      "ghana": "F&G:27"
-    },
-    {
-      "symbol": "DEXEUSDT",
-      "signal": "HOLD",
-      "score": -10,
-      "tech": -19,
-      "fund": 0,
-      "market": "crypto",
-      "price": 36.312,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
-    },
-    {
-      "symbol": "TRXUSDT",
-      "signal": "HOLD",
-      "score": -10,
-      "tech": -30,
-      "fund": 15,
-      "market": "crypto",
-      "price": 0.3228,
+      "market": "hfm",
+      "price": 950,
       "reason": "F&G:27",
       "ghana": "F&G:27"
     }
   ],
-  "buy_signals": 0,
+  "buy_signals": 2,
   "sell_signals": 0,
   "fear_greed": {
     "value": 27,
@@ -203,9 +210,9 @@
     "trump_score": 0
   },
   "performance": {
-    "total_trades": 227,
-    "trade_log_size": 227
+    "total_trades": 228,
+    "trade_log_size": 228
   },
   "version": "v9",
-  "uptime_cycles": 329729
+  "uptime_cycles": 329730
 }
