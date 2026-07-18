@@ -1,6 +1,6 @@
 {
-  "timestamp": "2026-07-18T05:54:00.245708",
-  "cycle": 335392,
+  "timestamp": "2026-07-18T05:54:08.461404",
+  "cycle": 335393,
   "strategy": "balanced",
   "market_condition": "neutral",
   "assets_scanned": 20,
@@ -57,7 +57,7 @@
       "tech": 100,
       "fund": 35,
       "market": "crypto",
-      "price": 0.00707,
+      "price": 0.00708,
       "reason": "F&G:25",
       "ghana": "F&G:25"
     },
@@ -74,12 +74,23 @@
     },
     {
       "symbol": "REUSDT",
-      "signal": "HOLD",
-      "score": 54,
-      "tech": 69,
+      "signal": "BUY",
+      "score": 57,
+      "tech": 75,
       "fund": 35,
       "market": "crypto",
-      "price": 0.4147,
+      "price": 0.4145,
+      "reason": "F&G:25",
+      "ghana": "F&G:25"
+    },
+    {
+      "symbol": "SNDKBUSDT",
+      "signal": "HOLD",
+      "score": 27,
+      "tech": 20,
+      "fund": 35,
+      "market": "crypto",
+      "price": 1357.25,
       "reason": "F&G:25",
       "ghana": "F&G:25"
     },
@@ -101,7 +112,18 @@
       "tech": -18,
       "fund": 0,
       "market": "crypto",
-      "price": 63969.93,
+      "price": 63969.94,
+      "reason": "Technical score too weak for AI analysis",
+      "ghana": "No action needed"
+    },
+    {
+      "symbol": "DOGEUSDT",
+      "signal": "HOLD",
+      "score": -8,
+      "tech": -15,
+      "fund": 0,
+      "market": "crypto",
+      "price": 0.0724,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     },
@@ -137,31 +159,9 @@
       "price": 567.13,
       "reason": "F&G:25",
       "ghana": "F&G:25"
-    },
-    {
-      "symbol": "MUBUSDT",
-      "signal": "HOLD",
-      "score": 5,
-      "tech": -20,
-      "fund": 35,
-      "market": "crypto",
-      "price": 846.26,
-      "reason": "F&G:25",
-      "ghana": "F&G:25"
-    },
-    {
-      "symbol": "SNDKBUSDT",
-      "signal": "HOLD",
-      "score": 4,
-      "tech": 8,
-      "fund": 0,
-      "market": "crypto",
-      "price": 1357.24,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
     }
   ],
-  "buy_signals": 2,
+  "buy_signals": 3,
   "sell_signals": 0,
   "fear_greed": {
     "value": 25,
@@ -200,5 +200,5 @@
     "trade_log_size": 232
   },
   "version": "v9",
-  "uptime_cycles": 335392
+  "uptime_cycles": 335393
 }
