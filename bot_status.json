@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-07-21T15:41:08.805684",
-  "cycle": 362299,
-  "strategy": "balanced",
-  "market_condition": "neutral",
-  "assets_scanned": 15,
+  "timestamp": "2026-07-21T15:41:36.561091",
+  "cycle": 362300,
+  "strategy": "aggressive",
+  "market_condition": "bear",
+  "assets_scanned": 36,
   "open_trades": 7,
   "open_positions": [
     {
@@ -58,24 +58,68 @@
   ],
   "top_opportunities": [
     {
+      "symbol": "COPPER",
+      "signal": "BUY",
+      "score": 66,
+      "tech": 91,
+      "fund": 35,
+      "market": "hfm",
+      "price": 4.2,
+      "reason": "F&G:25",
+      "ghana": "F&G:25"
+    },
+    {
       "symbol": "BANKUSDT",
-      "signal": "HOLD",
-      "score": 39,
-      "tech": 43,
+      "signal": "BUY",
+      "score": 45,
+      "tech": 53,
       "fund": 35,
       "market": "crypto",
-      "price": 0.1593,
+      "price": 0.1591,
       "reason": "F&G:25",
       "ghana": "F&G:25"
     },
     {
       "symbol": "DEXEUSDT",
-      "signal": "HOLD",
+      "signal": "BUY",
       "score": 39,
       "tech": 43,
       "fund": 35,
       "market": "crypto",
-      "price": 10.565,
+      "price": 10.493,
+      "reason": "F&G:25",
+      "ghana": "F&G:25"
+    },
+    {
+      "symbol": "XPTUSD",
+      "signal": "BUY",
+      "score": 33,
+      "tech": 31,
+      "fund": 35,
+      "market": "hfm",
+      "price": 950,
+      "reason": "F&G:25",
+      "ghana": "F&G:25"
+    },
+    {
+      "symbol": "EURJPY",
+      "signal": "BUY",
+      "score": 33,
+      "tech": 32,
+      "fund": 35,
+      "market": "hfm",
+      "price": 185.82,
+      "reason": "F&G:25",
+      "ghana": "F&G:25"
+    },
+    {
+      "symbol": "GBPJPY",
+      "signal": "BUY",
+      "score": 32,
+      "tech": 30,
+      "fund": 35,
+      "market": "hfm",
+      "price": 218.09,
       "reason": "F&G:25",
       "ghana": "F&G:25"
     },
@@ -97,78 +141,34 @@
       "tech": -17,
       "fund": 0,
       "market": "crypto",
-      "price": 0.1032,
+      "price": 0.1031,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     },
     {
-      "symbol": "TOWNSUSDT",
+      "symbol": "SP500",
       "signal": "HOLD",
-      "score": 7,
-      "tech": 13,
+      "score": 9,
+      "tech": 16,
       "fund": 0,
-      "market": "crypto",
-      "price": 0.00208,
+      "market": "hfm",
+      "price": 5200,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     },
     {
-      "symbol": "REUSDT",
+      "symbol": "XAUUSD",
       "signal": "HOLD",
-      "score": 7,
-      "tech": 13,
+      "score": -8,
+      "tech": -14,
       "fund": 0,
-      "market": "crypto",
-      "price": 0.3745,
+      "market": "hfm",
+      "price": 3000,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
-    },
-    {
-      "symbol": "ONDOUSDT",
-      "signal": "HOLD",
-      "score": -5,
-      "tech": -37,
-      "fund": 35,
-      "market": "crypto",
-      "price": 0.4061,
-      "reason": "F&G:25",
-      "ghana": "F&G:25"
-    },
-    {
-      "symbol": "ETHUSDT",
-      "signal": "HOLD",
-      "score": 4,
-      "tech": 7,
-      "fund": 0,
-      "market": "crypto",
-      "price": 1928.41,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
-    },
-    {
-      "symbol": "OPNUSDT",
-      "signal": "HOLD",
-      "score": 4,
-      "tech": -21,
-      "fund": 35,
-      "market": "crypto",
-      "price": 0.0697,
-      "reason": "F&G:25",
-      "ghana": "F&G:25"
-    },
-    {
-      "symbol": "BNBUSDT",
-      "signal": "HOLD",
-      "score": 4,
-      "tech": -22,
-      "fund": 35,
-      "market": "crypto",
-      "price": 575.22,
-      "reason": "F&G:25",
-      "ghana": "F&G:25"
     }
   ],
-  "buy_signals": 0,
+  "buy_signals": 2,
   "sell_signals": 0,
   "fear_greed": {
     "value": 25,
@@ -207,5 +207,5 @@
     "trade_log_size": 251
   },
   "version": "v9",
-  "uptime_cycles": 362299
+  "uptime_cycles": 362300
 }
