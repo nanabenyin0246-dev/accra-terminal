@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-07-24T21:42:39.200945",
-  "cycle": 387114,
-  "strategy": "balanced",
-  "market_condition": "neutral",
-  "assets_scanned": 20,
+  "timestamp": "2026-07-24T21:42:58.616794",
+  "cycle": 387115,
+  "strategy": "aggressive",
+  "market_condition": "bear",
+  "assets_scanned": 41,
   "open_trades": 6,
   "open_positions": [
     {
@@ -51,6 +51,17 @@
   ],
   "top_opportunities": [
     {
+      "symbol": "COPPER",
+      "signal": "BUY",
+      "score": 57,
+      "tech": 91,
+      "fund": 15,
+      "market": "hfm",
+      "price": 4.2,
+      "reason": "F&G:28",
+      "ghana": "F&G:28"
+    },
+    {
       "symbol": "OPNUSDT",
       "signal": "BUY",
       "score": 55,
@@ -63,7 +74,7 @@
     },
     {
       "symbol": "WLDUSDT",
-      "signal": "HOLD",
+      "signal": "BUY",
       "score": 41,
       "tech": 63,
       "fund": 15,
@@ -101,7 +112,7 @@
       "tech": 39,
       "fund": 15,
       "market": "crypto",
-      "price": 0.05309,
+      "price": 0.05306,
       "reason": "F&G:28",
       "ghana": "F&G:28"
     },
@@ -128,6 +139,17 @@
       "ghana": "F&G:28"
     },
     {
+      "symbol": "XPTUSD",
+      "signal": "HOLD",
+      "score": 24,
+      "tech": 31,
+      "fund": 15,
+      "market": "hfm",
+      "price": 950,
+      "reason": "F&G:28",
+      "ghana": "F&G:28"
+    },
+    {
       "symbol": "AEROUSDT",
       "signal": "HOLD",
       "score": 22,
@@ -137,31 +159,9 @@
       "price": 0.4112,
       "reason": "F&G:28",
       "ghana": "F&G:28"
-    },
-    {
-      "symbol": "XAUTUSDT",
-      "signal": "HOLD",
-      "score": -19,
-      "tech": -47,
-      "fund": 15,
-      "market": "crypto",
-      "price": 4052.82,
-      "reason": "F&G:28",
-      "ghana": "F&G:28"
-    },
-    {
-      "symbol": "BTCUSDT",
-      "signal": "HOLD",
-      "score": 18,
-      "tech": 20,
-      "fund": 15,
-      "market": "crypto",
-      "price": 64154.01,
-      "reason": "F&G:28",
-      "ghana": "F&G:28"
     }
   ],
-  "buy_signals": 1,
+  "buy_signals": 2,
   "sell_signals": 0,
   "fear_greed": {
     "value": 28,
@@ -200,5 +200,5 @@
     "trade_log_size": 270
   },
   "version": "v9",
-  "uptime_cycles": 387114
+  "uptime_cycles": 387115
 }
