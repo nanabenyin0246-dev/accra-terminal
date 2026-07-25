@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-07-25T17:33:09.313010",
-  "cycle": 393829,
-  "strategy": "balanced",
-  "market_condition": "neutral",
-  "assets_scanned": 15,
+  "timestamp": "2026-07-25T17:33:26.417743",
+  "cycle": 393830,
+  "strategy": "aggressive",
+  "market_condition": "bear",
+  "assets_scanned": 36,
   "open_trades": 6,
   "open_positions": [
     {
@@ -51,24 +51,57 @@
   ],
   "top_opportunities": [
     {
+      "symbol": "COPPER",
+      "signal": "BUY",
+      "score": 57,
+      "tech": 91,
+      "fund": 15,
+      "market": "hfm",
+      "price": 4.2,
+      "reason": "F&G:27",
+      "ghana": "F&G:27"
+    },
+    {
       "symbol": "ALLOUSDT",
-      "signal": "HOLD",
+      "signal": "BUY",
       "score": 33,
       "tech": 48,
       "fund": 15,
       "market": "crypto",
-      "price": 0.3428,
+      "price": 0.3435,
+      "reason": "F&G:27",
+      "ghana": "F&G:27"
+    },
+    {
+      "symbol": "XPTUSD",
+      "signal": "HOLD",
+      "score": 24,
+      "tech": 31,
+      "fund": 15,
+      "market": "hfm",
+      "price": 950,
       "reason": "F&G:27",
       "ghana": "F&G:27"
     },
     {
       "symbol": "DEXEUSDT",
       "signal": "HOLD",
-      "score": 28,
-      "tech": 38,
+      "score": 22,
+      "tech": 28,
       "fund": 15,
       "market": "crypto",
-      "price": 4.488,
+      "price": 4.505,
+      "reason": "F&G:27",
+      "ghana": "F&G:27"
+    },
+    {
+      "symbol": "GBPJPY",
+      "signal": "HOLD",
+      "score": 18,
+      "tech": 20,
+      "fund": 15,
+      "market": "hfm",
+      "price": 218.27,
       "reason": "F&G:27",
       "ghana": "F&G:27"
     },
@@ -79,7 +112,7 @@
       "tech": -38,
       "fund": 15,
       "market": "crypto",
-      "price": 64264.51,
+      "price": 64264.5,
       "reason": "F&G:27",
       "ghana": "F&G:27"
     },
@@ -90,7 +123,7 @@
       "tech": -37,
       "fund": 15,
       "market": "crypto",
-      "price": 1871.6,
+      "price": 1871.44,
       "reason": "F&G:27",
       "ghana": "F&G:27"
     },
@@ -101,67 +134,34 @@
       "tech": -38,
       "fund": 15,
       "market": "crypto",
-      "price": 74.46,
+      "price": 74.47,
       "reason": "F&G:27",
       "ghana": "F&G:27"
     },
     {
-      "symbol": "XRPUSDT",
+      "symbol": "XAGUSD",
       "signal": "HOLD",
-      "score": -10,
-      "tech": -30,
+      "score": -13,
+      "tech": -36,
       "fund": 15,
-      "market": "crypto",
-      "price": 1.1031,
+      "market": "hfm",
+      "price": 32,
       "reason": "F&G:27",
       "ghana": "F&G:27"
     },
     {
-      "symbol": "ZAMAUSDT",
+      "symbol": "EURJPY",
       "signal": "HOLD",
-      "score": 9,
-      "tech": 17,
-      "fund": 0,
-      "market": "crypto",
-      "price": 0.055,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
-    },
-    {
-      "symbol": "BANKUSDT",
-      "signal": "HOLD",
-      "score": -7,
-      "tech": -12,
-      "fund": 0,
-      "market": "crypto",
-      "price": 0.3487,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
-    },
-    {
-      "symbol": "DOGEUSDT",
-      "signal": "HOLD",
-      "score": -7,
-      "tech": -13,
-      "fund": 0,
-      "market": "crypto",
-      "price": 0.07278,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
-    },
-    {
-      "symbol": "BNBUSDT",
-      "signal": "HOLD",
-      "score": -6,
-      "tech": -10,
-      "fund": 0,
-      "market": "crypto",
-      "price": 567.87,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
+      "score": -13,
+      "tech": -36,
+      "fund": 15,
+      "market": "hfm",
+      "price": 186.38,
+      "reason": "F&G:27",
+      "ghana": "F&G:27"
     }
   ],
-  "buy_signals": 0,
+  "buy_signals": 1,
   "sell_signals": 0,
   "fear_greed": {
     "value": 27,
@@ -200,5 +200,5 @@
     "trade_log_size": 272
   },
   "version": "v9",
-  "uptime_cycles": 393829
+  "uptime_cycles": 393830
 }
