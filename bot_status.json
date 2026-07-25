@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-07-25T08:05:27.137747",
-  "cycle": 390699,
-  "strategy": "balanced",
-  "market_condition": "neutral",
-  "assets_scanned": 20,
+  "timestamp": "2026-07-25T08:05:55.154995",
+  "cycle": 390700,
+  "strategy": "aggressive",
+  "market_condition": "bear",
+  "assets_scanned": 41,
   "open_trades": 6,
   "open_positions": [
     {
@@ -51,6 +51,17 @@
   ],
   "top_opportunities": [
     {
+      "symbol": "COPPER",
+      "signal": "BUY",
+      "score": 57,
+      "tech": 91,
+      "fund": 15,
+      "market": "hfm",
+      "price": 4.2,
+      "reason": "F&G:27",
+      "ghana": "F&G:27"
+    },
+    {
       "symbol": "SUIUSDT",
       "signal": "BUY",
       "score": 55,
@@ -63,7 +74,7 @@
     },
     {
       "symbol": "WLDUSDT",
-      "signal": "HOLD",
+      "signal": "BUY",
       "score": 45,
       "tech": 70,
       "fund": 15,
@@ -90,7 +101,18 @@
       "tech": 40,
       "fund": 15,
       "market": "crypto",
-      "price": 63972.0,
+      "price": 63972.01,
+      "reason": "F&G:27",
+      "ghana": "F&G:27"
+    },
+    {
+      "symbol": "XPTUSD",
+      "signal": "HOLD",
+      "score": 24,
+      "tech": 31,
+      "fund": 15,
+      "market": "hfm",
+      "price": 950,
       "reason": "F&G:27",
       "ghana": "F&G:27"
     },
@@ -117,6 +139,17 @@
       "ghana": "F&G:27"
     },
     {
+      "symbol": "GBPJPY",
+      "signal": "HOLD",
+      "score": 18,
+      "tech": 20,
+      "fund": 15,
+      "market": "hfm",
+      "price": 218.27,
+      "reason": "F&G:27",
+      "ghana": "F&G:27"
+    },
+    {
       "symbol": "DOGEUSDT",
       "signal": "HOLD",
       "score": -16,
@@ -126,48 +159,15 @@
       "price": 0.06929,
       "reason": "F&G:27",
       "ghana": "F&G:27"
-    },
-    {
-      "symbol": "BNBUSDT",
-      "signal": "HOLD",
-      "score": -15,
-      "tech": -40,
-      "fund": 15,
-      "market": "crypto",
-      "price": 564.55,
-      "reason": "F&G:27",
-      "ghana": "F&G:27"
-    },
-    {
-      "symbol": "REUSDT",
-      "signal": "HOLD",
-      "score": -15,
-      "tech": -39,
-      "fund": 15,
-      "market": "crypto",
-      "price": 0.6124,
-      "reason": "F&G:27",
-      "ghana": "F&G:27"
-    },
-    {
-      "symbol": "AEROUSDT",
-      "signal": "HOLD",
-      "score": -14,
-      "tech": -37,
-      "fund": 15,
-      "market": "crypto",
-      "price": 0.4173,
-      "reason": "F&G:27",
-      "ghana": "F&G:27"
     }
   ],
-  "buy_signals": 1,
+  "buy_signals": 2,
   "sell_signals": 0,
   "fear_greed": {
     "value": 27,
     "label": "Fear",
     "trend": "declining",
-    "ts": 1784963143.0211022
+    "ts": 1784966743.8390994
   },
   "markets": {
     "crypto": "active",
@@ -200,5 +200,5 @@
     "trade_log_size": 272
   },
   "version": "v9",
-  "uptime_cycles": 390699
+  "uptime_cycles": 390700
 }
