@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-07-27T10:31:41.823678",
-  "cycle": 407884,
-  "strategy": "balanced",
+  "timestamp": "2026-07-27T10:32:02.022858",
+  "cycle": 407885,
+  "strategy": "aggressive",
   "market_condition": "neutral",
-  "assets_scanned": 10,
+  "assets_scanned": 31,
   "open_trades": 6,
   "open_positions": [
     {
@@ -51,13 +51,24 @@
   ],
   "top_opportunities": [
     {
+      "symbol": "COPPER",
+      "signal": "BUY",
+      "score": 57,
+      "tech": 91,
+      "fund": 15,
+      "market": "hfm",
+      "price": 4.2,
+      "reason": "F&G:30",
+      "ghana": "F&G:30"
+    },
+    {
       "symbol": "BANKUSDT",
-      "signal": "HOLD",
+      "signal": "BUY",
       "score": 51,
       "tech": 80,
       "fund": 15,
       "market": "crypto",
-      "price": 0.351,
+      "price": 0.3572,
       "reason": "F&G:30",
       "ghana": "F&G:30"
     },
@@ -68,7 +79,7 @@
       "tech": 41,
       "fund": 15,
       "market": "crypto",
-      "price": 2.597,
+      "price": 2.589,
       "reason": "F&G:30",
       "ghana": "F&G:30"
     },
@@ -84,84 +95,73 @@
       "ghana": "F&G:30"
     },
     {
-      "symbol": "BNBUSDT",
+      "symbol": "XPTUSD",
       "signal": "HOLD",
-      "score": -8,
-      "tech": -27,
+      "score": 24,
+      "tech": 31,
       "fund": 15,
-      "market": "crypto",
-      "price": 573.06,
+      "market": "hfm",
+      "price": 950,
+      "reason": "F&G:30",
+      "ghana": "F&G:30"
+    },
+    {
+      "symbol": "GBPJPY",
+      "signal": "HOLD",
+      "score": 18,
+      "tech": 20,
+      "fund": 15,
+      "market": "hfm",
+      "price": 218.27,
+      "reason": "F&G:30",
+      "ghana": "F&G:30"
+    },
+    {
+      "symbol": "XAGUSD",
+      "signal": "HOLD",
+      "score": -13,
+      "tech": -36,
+      "fund": 15,
+      "market": "hfm",
+      "price": 32,
+      "reason": "F&G:30",
+      "ghana": "F&G:30"
+    },
+    {
+      "symbol": "EURJPY",
+      "signal": "HOLD",
+      "score": -13,
+      "tech": -36,
+      "fund": 15,
+      "market": "hfm",
+      "price": 186.38,
       "reason": "F&G:30",
       "ghana": "F&G:30"
     },
     {
       "symbol": "AEROUSDT",
       "signal": "HOLD",
-      "score": 8,
-      "tech": 14,
+      "score": 10,
+      "tech": 19,
       "fund": 0,
       "market": "crypto",
-      "price": 0.4343,
+      "price": 0.4342,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     },
     {
-      "symbol": "XRPUSDT",
+      "symbol": "GBPUSD",
       "signal": "HOLD",
-      "score": -6,
-      "tech": -10,
+      "score": 10,
+      "tech": 19,
       "fund": 0,
-      "market": "crypto",
-      "price": 1.1085,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
-    },
-    {
-      "symbol": "BTCUSDT",
-      "signal": "HOLD",
-      "score": -4,
-      "tech": -8,
-      "fund": 0,
-      "market": "crypto",
-      "price": 65360.0,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
-    },
-    {
-      "symbol": "ETHUSDT",
-      "signal": "HOLD",
-      "score": -4,
-      "tech": -20,
-      "fund": 15,
-      "market": "crypto",
-      "price": 1967.74,
-      "reason": "F&G:30",
-      "ghana": "F&G:30"
-    },
-    {
-      "symbol": "EURUSDT",
-      "signal": "HOLD",
-      "score": 4,
-      "tech": 7,
-      "fund": 0,
-      "market": "crypto",
-      "price": 1.1406,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
-    },
-    {
-      "symbol": "SOLUSDT",
-      "signal": "HOLD",
-      "score": 1,
-      "tech": 2,
-      "fund": 0,
-      "market": "crypto",
-      "price": 76.57,
+      "market": "hfm",
+      "price": 1.3323917764779556,
       "reason": "Technical score too weak for AI analysis",
       "ghana": "No action needed"
     }
   ],
-  "buy_signals": 0,
+  "buy_signals": 1,
   "sell_signals": 0,
   "fear_greed": {
     "value": 30,
@@ -200,5 +200,5 @@
     "trade_log_size": 276
   },
   "version": "v9",
-  "uptime_cycles": 407884
+  "uptime_cycles": 407885
 }
