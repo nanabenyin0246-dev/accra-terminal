@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-07-27T21:25:33.567421",
-  "cycle": 411029,
-  "strategy": "balanced",
-  "market_condition": "neutral",
-  "assets_scanned": 20,
+  "timestamp": "2026-07-27T21:25:59.498283",
+  "cycle": 411030,
+  "strategy": "aggressive",
+  "market_condition": "bear",
+  "assets_scanned": 41,
   "open_trades": 6,
   "open_positions": [
     {
@@ -51,13 +51,24 @@
   ],
   "top_opportunities": [
     {
+      "symbol": "COPPER",
+      "signal": "BUY",
+      "score": 57,
+      "tech": 91,
+      "fund": 15,
+      "market": "hfm",
+      "price": 4.2,
+      "reason": "F&G:30",
+      "ghana": "F&G:30"
+    },
+    {
       "symbol": "SNDKBUSDT",
-      "signal": "HOLD",
+      "signal": "BUY",
       "score": 45,
       "tech": 70,
       "fund": 15,
       "market": "crypto",
-      "price": 1276.85,
+      "price": 1276.69,
       "reason": "F&G:30",
       "ghana": "F&G:30"
     },
@@ -73,13 +84,35 @@
       "ghana": "F&G:30"
     },
     {
+      "symbol": "XPTUSD",
+      "signal": "HOLD",
+      "score": 24,
+      "tech": 31,
+      "fund": 15,
+      "market": "hfm",
+      "price": 950,
+      "reason": "F&G:30",
+      "ghana": "F&G:30"
+    },
+    {
       "symbol": "BTCUSDT",
       "signal": "HOLD",
       "score": -18,
       "tech": -45,
       "fund": 15,
       "market": "crypto",
-      "price": 64861.02,
+      "price": 64863.61,
+      "reason": "F&G:30",
+      "ghana": "F&G:30"
+    },
+    {
+      "symbol": "USDJPY",
+      "signal": "HOLD",
+      "score": 18,
+      "tech": 20,
+      "fund": 15,
+      "market": "hfm",
+      "price": 163.64,
       "reason": "F&G:30",
       "ghana": "F&G:30"
     },
@@ -123,45 +156,12 @@
       "tech": -36,
       "fund": 15,
       "market": "crypto",
-      "price": 0.06051,
-      "reason": "F&G:30",
-      "ghana": "F&G:30"
-    },
-    {
-      "symbol": "DEXEUSDT",
-      "signal": "HOLD",
-      "score": 9,
-      "tech": 17,
-      "fund": 0,
-      "market": "crypto",
-      "price": 2.789,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
-    },
-    {
-      "symbol": "LINKUSDT",
-      "signal": "HOLD",
-      "score": -8,
-      "tech": -27,
-      "fund": 15,
-      "market": "crypto",
-      "price": 8.607,
-      "reason": "F&G:30",
-      "ghana": "F&G:30"
-    },
-    {
-      "symbol": "XRPUSDT",
-      "signal": "HOLD",
-      "score": -7,
-      "tech": -25,
-      "fund": 15,
-      "market": "crypto",
-      "price": 1.0895,
+      "price": 0.06059,
       "reason": "F&G:30",
       "ghana": "F&G:30"
     }
   ],
-  "buy_signals": 0,
+  "buy_signals": 1,
   "sell_signals": 0,
   "fear_greed": {
     "value": 30,
@@ -200,5 +200,5 @@
     "trade_log_size": 276
   },
   "version": "v9",
-  "uptime_cycles": 411029
+  "uptime_cycles": 411030
 }
