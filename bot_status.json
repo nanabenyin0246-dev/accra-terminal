@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-08-08T02:24:02.667086",
-  "cycle": 567554,
-  "strategy": "balanced",
+  "timestamp": "2026-08-08T02:24:21.470174",
+  "cycle": 567555,
+  "strategy": "aggressive",
   "market_condition": "neutral",
-  "assets_scanned": 20,
+  "assets_scanned": 41,
   "open_trades": 6,
   "open_positions": [
     {
@@ -51,13 +51,24 @@
   ],
   "top_opportunities": [
     {
+      "symbol": "COPPER",
+      "signal": "BUY",
+      "score": 57,
+      "tech": 91,
+      "fund": 15,
+      "market": "hfm",
+      "price": 4.2,
+      "reason": "F&G:29",
+      "ghana": "F&G:29"
+    },
+    {
       "symbol": "ZBTUSDT",
-      "signal": "HOLD",
+      "signal": "BUY",
       "score": 42,
       "tech": 64,
       "fund": 15,
       "market": "crypto",
-      "price": 0.1089,
+      "price": 0.1082,
       "reason": "F&G:30",
       "ghana": "F&G:30"
     },
@@ -68,7 +79,7 @@
       "tech": -62,
       "fund": 15,
       "market": "crypto",
-      "price": 1.1813,
+      "price": 1.183,
       "reason": "F&G:30",
       "ghana": "F&G:30"
     },
@@ -79,7 +90,18 @@
       "tech": 31,
       "fund": 15,
       "market": "crypto",
-      "price": 0.012688,
+      "price": 0.012736,
+      "reason": "F&G:29",
+      "ghana": "F&G:29"
+    },
+    {
+      "symbol": "XPTUSD",
+      "signal": "HOLD",
+      "score": 24,
+      "tech": 31,
+      "fund": 15,
+      "market": "hfm",
+      "price": 950,
       "reason": "F&G:29",
       "ghana": "F&G:29"
     },
@@ -90,78 +112,56 @@
       "tech": 23,
       "fund": 15,
       "market": "crypto",
-      "price": 0.1085,
+      "price": 0.1083,
       "reason": "F&G:30",
       "ghana": "F&G:30"
     },
     {
-      "symbol": "ETHUSDT",
+      "symbol": "EURJPY",
       "signal": "HOLD",
-      "score": -10,
-      "tech": -30,
+      "score": 18,
+      "tech": 20,
       "fund": 15,
-      "market": "crypto",
-      "price": 1913.36,
+      "market": "hfm",
+      "price": 182.64,
       "reason": "F&G:29",
       "ghana": "F&G:29"
     },
     {
-      "symbol": "SPCXBUSDT",
+      "symbol": "GBPUSD",
       "signal": "HOLD",
-      "score": -10,
-      "tech": -30,
+      "score": -15,
+      "tech": -40,
       "fund": 15,
-      "market": "crypto",
-      "price": 132.76,
+      "market": "hfm",
+      "price": 1.3449537335915644,
       "reason": "F&G:29",
       "ghana": "F&G:29"
     },
     {
-      "symbol": "HEIUSDT",
+      "symbol": "XAGUSD",
       "signal": "HOLD",
-      "score": 10,
-      "tech": 19,
-      "fund": 0,
-      "market": "crypto",
-      "price": 0.2259,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
+      "score": -13,
+      "tech": -36,
+      "fund": 15,
+      "market": "hfm",
+      "price": 32,
+      "reason": "F&G:29",
+      "ghana": "F&G:29"
     },
     {
-      "symbol": "ADAUSDT",
+      "symbol": "EURUSD",
       "signal": "HOLD",
-      "score": -9,
-      "tech": -17,
-      "fund": 0,
-      "market": "crypto",
-      "price": 0.2009,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
-    },
-    {
-      "symbol": "SKHYBUSDT",
-      "signal": "HOLD",
-      "score": -9,
-      "tech": -17,
-      "fund": 0,
-      "market": "crypto",
-      "price": 138.28,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
-    },
-    {
-      "symbol": "BNBUSDT",
-      "signal": "HOLD",
-      "score": -8,
-      "tech": -15,
-      "fund": 0,
-      "market": "crypto",
-      "price": 591.54,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
+      "score": -11,
+      "tech": -32,
+      "fund": 15,
+      "market": "hfm",
+      "price": 1.1534956686237643,
+      "reason": "F&G:29",
+      "ghana": "F&G:29"
     }
   ],
-  "buy_signals": 0,
+  "buy_signals": 1,
   "sell_signals": 0,
   "fear_greed": {
     "value": 30,
@@ -200,5 +200,5 @@
     "trade_log_size": 282
   },
   "version": "v9",
-  "uptime_cycles": 567554
+  "uptime_cycles": 567555
 }
