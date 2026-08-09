@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-08-09T14:37:35.167049",
-  "cycle": 580079,
+  "timestamp": "2026-08-09T14:37:56.781582",
+  "cycle": 580080,
   "strategy": "balanced",
-  "market_condition": "neutral",
-  "assets_scanned": 20,
+  "market_condition": "bear",
+  "assets_scanned": 41,
   "open_trades": 6,
   "open_positions": [
     {
@@ -51,13 +51,24 @@
   ],
   "top_opportunities": [
     {
+      "symbol": "COPPER",
+      "signal": "BUY",
+      "score": 57,
+      "tech": 91,
+      "fund": 15,
+      "market": "hfm",
+      "price": 4.2,
+      "reason": "F&G:31",
+      "ghana": "F&G:31"
+    },
+    {
       "symbol": "BICOUSDT",
-      "signal": "HOLD",
+      "signal": "BUY",
       "score": 52,
       "tech": 82,
       "fund": 15,
       "market": "crypto",
-      "price": 0.04246,
+      "price": 0.0427,
       "reason": "F&G:31",
       "ghana": "F&G:31"
     },
@@ -90,7 +101,7 @@
       "tech": -62,
       "fund": 15,
       "market": "crypto",
-      "price": 76.77,
+      "price": 76.78,
       "reason": "F&G:31",
       "ghana": "F&G:31"
     },
@@ -101,7 +112,18 @@
       "tech": -55,
       "fund": 15,
       "market": "crypto",
-      "price": 65188.23,
+      "price": 65188.24,
+      "reason": "F&G:31",
+      "ghana": "F&G:31"
+    },
+    {
+      "symbol": "XPTUSD",
+      "signal": "HOLD",
+      "score": 24,
+      "tech": 31,
+      "fund": 15,
+      "market": "hfm",
+      "price": 950,
       "reason": "F&G:31",
       "ghana": "F&G:31"
     },
@@ -112,7 +134,7 @@
       "tech": -50,
       "fund": 15,
       "market": "crypto",
-      "price": 1923.56,
+      "price": 1923.59,
       "reason": "F&G:31",
       "ghana": "F&G:31"
     },
@@ -137,31 +159,9 @@
       "price": 0.1226,
       "reason": "F&G:31",
       "ghana": "F&G:31"
-    },
-    {
-      "symbol": "TRXUSDT",
-      "signal": "HOLD",
-      "score": -17,
-      "tech": -43,
-      "fund": 15,
-      "market": "crypto",
-      "price": 0.3302,
-      "reason": "F&G:31",
-      "ghana": "F&G:31"
-    },
-    {
-      "symbol": "PUMPUSDT",
-      "signal": "HOLD",
-      "score": -15,
-      "tech": -40,
-      "fund": 15,
-      "market": "crypto",
-      "price": 0.002689,
-      "reason": "F&G:31",
-      "ghana": "F&G:31"
     }
   ],
-  "buy_signals": 0,
+  "buy_signals": 1,
   "sell_signals": 0,
   "fear_greed": {
     "value": 31,
@@ -200,5 +200,5 @@
     "trade_log_size": 284
   },
   "version": "v9",
-  "uptime_cycles": 580079
+  "uptime_cycles": 580080
 }
