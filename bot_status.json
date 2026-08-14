@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-08-14T14:25:25.122193",
-  "cycle": 618594,
-  "strategy": "balanced",
-  "market_condition": "neutral",
-  "assets_scanned": 15,
+  "timestamp": "2026-08-14T14:25:51.449322",
+  "cycle": 618595,
+  "strategy": "aggressive",
+  "market_condition": "bear",
+  "assets_scanned": 36,
   "open_trades": 6,
   "open_positions": [
     {
@@ -51,13 +51,24 @@
   ],
   "top_opportunities": [
     {
+      "symbol": "COPPER",
+      "signal": "BUY",
+      "score": 62,
+      "tech": 100,
+      "fund": 15,
+      "market": "hfm",
+      "price": 4.2,
+      "reason": "F&G:29",
+      "ghana": "F&G:29"
+    },
+    {
       "symbol": "UNIUSDT",
-      "signal": "HOLD",
+      "signal": "BUY",
       "score": 43,
       "tech": 66,
       "fund": 15,
       "market": "crypto",
-      "price": 3.237,
+      "price": 3.236,
       "reason": "F&G:29",
       "ghana": "F&G:29"
     },
@@ -68,7 +79,7 @@
       "tech": 58,
       "fund": 15,
       "market": "crypto",
-      "price": 0.03365,
+      "price": 0.0337,
       "reason": "F&G:29",
       "ghana": "F&G:29"
     },
@@ -79,18 +90,40 @@
       "tech": 59,
       "fund": 15,
       "market": "crypto",
-      "price": 136.23,
+      "price": 136.26,
+      "reason": "F&G:29",
+      "ghana": "F&G:29"
+    },
+    {
+      "symbol": "XPTUSD",
+      "signal": "HOLD",
+      "score": 35,
+      "tech": 51,
+      "fund": 15,
+      "market": "hfm",
+      "price": 950,
+      "reason": "F&G:29",
+      "ghana": "F&G:29"
+    },
+    {
+      "symbol": "USDCAD",
+      "signal": "HOLD",
+      "score": 35,
+      "tech": 51,
+      "fund": 15,
+      "market": "hfm",
+      "price": 1.3949,
       "reason": "F&G:29",
       "ghana": "F&G:29"
     },
     {
       "symbol": "SNDKBUSDT",
       "signal": "HOLD",
-      "score": -28,
-      "tech": -63,
+      "score": -32,
+      "tech": -71,
       "fund": 15,
       "market": "crypto",
-      "price": 1621.71,
+      "price": 1624.66,
       "reason": "F&G:29",
       "ghana": "F&G:29"
     },
@@ -101,67 +134,34 @@
       "tech": 36,
       "fund": 15,
       "market": "crypto",
-      "price": 0.05278,
+      "price": 0.0527,
       "reason": "F&G:29",
       "ghana": "F&G:29"
     },
     {
-      "symbol": "XRPUSDT",
+      "symbol": "SP500",
       "signal": "HOLD",
-      "score": -11,
-      "tech": -32,
+      "score": 27,
+      "tech": 36,
       "fund": 15,
-      "market": "crypto",
-      "price": 1.0013,
+      "market": "hfm",
+      "price": 5200,
       "reason": "F&G:29",
       "ghana": "F&G:29"
     },
     {
-      "symbol": "BNBUSDT",
+      "symbol": "USDGHS",
       "signal": "HOLD",
-      "score": 10,
-      "tech": 18,
-      "fund": 0,
-      "market": "crypto",
-      "price": 603.8,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
-    },
-    {
-      "symbol": "ALLOUSDT",
-      "signal": "HOLD",
-      "score": 7,
-      "tech": 13,
-      "fund": 0,
-      "market": "crypto",
-      "price": 0.2774,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
-    },
-    {
-      "symbol": "XAUTUSDT",
-      "signal": "HOLD",
-      "score": -7,
-      "tech": -13,
-      "fund": 0,
-      "market": "crypto",
-      "price": 4374.11,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
-    },
-    {
-      "symbol": "TRXUSDT",
-      "signal": "HOLD",
-      "score": 7,
-      "tech": 13,
-      "fund": 0,
-      "market": "crypto",
-      "price": 0.3325,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
+      "score": 26,
+      "tech": 35,
+      "fund": 15,
+      "market": "hfm",
+      "price": 15.3,
+      "reason": "F&G:29",
+      "ghana": "F&G:29"
     }
   ],
-  "buy_signals": 0,
+  "buy_signals": 1,
   "sell_signals": 0,
   "fear_greed": {
     "value": 29,
@@ -200,5 +200,5 @@
     "trade_log_size": 294
   },
   "version": "v9",
-  "uptime_cycles": 618594
+  "uptime_cycles": 618595
 }
