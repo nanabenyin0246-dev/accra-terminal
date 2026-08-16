@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-08-16T09:29:31.009456",
-  "cycle": 633134,
-  "strategy": "balanced",
-  "market_condition": "neutral",
-  "assets_scanned": 20,
+  "timestamp": "2026-08-16T09:30:02.532676",
+  "cycle": 633135,
+  "strategy": "aggressive",
+  "market_condition": "bear",
+  "assets_scanned": 41,
   "open_trades": 6,
   "open_positions": [
     {
@@ -51,19 +51,30 @@
   ],
   "top_opportunities": [
     {
+      "symbol": "COPPER",
+      "signal": "BUY",
+      "score": 57,
+      "tech": 91,
+      "fund": 15,
+      "market": "hfm",
+      "price": 4.2,
+      "reason": "F&G:34",
+      "ghana": "F&G:34"
+    },
+    {
       "symbol": "BTCUSDT",
-      "signal": "HOLD",
-      "score": -43,
-      "tech": -90,
+      "signal": "SELL",
+      "score": -48,
+      "tech": -100,
       "fund": 15,
       "market": "crypto",
-      "price": 63072.43,
+      "price": 63072.42,
       "reason": "F&G:34",
       "ghana": "F&G:34"
     },
     {
       "symbol": "FETUSDT",
-      "signal": "HOLD",
+      "signal": "BUY",
       "score": 42,
       "tech": 64,
       "fund": 15,
@@ -79,7 +90,7 @@
       "tech": 50,
       "fund": 15,
       "market": "crypto",
-      "price": 0.149,
+      "price": 0.1482,
       "reason": "F&G:34",
       "ghana": "F&G:34"
     },
@@ -91,6 +102,17 @@
       "fund": 15,
       "market": "crypto",
       "price": 1.1571,
+      "reason": "F&G:34",
+      "ghana": "F&G:34"
+    },
+    {
+      "symbol": "GBPJPY",
+      "signal": "HOLD",
+      "score": 27,
+      "tech": 37,
+      "fund": 15,
+      "market": "hfm",
+      "price": 215.25,
       "reason": "F&G:34",
       "ghana": "F&G:34"
     },
@@ -128,40 +150,18 @@
       "ghana": "F&G:34"
     },
     {
-      "symbol": "TUTUSDT",
+      "symbol": "XPTUSD",
       "signal": "HOLD",
-      "score": 20,
-      "tech": 25,
+      "score": 24,
+      "tech": 31,
       "fund": 15,
-      "market": "crypto",
-      "price": 0.03276,
-      "reason": "F&G:34",
-      "ghana": "F&G:34"
-    },
-    {
-      "symbol": "CHIPUSDT",
-      "signal": "HOLD",
-      "score": -17,
-      "tech": -43,
-      "fund": 15,
-      "market": "crypto",
-      "price": 0.0285,
-      "reason": "F&G:34",
-      "ghana": "F&G:34"
-    },
-    {
-      "symbol": "BNBUSDT",
-      "signal": "HOLD",
-      "score": -14,
-      "tech": -38,
-      "fund": 15,
-      "market": "crypto",
-      "price": 607.74,
+      "market": "hfm",
+      "price": 950,
       "reason": "F&G:34",
       "ghana": "F&G:34"
     }
   ],
-  "buy_signals": 0,
+  "buy_signals": 1,
   "sell_signals": 0,
   "fear_greed": {
     "value": 34,
@@ -200,5 +200,5 @@
     "trade_log_size": 298
   },
   "version": "v9",
-  "uptime_cycles": 633134
+  "uptime_cycles": 633135
 }
