@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-08-17T22:40:13.655835",
-  "cycle": 644999,
-  "strategy": "balanced",
-  "market_condition": "neutral",
-  "assets_scanned": 20,
+  "timestamp": "2026-08-17T22:40:33.076257",
+  "cycle": 645000,
+  "strategy": "aggressive",
+  "market_condition": "bear",
+  "assets_scanned": 41,
   "open_trades": 6,
   "open_positions": [
     {
@@ -51,13 +51,24 @@
   ],
   "top_opportunities": [
     {
+      "symbol": "COPPER",
+      "signal": "BUY",
+      "score": 57,
+      "tech": 91,
+      "fund": 15,
+      "market": "hfm",
+      "price": 4.2,
+      "reason": "F&G:31",
+      "ghana": "F&G:31"
+    },
+    {
       "symbol": "BNBUSDT",
-      "signal": "HOLD",
+      "signal": "SELL",
       "score": -43,
       "tech": -90,
       "fund": 15,
       "market": "crypto",
-      "price": 604.84,
+      "price": 604.8,
       "reason": "F&G:31",
       "ghana": "F&G:31"
     },
@@ -95,13 +106,24 @@
       "ghana": "F&G:31"
     },
     {
+      "symbol": "XPTUSD",
+      "signal": "HOLD",
+      "score": 24,
+      "tech": 31,
+      "fund": 15,
+      "market": "hfm",
+      "price": 950,
+      "reason": "F&G:31",
+      "ghana": "F&G:31"
+    },
+    {
       "symbol": "ACEUSDT",
       "signal": "HOLD",
       "score": 22,
       "tech": 28,
       "fund": 15,
       "market": "crypto",
-      "price": 0.1551,
+      "price": 0.155,
       "reason": "F&G:31",
       "ghana": "F&G:31"
     },
@@ -117,6 +139,17 @@
       "ghana": "F&G:31"
     },
     {
+      "symbol": "PLUMEUSDT",
+      "signal": "HOLD",
+      "score": 20,
+      "tech": 24,
+      "fund": 15,
+      "market": "crypto",
+      "price": 0.01205,
+      "reason": "F&G:31",
+      "ghana": "F&G:31"
+    },
+    {
       "symbol": "XRPUSDT",
       "signal": "HOLD",
       "score": -18,
@@ -126,39 +159,6 @@
       "price": 1.0007,
       "reason": "F&G:31",
       "ghana": "F&G:31"
-    },
-    {
-      "symbol": "XPLUSDT",
-      "signal": "HOLD",
-      "score": -12,
-      "tech": -35,
-      "fund": 15,
-      "market": "crypto",
-      "price": 0.07617,
-      "reason": "F&G:31",
-      "ghana": "F&G:31"
-    },
-    {
-      "symbol": "SOLUSDT",
-      "signal": "HOLD",
-      "score": -11,
-      "tech": -32,
-      "fund": 15,
-      "market": "crypto",
-      "price": 75.82,
-      "reason": "F&G:31",
-      "ghana": "F&G:31"
-    },
-    {
-      "symbol": "PLUMEUSDT",
-      "signal": "HOLD",
-      "score": 10,
-      "tech": 18,
-      "fund": 0,
-      "market": "crypto",
-      "price": 0.01206,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
     }
   ],
   "buy_signals": 0,
@@ -200,5 +200,5 @@
     "trade_log_size": 300
   },
   "version": "v9",
-  "uptime_cycles": 644999
+  "uptime_cycles": 645000
 }
