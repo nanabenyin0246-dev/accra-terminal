@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-08-18T02:27:02.879751",
-  "cycle": 646234,
+  "timestamp": "2026-08-18T02:27:21.149309",
+  "cycle": 646235,
   "strategy": "balanced",
   "market_condition": "neutral",
-  "assets_scanned": 20,
+  "assets_scanned": 41,
   "open_trades": 6,
   "open_positions": [
     {
@@ -51,24 +51,35 @@
   ],
   "top_opportunities": [
     {
+      "symbol": "COPPER",
+      "signal": "BUY",
+      "score": 57,
+      "tech": 91,
+      "fund": 15,
+      "market": "hfm",
+      "price": 4.2,
+      "reason": "F&G:31",
+      "ghana": "F&G:31"
+    },
+    {
       "symbol": "PLUMEUSDT",
-      "signal": "HOLD",
+      "signal": "BUY",
       "score": 46,
       "tech": 71,
       "fund": 15,
       "market": "crypto",
-      "price": 0.012,
+      "price": 0.01199,
       "reason": "F&G:31",
       "ghana": "F&G:31"
     },
     {
       "symbol": "GPSUSDT",
-      "signal": "HOLD",
-      "score": -39,
-      "tech": -84,
+      "signal": "SELL",
+      "score": -43,
+      "tech": -90,
       "fund": 15,
       "market": "crypto",
-      "price": 0.01744,
+      "price": 0.0173,
       "reason": "F&G:31",
       "ghana": "F&G:31"
     },
@@ -90,9 +101,20 @@
       "tech": 63,
       "fund": 0,
       "market": "crypto",
-      "price": 0.3326,
+      "price": 0.3325,
       "reason": "F&G:41",
       "ghana": "F&G:41"
+    },
+    {
+      "symbol": "XPTUSD",
+      "signal": "HOLD",
+      "score": 24,
+      "tech": 31,
+      "fund": 15,
+      "market": "hfm",
+      "price": 950,
+      "reason": "F&G:31",
+      "ghana": "F&G:31"
     },
     {
       "symbol": "BFUSDUSDT",
@@ -112,7 +134,7 @@
       "tech": 20,
       "fund": 15,
       "market": "crypto",
-      "price": 144.02,
+      "price": 144.08,
       "reason": "F&G:31",
       "ghana": "F&G:31"
     },
@@ -134,34 +156,12 @@
       "tech": 31,
       "fund": 0,
       "market": "crypto",
-      "price": 0.2932,
+      "price": 0.2933,
       "reason": "F&G:41",
       "ghana": "F&G:41"
-    },
-    {
-      "symbol": "BTCUSDT",
-      "signal": "HOLD",
-      "score": -10,
-      "tech": -30,
-      "fund": 15,
-      "market": "crypto",
-      "price": 64172.0,
-      "reason": "F&G:31",
-      "ghana": "F&G:31"
-    },
-    {
-      "symbol": "ACEUSDT",
-      "signal": "HOLD",
-      "score": 10,
-      "tech": 18,
-      "fund": 0,
-      "market": "crypto",
-      "price": 0.1565,
-      "reason": "Technical score too weak for AI analysis",
-      "ghana": "No action needed"
     }
   ],
-  "buy_signals": 0,
+  "buy_signals": 1,
   "sell_signals": 0,
   "fear_greed": {
     "value": 41,
@@ -200,5 +200,5 @@
     "trade_log_size": 302
   },
   "version": "v9",
-  "uptime_cycles": 646234
+  "uptime_cycles": 646235
 }
