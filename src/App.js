@@ -109,9 +109,36 @@ function generateSignal(closes){
   return {signal,confidence:conf,rsi,macd:+hist.toFixed(4),pctB:+pctB.toFixed(3),reasons:reasons.slice(0,3),sl:+(closes[closes.length-1]*0.97).toFixed(4),tp:+(closes[closes.length-1]*1.04).toFixed(4)};
 }
 
+const GIST_ID='4f5f6918288ddaec0a1fc998af3e6f99';
+
+// Merge-before-write: Gist PATCH replaces a file's whole content, it doesn't
+// merge fields. Writing one field at a time without reading current state
+// first would silently clobber whatever the last write set. This always
+// reads the current terminal_override.json, merges the new fields in, and
+// writes the merged result back with a fresh timestamp.
+async function pushTerminalOverride(partial){
+  const _t=localStorage.getItem('at_gh_token')||'';
+  if(!_t){alert('Set GitHub Token in Settings first.');return false;}
+  try{
+    const cur=await fetch('https://api.github.com/gists/'+GIST_ID,{headers:{'Authorization':'Bearer '+_t}});
+    const curJson=await cur.json();
+    let existing={};
+    try{existing=JSON.parse(curJson?.files?.['terminal_override.json']?.content||'{}');}catch(e){existing={};}
+    const merged={...existing,...partial,set_at:new Date().toISOString()};
+    await fetch('https://api.github.com/gists/'+GIST_ID,{
+      method:'PATCH',
+      headers:{'Authorization':'Bearer '+_t,'Content-Type':'application/json'},
+      body:JSON.stringify({files:{'terminal_override.json':{content:JSON.stringify(merged,null,2)}}})
+    });
+    return true;
+  }catch(e){console.error(e);return false;}
+}
+
 export default function App(){
   const [page,setPage]=useState('dashboard');
   const [sidebarOpen,setSidebarOpen]=useState(true);
+  const [tradingPaused,setTradingPaused]=useState(false);
+  const [pausePending,setPausePending]=useState(false);
   const [activeEx,setActiveEx]=useState('GSE');
   const [stocks,setStocks]=useState(ALL_STOCKS);
   const [selStock,setSelStock]=useState(ALL_STOCKS.GSE[0]);
@@ -210,8 +237,8 @@ export default function App(){
     useEffect(()=>{
     async function fetchBotStatus(){
       try{
-        const r=await fetch(`https://gist.githubusercontent.com/nanabenyin0246-dev/4f5f6918288ddaec0a1fc998af3e6f99/raw/bot_status.json?t=${Date.now()}`,{cache:'no-store'});
-        if(r.ok){const d=await r.json();setBotStatus(d);setBotConnected(true);}
+        const r=await fetch(`https://raw.githubusercontent.com/nanabenyin0246-dev/accra-terminal/master/bot_status.json?t=${Date.now()}`,{cache:'no-store'});
+        if(r.ok){const d=await r.json();setBotStatus(d);setBotConnected(true);if(typeof d.trading_paused==='boolean')setTradingPaused(d.trading_paused);}
         else{setBotConnected(false);}
       }catch{setBotConnected(false);}
     }
@@ -224,6 +251,7 @@ export default function App(){
     try{
       const updated={...botStrategy,...newStrategy,last_updated:new Date().toISOString(),updated_by:'terminal_ai'};
       setBotStrategy(updated);
+      await pushTerminalOverride(newStrategy);
       await sendChat('Based on current market conditions analyze and confirm this strategy change: '+JSON.stringify(newStrategy));
     }catch(e){console.error(e);}
   }
@@ -1318,7 +1346,7 @@ export default function App(){
                       {[['crypto','Crypto'],['stocks','Stocks'],['hfm','HFM/Forex']].map(([k,label])=>(
                         <div key={k} style={{display:'flex',justifyContent:'space-between',padding:'4px 0'}}>
                           <span style={{fontSize:12,color:C.text2}}>{label}</span>
-                          <div onClick={async()=>{const newVal=!botStrategy[k+'_enabled'];setBotStrategy(prev=>({...prev,[k+'_enabled']:newVal}));try{const s={...botStrategy,[k+'_enabled']:newVal,updated_by:'terminal',last_updated:new Date().toISOString()};await fetch('https://api.github.com/gists/4f5f6918288ddaec0a1fc998af3e6f99',{method:'PATCH',headers:{'Authorization':'Bearer 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','Content-Type':'application/json'},body:JSON.stringify({files:{'bot_strategy.json':{content:JSON.stringify(s,null,2)}}})});}catch(e){console.error(e);}}}
+                          <div onClick={async()=>{const newVal=!botStrategy[k+'_enabled'];setBotStrategy(prev=>({...prev,[k+'_enabled']:newVal}));await pushTerminalOverride({[k+'_enabled']:newVal});}}
                             style={{width:36,height:20,borderRadius:10,cursor:'pointer',position:'relative',
                               background:botStrategy[k+'_enabled']?C.green:C.border}}>
                             <div style={{position:'absolute',top:2,left:botStrategy[k+'_enabled']?18:2,
@@ -1326,6 +1354,33 @@ export default function App(){
                           </div>
                         </div>
                       ))}
+                    </div>
+                    <div style={{marginBottom:12,padding:'10px',borderRadius:8,
+                        background:tradingPaused?'rgba(239,68,68,0.1)':'transparent',
+                        border:tradingPaused?'1px solid '+C.red:'1px solid transparent'}}>
+                      <div style={{display:'flex',justifyContent:'space-between',alignItems:'center'}}>
+                        <div>
+                          <div style={{fontSize:13,color:C.text1,fontWeight:600}}>
+                            {tradingPaused?'Trading Paused':'Trading Active'}
+                          </div>
+                          <div style={{fontSize:11,color:C.text3}}>
+                            Blocks new BUYs only — open positions still monitored and closed normally
+                          </div>
+                        </div>
+                        <button disabled={pausePending} onClick={async()=>{
+                            const newVal=!tradingPaused;
+                            setPausePending(true);
+                            const ok=await pushTerminalOverride({trading_paused:newVal});
+                            if(ok)setTradingPaused(newVal);
+                            else alert('Failed to reach the Gist — check GitHub Token in Settings.');
+                            setPausePending(false);
+                          }}
+                          style={{padding:'6px 14px',borderRadius:6,border:'none',cursor:'pointer',
+                            fontSize:12,fontWeight:600,opacity:pausePending?0.6:1,
+                            background:tradingPaused?C.green:C.red,color:'#fff'}}>
+                          {pausePending?'...':(tradingPaused?'Resume':'Pause')}
+                        </button>
+                      </div>
                     </div>
                     <button onClick={async()=>{
                         setAiLoading(true);setAiRec('');
