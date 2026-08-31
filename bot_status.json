@@ -1,10 +1,10 @@
 {
-  "timestamp": "2026-08-31T04:22:09.546382",
-  "cycle": 4824,
+  "timestamp": "2026-08-31T04:22:29.898907",
+  "cycle": 4825,
   "strategy": "balanced",
   "market_condition": "neutral",
-  "assets_scanned": 20,
-  "open_trades": 1,
+  "assets_scanned": 41,
+  "open_trades": 2,
   "open_positions": [
     {
       "symbol": "COPPER",
@@ -12,12 +12,41 @@
       "market": "hfm",
       "sl": 3.78,
       "tp": 4.83
+    },
+    {
+      "symbol": "BMTUSDT",
+      "entry": 0.02048,
+      "market": "crypto",
+      "sl": 0.018432,
+      "tp": 0.023552
     }
   ],
   "top_opportunities": [
     {
+      "symbol": "BMTUSDT",
+      "signal": "BUY",
+      "score": 55,
+      "tech": 100,
+      "fund": 0,
+      "market": "crypto",
+      "price": 0.02048,
+      "reason": "F&G:62",
+      "ghana": "F&G:62"
+    },
+    {
+      "symbol": "COPPER",
+      "signal": "BUY",
+      "score": 50,
+      "tech": 91,
+      "fund": 0,
+      "market": "hfm",
+      "price": 4.2,
+      "reason": "F&G:62",
+      "ghana": "F&G:62"
+    },
+    {
       "symbol": "PUMPUSDT",
-      "signal": "HOLD",
+      "signal": "BUY",
       "score": 47,
       "tech": 85,
       "fund": 0,
@@ -33,18 +62,7 @@
       "tech": 64,
       "fund": 0,
       "market": "crypto",
-      "price": 0.146,
-      "reason": "F&G:62",
-      "ghana": "F&G:62"
-    },
-    {
-      "symbol": "BMTUSDT",
-      "signal": "HOLD",
-      "score": 32,
-      "tech": 58,
-      "fund": 0,
-      "market": "crypto",
-      "price": 0.02056,
+      "price": 0.1459,
       "reason": "F&G:62",
       "ghana": "F&G:62"
     },
@@ -88,7 +106,7 @@
       "tech": 40,
       "fund": 0,
       "market": "crypto",
-      "price": 101.24,
+      "price": 101.22,
       "reason": "F&G:62",
       "ghana": "F&G:62"
     },
@@ -99,7 +117,7 @@
       "tech": 40,
       "fund": 0,
       "market": "crypto",
-      "price": 1.3462,
+      "price": 1.3461,
       "reason": "F&G:62",
       "ghana": "F&G:62"
     },
@@ -113,20 +131,9 @@
       "price": 0.08197,
       "reason": "F&G:62",
       "ghana": "F&G:62"
-    },
-    {
-      "symbol": "SUIUSDT",
-      "signal": "HOLD",
-      "score": 22,
-      "tech": 40,
-      "fund": 0,
-      "market": "crypto",
-      "price": 0.7116,
-      "reason": "F&G:62",
-      "ghana": "F&G:62"
     }
   ],
-  "buy_signals": 0,
+  "buy_signals": 2,
   "sell_signals": 0,
   "fear_greed": {
     "value": 62,
@@ -140,7 +147,7 @@
     "hfm": "signal_mode"
   },
   "binance_balance": {
-    "usdt": 30.85
+    "usdt": 25.84
   },
   "xyz": {
     "balance": 0.0,
@@ -162,8 +169,8 @@
   },
   "performance": {
     "total_trades": 1,
-    "trade_log_size": 0
+    "trade_log_size": 1
   },
   "version": "v9",
-  "uptime_cycles": 4824
+  "uptime_cycles": 4825
 }
