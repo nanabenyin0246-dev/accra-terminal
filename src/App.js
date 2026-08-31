@@ -237,7 +237,7 @@ export default function App(){
     useEffect(()=>{
     async function fetchBotStatus(){
       try{
-        const r=await fetch(`https://raw.githubusercontent.com/nanabenyin0246-dev/accra-terminal/master/bot_status.json?t=${Date.now()}`,{cache:'no-store'});
+        const r=await fetch(`https://gist.githubusercontent.com/nanabenyin0246-dev/${GIST_ID}/raw/bot_status.json?t=${Date.now()}`,{cache:'no-store'});
         if(r.ok){const d=await r.json();setBotStatus(d);setBotConnected(true);if(typeof d.trading_paused==='boolean')setTradingPaused(d.trading_paused);}
         else{setBotConnected(false);}
       }catch{setBotConnected(false);}
